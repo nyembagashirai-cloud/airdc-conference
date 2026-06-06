@@ -36,24 +36,24 @@ export function Navbar() {
       )}
     >
       <div className="container">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex items-center justify-between h-20 lg:h-24">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 flex-shrink-0">
-            <div className="relative w-10 h-10 lg:w-12 lg:h-12">
+            <div className="relative w-16 h-16 lg:w-20 lg:h-20">
               <Image
                 src="/images/logo.png"
                 alt="AIRDC Logo"
                 fill
-                className="object-contain"
+                className="object-contain drop-shadow-md"
                 priority
               />
             </div>
             <div className="hidden sm:block">
-              <p className={cn("font-heading font-bold text-sm leading-tight",
+              <p className={cn("font-heading font-bold text-base leading-tight",
                 scrolled ? "text-primary" : "text-white")}>AIRDC</p>
               <p className={cn("text-xs font-medium",
                 scrolled ? "text-secondary" : "text-secondary-light")}>
-                23rd Conference 2026
+                23rd Annual Conference 2026
               </p>
             </div>
           </Link>
