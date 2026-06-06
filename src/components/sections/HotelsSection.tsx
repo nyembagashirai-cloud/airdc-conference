@@ -33,7 +33,7 @@ const hotels = [
     address: "Samora Machel Avenue, Harare",
     badge: null,
     featured: false,
-    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80",
+    image: "/images/holiday-inn-harare.jpg",
     website: "https://www.ihg.com/holidayinn/hotels/us/en/harare/harsf/hoteldetail?cm_mmc=GoogleMaps-_-HI-_-ZW-_-HARSF",
     fromRate: "$130",
     rateNote: "B&B · Single/Twin from",
