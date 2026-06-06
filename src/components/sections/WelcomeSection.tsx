@@ -1,7 +1,10 @@
+"use client";
 import Image from "next/image";
 import { Quote } from "lucide-react";
+import { useState } from "react";
 
 export function WelcomeSection() {
+  const [imgError, setImgError] = useState(false);
   return (
     <section className="section-padding bg-muted">
       <div className="container">
@@ -14,13 +17,20 @@ export function WelcomeSection() {
 
           {/* Photo column */}
           <div className="flex flex-col items-center lg:items-start">
-            <div className="relative w-56 h-64 lg:w-full lg:h-80 rounded-2xl overflow-hidden shadow-premium mb-4">
-              <Image
-                src="/images/secretary-general.jpg"
-                alt="Januario Aliwalas — Secretary General, AIRDC"
-                fill
-                className="object-cover object-top"
-              />
+            <div className="relative w-56 h-64 lg:w-full lg:h-80 rounded-2xl overflow-hidden shadow-premium mb-4 bg-primary/10">
+              {!imgError ? (
+                <Image
+                  src="/images/secretary-general.jpg"
+                  alt="Januario Aliwalas — Secretary General, AIRDC"
+                  fill
+                  className="object-cover object-top"
+                  onError={() => setImgError(true)}
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-primary/10">
+                  <span className="text-6xl font-black text-primary/30">JA</span>
+                </div>
+              )}
             </div>
             <div className="text-center lg:text-left">
               <p className="font-heading font-bold text-primary text-lg">Januario Aliwalas</p>
