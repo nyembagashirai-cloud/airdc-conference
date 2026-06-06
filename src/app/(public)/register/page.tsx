@@ -28,6 +28,36 @@ export default function RegisterPage() {
         </div>
       </div>
 
+      {/* Zimbabwe Immigration Notice */}
+      <div className="bg-secondary/10 border-y-2 border-secondary">
+        <div className="container py-6">
+          <div className="flex gap-4 items-start">
+            <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span className="text-white font-black text-lg">!</span>
+            </div>
+            <div>
+              <h3 className="font-heading font-bold text-primary text-lg mb-1">
+                🇿🇼 Zimbabwe Immigration Update — Important Notice
+              </h3>
+              <p className="text-foreground/80 text-sm leading-relaxed mb-2">
+                Passengers travelling to Zimbabwe are now required to complete arrival forms <strong>online before departure</strong>, as paper forms are no longer in use. While iPads are provided at immigration in Zimbabwe for this purpose, completing the form on arrival may result in delays.
+              </p>
+              <p className="text-foreground/80 text-sm leading-relaxed">
+                To ensure a smoother and quicker journey through immigration, we recommend completing your form in advance at:{" "}
+                <a
+                  href="https://evisa.gov.zw/app/index.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary font-bold underline hover:text-primary-mid"
+                >
+                  https://evisa.gov.zw/app/index.html
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="section-padding bg-muted">
         <div className="container">
           <div className="grid lg:grid-cols-3 gap-10">
