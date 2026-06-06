@@ -229,7 +229,18 @@ model Registration {
   organisation    String
   jobTitle        String
   country         String
-  delegateType    DelegateType
+  delegateType    String
+  civility        String?
+  passportId      String?
+  companyAddress  String?
+  branchOfActivity String?
+  visaInvitation  String?
+  arrivalDate     String?
+  arrivalTime     String?
+  departureDate   String?
+  departureTime   String?
+  airlineCompany  String?
+  flightNumber    String?
   dietaryRequirements String?
   specialNeeds    String?
   workshopChoice  String?
