@@ -11,18 +11,18 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#0D3B66",
-          dark: "#0D3B66",
-          mid: "#1D4E89",
+          DEFAULT: "#1A4A2A",
+          dark: "#0F3018",
+          mid: "#2D6A40",
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#D4AF37",
-          light: "#F4C542",
-          foreground: "#1F2937",
+          DEFAULT: "#C8941C",
+          light: "#E8B832",
+          foreground: "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#2A9D8F",
+          DEFAULT: "#C41230",
           foreground: "#FFFFFF",
         },
         background: "#FFFFFF",
@@ -40,7 +40,7 @@ const config: Config = {
           DEFAULT: "#EF4444",
           foreground: "#FFFFFF",
         },
-        ring: "#1D4E89",
+        ring: "#2D6A40",
         input: "#E5E7EB",
       },
       fontFamily: {
@@ -54,13 +54,13 @@ const config: Config = {
         sm: "0.375rem",
       },
       boxShadow: {
-        premium: "0 4px 24px rgba(13, 59, 102, 0.12)",
-        card: "0 2px 12px rgba(13, 59, 102, 0.08)",
-        glow: "0 0 40px rgba(212, 175, 55, 0.2)",
+        premium: "0 4px 24px rgba(26, 74, 42, 0.12)",
+        card: "0 2px 12px rgba(26, 74, 42, 0.08)",
+        glow: "0 0 40px rgba(200, 148, 28, 0.25)",
       },
       backgroundImage: {
-        "hero-gradient": "linear-gradient(135deg, #0D3B66 0%, #1D4E89 50%, #2A9D8F 100%)",
-        "gold-gradient": "linear-gradient(135deg, #D4AF37 0%, #F4C542 100%)",
+        "hero-gradient": "linear-gradient(135deg, #0F3018 0%, #1A4A2A 50%, #2D6A40 100%)",
+        "gold-gradient": "linear-gradient(135deg, #C8941C 0%, #E8B832 100%)",
         "pattern-zimbabwe": "url('/images/zimbabwe-pattern.svg')",
       },
       animation: {

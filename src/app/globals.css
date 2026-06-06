@@ -4,11 +4,11 @@
 
 @layer base {
   :root {
-    --primary: 210 75% 22%;
-    --primary-mid: 214 65% 32%;
-    --secondary: 43 63% 52%;
-    --secondary-light: 43 90% 60%;
-    --accent: 173 58% 39%;
+    --primary: 142 48% 22%;
+    --primary-mid: 142 40% 30%;
+    --secondary: 38 76% 45%;
+    --secondary-light: 38 85% 56%;
+    --accent: 350 82% 41%;
     --background: 0 0% 100%;
     --foreground: 220 30% 15%;
     --muted: 210 20% 98%;
@@ -60,7 +60,7 @@
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, #D4AF37 0%, #F4C542 100%);
+    background: linear-gradient(135deg, #C8941C 0%, #E8B832 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -100,5 +100,5 @@
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #1D4E89; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #0D3B66; }
+::-webkit-scrollbar-thumb { background: #1A4A2A; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #0F3018; }
