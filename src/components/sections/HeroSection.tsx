@@ -5,8 +5,10 @@ import { Calendar, MapPin, Download, ArrowRight, ChevronDown, Globe } from "luci
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Deep green gradient background */}
-      <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, #0a1f10 0%, #0F3018 40%, #1A4A2A 70%, #2D6A40 100%)" }} />
+      {/* Rainbow Towers background image */}
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/images/rainbow-hotel.webp')" }} />
+      {/* Green gradient overlay */}
+      <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(10,31,16,0.92) 0%, rgba(15,48,24,0.88) 40%, rgba(26,74,42,0.80) 70%, rgba(45,106,64,0.72) 100%)" }} />
 
       {/* Subtle geometric pattern overlay */}
       <div
