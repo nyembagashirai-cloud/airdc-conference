@@ -23,17 +23,7 @@ export async function POST(req: NextRequest) {
 
     const data = schema.parse(body);
 
-    await prisma.contactSubmission.create({
-      data: {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        subject: data.subject,
-        message: data.message,
-        type: data.subject,
-        status: "NEW",
-      },
-    });
+console.log("Contact submission:", data);
 
     return NextResponse.json({ success: true });
   } catch (error) {
