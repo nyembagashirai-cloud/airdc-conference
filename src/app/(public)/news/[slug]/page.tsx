@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Calendar, ArrowLeft, Tag } from "lucide-react";
 
-type Props = { params: { slug: string } };
+type Props = { params: Promise<{ slug: string }> };
 
 async function getArticle(slug: string) {
   if (!process.env.DATABASE_URL) return null;
@@ -14,7 +14,8 @@ async function getArticle(slug: string) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const article = await getArticle(params.slug);
+  const { slug } = await params;
+  const article = await getArticle(slug);
   if (!article) return { title: "Article Not Found" };
   return {
     title: article.title,
@@ -24,7 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArticlePage({ params }: Props) {
-  const article = await getArticle(params.slug);
+  const { slug } = await params;
+  const article = await getArticle(slug);
   if (!article) notFound();
 
   return (
