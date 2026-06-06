@@ -63,3 +63,20 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+// GET — fetch all contact submissions for admin dashboard
+export async function GET() {
+  if (!process.env.DATABASE_URL) {
+    return NextResponse.json({ submissions: [] });
+  }
+  try {
+    const { prisma } = await import("@/lib/prisma");
+    const submissions = await prisma.contactSubmission.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    return NextResponse.json({ submissions });
+  } catch (error) {
+    console.error("Fetch contacts error:", error);
+    return NextResponse.json({ submissions: [] });
+  }
+}
