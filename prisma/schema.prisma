@@ -85,14 +85,14 @@ model ProgrammeSession {
   id           String    @id @default(cuid())
   conferenceId String
   conference   Conference @relation(fields: [conferenceId], references: [id])
-  day          Int        // 1, 2, 3...
+  day          String     // "Day 1", "Day 2", etc.
   date         DateTime
   startTime    String
   endTime      String
   title        String
   subtitle     String?
   description  String?   @db.Text
-  type         SessionType @default(PLENARY)
+  type         String    @default("PLENARY")
   venue        String?
   capacity     Int?
   speakers     SessionSpeaker[]
@@ -100,34 +100,23 @@ model ProgrammeSession {
   updatedAt    DateTime  @updatedAt
 }
 
-enum SessionType {
-  PLENARY
-  PANEL
-  WORKSHOP
-  NETWORKING
-  GALA
-  OPENING
-  CLOSING
-  BREAK
-}
-
 // ─── Speakers ────────────────────────────────────────────────────────────────
 model Speaker {
   id           String   @id @default(cuid())
-  firstName    String
-  lastName     String
-  title        String?  // Dr., Prof., Mr., etc.
-  jobTitle     String
+  name         String
+  title        String?
   organisation String
-  country      String
-  bio          String   @db.Text
+  country      String?
+  bio          String?  @db.Text
   photoUrl     String?
   photoPublicId String?
   email        String?
-  linkedin     String?
+  linkedinUrl  String?
   twitter      String?
   website      String?
+  speakerType  String   @default("Panel Speaker")
   featured     Boolean  @default(false)
+  active       Boolean  @default(true)
   order        Int      @default(0)
   sessions     SessionSpeaker[]
   createdAt    DateTime @default(now())
@@ -147,7 +136,7 @@ model SessionSpeaker {
 model Sponsor {
   id          String      @id @default(cuid())
   name        String
-  tier        SponsorTier
+  tier        String      @default("GOLD")
   logoUrl     String?
   logoPublicId String?
   website     String?
@@ -160,14 +149,6 @@ model Sponsor {
   updatedAt   DateTime    @updatedAt
 }
 
-enum SponsorTier {
-  PLATINUM
-  GOLD
-  SILVER
-  SUPPORTING
-  MEDIA
-}
-
 // ─── News / Articles ─────────────────────────────────────────────────────────
 model Article {
   id          String      @id @default(cuid())
@@ -177,7 +158,7 @@ model Article {
   content     String      @db.Text
   coverImage  String?
   coverPublicId String?
-  category    ArticleCategory @default(NEWS)
+  category    String      @default("NEWS")
   published   Boolean     @default(false)
   publishedAt DateTime?
   tags        String[]
@@ -185,13 +166,6 @@ model Article {
   authorTitle String?
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-}
-
-enum ArticleCategory {
-  NEWS
-  ANNOUNCEMENT
-  PRESS_RELEASE
-  UPDATE
 }
 
 // ─── Gallery ─────────────────────────────────────────────────────────────────

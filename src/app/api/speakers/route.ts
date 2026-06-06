@@ -5,7 +5,7 @@ export async function GET() {
   if (!process.env.DATABASE_URL) return NextResponse.json({ speakers: [] });
   try {
     const { prisma } = await import("@/lib/prisma");
-    const speakers = await prisma.speaker.findMany({ orderBy: [{ order: "asc" }, { lastName: "asc" }] });
+    const speakers = await prisma.speaker.findMany({ orderBy: [{ order: "asc" }, { name: "asc" }] });
     return NextResponse.json({ speakers });
   } catch (e) {
     console.error(e);
@@ -19,17 +19,16 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { prisma } = await import("@/lib/prisma");
     const speaker = await prisma.speaker.create({ data: {
-      firstName: body.firstName,
-      lastName: body.lastName,
+      name: body.name,
       title: body.title,
-      jobTitle: body.jobTitle,
       organisation: body.organisation,
       country: body.country,
-      bio: body.bio || "",
+      bio: body.bio,
       photoUrl: body.photoUrl,
-      email: body.email,
-      linkedin: body.linkedin,
+      linkedinUrl: body.linkedinUrl,
+      speakerType: body.speakerType || "Panel Speaker",
       featured: body.featured ?? false,
+      active: body.active ?? true,
       order: body.order ?? 0,
     }});
     return NextResponse.json({ speaker });
