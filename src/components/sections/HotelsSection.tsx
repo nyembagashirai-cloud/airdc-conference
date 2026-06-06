@@ -200,7 +200,6 @@ export function HotelsSection() {
 
         <p className="text-center text-xs text-muted-foreground mt-6">
           All rates in USD per room per night. Click any hotel to book directly on their website.
-          For group bookings contact <a href="mailto:info@airdczim.co.zw" className="text-primary font-semibold hover:underline">info@airdczim.co.zw</a>
         </p>
       </div>
     </section>
