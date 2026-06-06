@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -19,20 +20,28 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  // Only use the transparent-over-hero style on the home page
+  const isHome = pathname === "/";
+  // Navbar is "dark mode" (white text) when on home page AND not yet scrolled
+  const isDark = isHome && !scrolled;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
+    // On non-home pages treat as already scrolled
+    if (!isHome) setScrolled(true);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHome]);
 
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-card border-b border-border"
-          : "bg-transparent"
+        isDark
+          ? "bg-transparent"
+          : "bg-white/95 backdrop-blur-md shadow-card border-b border-border"
       )}
     >
       <div className="container">
@@ -50,9 +59,9 @@ export function Navbar() {
             </div>
             <div className="hidden sm:block">
               <p className={cn("font-heading font-bold text-base leading-tight",
-                scrolled ? "text-primary" : "text-white")}>AIRDC</p>
+                isDark ? "text-white" : "text-primary")}>AIRDC</p>
               <p className={cn("text-xs font-medium",
-                scrolled ? "text-secondary" : "text-secondary-light")}>
+                isDark ? "text-secondary-light" : "text-secondary")}>
                 23rd Annual Conference 2026
               </p>
             </div>
@@ -66,9 +75,9 @@ export function Navbar() {
                 href={link.href}
                 className={cn(
                   "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                  scrolled
-                    ? "text-foreground hover:text-primary hover:bg-muted"
-                    : "text-white/90 hover:text-white hover:bg-white/10"
+                  isDark
+                    ? "text-white/90 hover:text-white hover:bg-white/10"
+                    : "text-foreground hover:text-primary hover:bg-muted"
                 )}
               >
                 {link.label}
@@ -80,7 +89,7 @@ export function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <Link
               href="/register"
-              className="bg-secondary text-primary-dark font-semibold px-5 py-2.5 rounded-lg text-sm hover:bg-secondary-light transition-all duration-200 shadow-card hover:-translate-y-0.5"
+              className="bg-secondary text-white font-semibold px-5 py-2.5 rounded-lg text-sm hover:bg-secondary-light transition-all duration-200 shadow-card hover:-translate-y-0.5"
             >
               Register Now
             </Link>
@@ -91,7 +100,7 @@ export function Navbar() {
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
               "lg:hidden p-2 rounded-lg transition-colors",
-              scrolled ? "text-foreground hover:bg-muted" : "text-white hover:bg-white/10"
+              isDark ? "text-white hover:bg-white/10" : "text-foreground hover:bg-muted"
             )}
             aria-label="Toggle menu"
           >
@@ -118,7 +127,7 @@ export function Navbar() {
               <Link
                 href="/register"
                 onClick={() => setIsOpen(false)}
-                className="btn-secondary w-full text-center block"
+                className="bg-secondary text-white font-semibold px-5 py-3 rounded-lg text-sm w-full text-center block hover:bg-secondary-light transition-colors"
               >
                 Register Now
               </Link>
