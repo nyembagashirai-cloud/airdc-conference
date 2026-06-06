@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Sponsors & Partners",
@@ -9,72 +9,35 @@ export const metadata: Metadata = {
 
 const packages = [
   {
-    tier: "PLATINUM",
-    color: "border-gray-300 bg-gradient-to-br from-gray-50 to-white",
-    headerBg: "bg-gradient-to-r from-gray-600 to-gray-400",
-    badge: "🏆",
-    price: "USD 25,000",
-    benefits: [
-      "Premier logo placement on all conference materials",
-      "Exclusive 30-min keynote speaking slot",
-      "4 complimentary delegate registrations",
-      "Premium exhibition stand (6m × 6m)",
-      "Full-page advertisement in conference brochure",
-      "1:1 networking sessions with delegates",
-      "Pre-conference hosted dinner for 10",
-      "Logo on conference lanyards",
-      "Post-conference delegate contact list",
-      "Social media promotion (50+ posts)",
-    ],
+    tier: "PLATINUM", color: "border-gray-300 bg-gradient-to-br from-gray-50 to-white",
+    headerBg: "bg-gradient-to-r from-gray-600 to-gray-400", badge: "🏆", price: "USD 25,000",
+    benefits: ["Premier logo placement on all conference materials", "Exclusive 30-min keynote speaking slot", "4 complimentary delegate registrations", "Premium exhibition stand (6m × 6m)", "Full-page advertisement in conference brochure", "1:1 networking sessions with delegates", "Pre-conference hosted dinner for 10", "Logo on conference lanyards", "Post-conference delegate contact list", "Social media promotion (50+ posts)"],
   },
   {
-    tier: "GOLD",
-    color: "border-secondary/40 bg-gradient-to-br from-secondary/5 to-white",
-    headerBg: "bg-gold-gradient",
-    badge: "⭐",
-    price: "USD 15,000",
-    benefits: [
-      "Prime logo placement on main stage backdrop",
-      "15-minute speaking opportunity",
-      "3 complimentary delegate registrations",
-      "Exhibition stand (4m × 4m)",
-      "Half-page advertisement in conference brochure",
-      "Logo on conference website (homepage)",
-      "Social media promotion (25+ posts)",
-      "Post-conference delegate list",
-      "Branded workshop session co-hosting",
-    ],
+    tier: "GOLD", color: "border-secondary/40 bg-gradient-to-br from-secondary/5 to-white",
+    headerBg: "bg-gold-gradient", badge: "⭐", price: "USD 15,000",
+    benefits: ["Prime logo placement on main stage backdrop", "15-minute speaking opportunity", "3 complimentary delegate registrations", "Exhibition stand (4m × 4m)", "Half-page advertisement in conference brochure", "Logo on conference website (homepage)", "Social media promotion (25+ posts)", "Post-conference delegate list", "Branded workshop session co-hosting"],
   },
   {
-    tier: "SILVER",
-    color: "border-slate-200 bg-gradient-to-br from-slate-50 to-white",
-    headerBg: "bg-gradient-to-r from-slate-400 to-slate-300",
-    badge: "🥈",
-    price: "USD 8,000",
-    benefits: [
-      "Logo on conference website and materials",
-      "2 complimentary delegate registrations",
-      "Exhibition stand (3m × 3m)",
-      "Quarter-page advertisement in brochure",
-      "Social media promotion (10+ posts)",
-      "Logo on conference programme",
-    ],
+    tier: "SILVER", color: "border-slate-200 bg-gradient-to-br from-slate-50 to-white",
+    headerBg: "bg-gradient-to-r from-slate-400 to-slate-300", badge: "🥈", price: "USD 8,000",
+    benefits: ["Logo on conference website and materials", "2 complimentary delegate registrations", "Exhibition stand (3m × 3m)", "Quarter-page advertisement in brochure", "Social media promotion (10+ posts)", "Logo on conference programme"],
   },
   {
-    tier: "SUPPORTING PARTNER",
-    color: "border-accent/30 bg-gradient-to-br from-accent/5 to-white",
-    headerBg: "bg-gradient-to-r from-accent to-teal-400",
-    badge: "🤝",
-    price: "USD 3,500",
-    benefits: [
-      "Logo on conference website",
-      "1 complimentary delegate registration",
-      "Exhibition table top display",
-      "Social media recognition",
-      "Listed in conference programme",
-    ],
+    tier: "SUPPORTING PARTNER", color: "border-accent/30 bg-gradient-to-br from-accent/5 to-white",
+    headerBg: "bg-gradient-to-r from-accent to-teal-400", badge: "🤝", price: "USD 3,500",
+    benefits: ["Logo on conference website", "1 complimentary delegate registration", "Exhibition table top display", "Social media recognition", "Listed in conference programme"],
   },
 ];
+
+const TIER_ORDER = ["PLATINUM", "GOLD", "SILVER", "SUPPORTING_PARTNER"];
+const TIER_LABELS: Record<string, string> = { PLATINUM: "Platinum", GOLD: "Gold", SILVER: "Silver", SUPPORTING_PARTNER: "Supporting Partner" };
+const TIER_COLORS: Record<string, string> = {
+  PLATINUM: "text-gray-700 bg-gray-100 border-gray-300",
+  GOLD: "text-yellow-800 bg-yellow-100 border-yellow-300",
+  SILVER: "text-slate-600 bg-slate-100 border-slate-300",
+  SUPPORTING_PARTNER: "text-blue-700 bg-blue-50 border-blue-200",
+};
 
 const whySponsor = [
   "Access 500+ insurance decision-makers from 40+ developing countries",
@@ -85,7 +48,18 @@ const whySponsor = [
   "Year-round brand visibility through AIRDC digital channels",
 ];
 
-export default function SponsorsPage() {
+async function getSponsors() {
+  if (!process.env.DATABASE_URL) return [];
+  try {
+    const { prisma } = await import("@/lib/prisma");
+    return await prisma.sponsor.findMany({ where: { active: true }, orderBy: [{ tier: "asc" }, { order: "asc" }] });
+  } catch { return []; }
+}
+
+export default async function SponsorsPage() {
+  const sponsors = await getSponsors();
+  const hasSponsors = sponsors.length > 0;
+
   return (
     <div className="pt-20">
       <div className="bg-primary py-16">
@@ -97,6 +71,59 @@ export default function SponsorsPage() {
           </p>
         </div>
       </div>
+
+      {/* Current Sponsors — only shown if there are sponsors in DB */}
+      {hasSponsors && (
+        <section className="section-padding bg-white border-b border-border">
+          <div className="container">
+            <div className="text-center mb-10">
+              <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-3">Our Partners</p>
+              <h2 className="section-title">Conference Sponsors</h2>
+              <p className="text-muted-foreground mt-2">Thank you to our valued sponsors and partners</p>
+            </div>
+            {TIER_ORDER.map(tier => {
+              const tierSponsors = sponsors.filter(s => s.tier === tier);
+              if (tierSponsors.length === 0) return null;
+              return (
+                <div key={tier} className="mb-10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className={`text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border ${TIER_COLORS[tier]}`}>{TIER_LABELS[tier]}</span>
+                    <div className="flex-1 h-px bg-border" />
+                  </div>
+                  <div className={`flex flex-wrap gap-6 justify-center ${tier === "PLATINUM" ? "items-center" : "items-center"}`}>
+                    {tierSponsors.map(s => (
+                      <div key={s.id} className={`flex flex-col items-center gap-3 ${tier === "PLATINUM" ? "w-64" : tier === "GOLD" ? "w-48" : "w-36"}`}>
+                        {s.website ? (
+                          <a href={s.website} target="_blank" rel="noopener noreferrer" className="block hover:opacity-80 transition-opacity">
+                            {s.logoUrl ? (
+                              <img src={s.logoUrl} alt={s.name} className="h-20 w-auto object-contain grayscale hover:grayscale-0 transition-all" />
+                            ) : (
+                              <div className="h-20 w-full bg-muted rounded-xl flex items-center justify-center border border-border">
+                                <span className="font-heading font-bold text-primary text-lg">{s.name}</span>
+                              </div>
+                            )}
+                          </a>
+                        ) : (
+                          <>
+                            {s.logoUrl ? (
+                              <img src={s.logoUrl} alt={s.name} className="h-20 w-auto object-contain" />
+                            ) : (
+                              <div className="h-20 w-full bg-muted rounded-xl flex items-center justify-center border border-border">
+                                <span className="font-heading font-bold text-primary text-lg">{s.name}</span>
+                              </div>
+                            )}
+                          </>
+                        )}
+                        {s.description && <p className="text-xs text-muted-foreground text-center leading-snug">{s.description}</p>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Why Sponsor */}
       <section className="section-padding bg-white">
@@ -118,7 +145,7 @@ export default function SponsorsPage() {
               {[
                 { value: "500+", label: "Decision Makers" },
                 { value: "40+", label: "Countries" },
-                { value: "3", label: "Days of Exposure" },
+                { value: "5", label: "Days of Exposure" },
                 { value: "$B's", label: "in Premium Volume" },
               ].map((stat) => (
                 <div key={stat.label} className="card-premium p-6 text-center">
@@ -155,8 +182,7 @@ export default function SponsorsPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link href="/contact?subject=Sponsorship+Enquiry"
-                    className="btn-primary w-full text-center text-sm py-2.5">
+                  <Link href="/contact?subject=Sponsorship+Enquiry" className="btn-primary w-full text-center text-sm py-2.5">
                     Enquire Now
                   </Link>
                 </div>
@@ -165,7 +191,8 @@ export default function SponsorsPage() {
           </div>
           <div className="mt-8 text-center">
             <p className="text-muted-foreground text-sm">
-              Custom packages available. Contact us at <a href="mailto:sponsorship@airdc2026.org" className="text-primary font-medium">sponsorship@airdc2026.org</a>
+              Custom packages available. Contact us at{" "}
+              <a href="mailto:info@airdczim.co.zw" className="text-primary font-medium">info@airdczim.co.zw</a>
             </p>
           </div>
         </div>
