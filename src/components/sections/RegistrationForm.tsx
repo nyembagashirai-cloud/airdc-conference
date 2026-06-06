@@ -295,11 +295,6 @@ export function RegistrationForm() {
           </div>
         </div>
 
-        {/* Notice */}
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
-          <strong>Please note:</strong> During registration we have requested your personal details including your email address. This information may be shared with registered delegates for networking purposes during the conference.
-        </div>
-
         {/* Terms */}
         <div className="flex items-start gap-3 p-4 bg-muted rounded-lg">
           <input {...register("terms")} type="checkbox" id="terms" className="mt-0.5 w-4 h-4 accent-primary" />
