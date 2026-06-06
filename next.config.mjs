@@ -7,6 +7,7 @@ const nextConfig = {
       { protocol: "https", hostname: "assets.hyatt.com" },
       { protocol: "https", hostname: "rtgafrica.com" },
       { protocol: "https", hostname: "images.crestahotels.com" },
+      { protocol: "https", hostname: "thegray.co.zw" },
     ],
   },
   webpack: (config, { isServer }) => {
