@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Star, ExternalLink, MapPin } from "lucide-react";
 
 const hotels = [
@@ -8,7 +9,7 @@ const hotels = [
     address: "Jason Moyo Avenue, Harare",
     badge: "20% Delegate Discount",
     featured: true,
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80",
+    image: "https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2025/05/12/0511/HRERH-P0085-Daytime-Hotel-Exterior.jpg/HRERH-P0085-Daytime-Hotel-Exterior.16x9.jpg?imwidth=800",
     website: "https://www.hyatt.com/hyatt-regency/en-US/hrerh-hyatt-regency-harare-the-meikles",
     fromRate: "$228",
     rateNote: "B&B · Single from",
@@ -20,7 +21,7 @@ const hotels = [
     address: "Pennefather Avenue, Harare",
     badge: null,
     featured: false,
-    image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80",
+    image: "https://rtgafrica.com/wp-content/uploads/2021/08/Lobby-1.jpg",
     website: "https://rtgafrica.com/rainbow-towers-hotel/",
     fromRate: "$130",
     rateNote: "B&B · Single/Twin from",
@@ -32,7 +33,7 @@ const hotels = [
     address: "Samora Machel Avenue, Harare",
     badge: null,
     featured: false,
-    image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80",
     website: "https://www.ihg.com/holidayinn/hotels/us/en/harare/harsf/hoteldetail?cm_mmc=GoogleMaps-_-HI-_-ZW-_-HARSF",
     fromRate: "$130",
     rateNote: "B&B · Single/Twin from",
@@ -44,7 +45,7 @@ const hotels = [
     address: "Stanley Avenue, Harare",
     badge: null,
     featured: false,
-    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80",
+    image: "https://images.crestahotels.com/medium_focal_home_page_test_image_7_5bf3178aff.jpg?tr=w-800,q-90,f-auto",
     website: "https://www.crestahotels.com",
     fromRate: "$90",
     rateNote: "B&B · Single from",
@@ -56,7 +57,7 @@ const hotels = [
     address: "Harare",
     badge: null,
     featured: false,
-    image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
     website: "https://www.n1hotel.co.zw/",
     fromRate: "$70",
     rateNote: "Bed only · Single from",
@@ -68,7 +69,7 @@ const hotels = [
     address: "Harare",
     badge: null,
     featured: false,
-    image: "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?w=600&q=80",
+    image: "https://images.crestahotels.com/medium_focal_home_page_test_image_7_5bf3178aff.jpg?tr=w-800,q-90,f-auto",
     website: "https://www.crestahotels.com",
     fromRate: null,
     rateNote: "Contact for delegate rates",
@@ -80,7 +81,7 @@ const hotels = [
     address: "Harare",
     badge: null,
     featured: false,
-    image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&q=80",
+    image: "https://images.crestahotels.com/medium_focal_home_page_test_image_7_5bf3178aff.jpg?tr=w-800,q-90,f-auto",
     website: "https://www.crestahotels.com",
     fromRate: null,
     rateNote: "Contact for delegate rates",
@@ -92,7 +93,7 @@ const hotels = [
     address: "Harare",
     badge: null,
     featured: false,
-    image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1587213811864-46e59f653b75?w=800&q=80",
     website: "https://www.purposeinternationalhotel.com/",
     fromRate: null,
     rateNote: "Contact for delegate rates",
@@ -104,7 +105,7 @@ const hotels = [
     address: "Harare",
     badge: null,
     featured: false,
-    image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
     website: "https://thegray.co.zw/",
     fromRate: null,
     rateNote: "Contact for delegate rates",
@@ -144,10 +145,12 @@ export function HotelsSection() {
             >
               {/* Image */}
               <div className="relative h-44 overflow-hidden">
-                <img
+                <Image
                   src={hotel.image}
                   alt={hotel.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
 

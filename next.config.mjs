@@ -4,9 +4,11 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "assets.hyatt.com" },
+      { protocol: "https", hostname: "rtgafrica.com" },
+      { protocol: "https", hostname: "images.crestahotels.com" },
     ],
   },
-  // Suppress Prisma binary warnings during build
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.externals = [...(config.externals || []), "@prisma/client"];
