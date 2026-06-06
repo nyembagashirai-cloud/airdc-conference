@@ -23,7 +23,7 @@ export default function RegisterPage() {
           <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-4">Registration</p>
           <h1 className="font-heading font-black text-white text-4xl md:text-5xl mb-4">Register for AIRDC 2026</h1>
           <p className="text-white/70 text-lg max-w-2xl mx-auto">
-            Secure your place at Africa's premier insurance conference. September 2026 · Harare, Zimbabwe.
+            Secure your place at Africa's premier insurance conference. 26–30 September 2026 · Rainbow Towers Hotel, Harare.
           </p>
         </div>
       </div>

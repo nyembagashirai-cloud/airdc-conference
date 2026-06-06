@@ -1,78 +1,99 @@
 "use client";
-import { useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Calendar, MapPin, Download, ArrowRight, ChevronDown } from "lucide-react";
+import { Calendar, MapPin, Download, ArrowRight, ChevronDown, Globe } from "lucide-react";
 
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-hero-gradient" />
-      
-      {/* Pattern overlay */}
-      <div className="absolute inset-0 opacity-5"
-        style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }}
+      {/* Deep blue gradient background */}
+      <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, #0a2d52 0%, #0D3B66 40%, #1D4E89 70%, #1a6b6b 100%)" }} />
+
+      {/* Subtle geometric pattern overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0L80 12v2L54 40h-2zm4 0L80 16v2L58 40h-2zm4 0L80 20v2L62 40h-2zm4 0L80 24v2L66 40h-2zm4 0L80 28v2L70 40h-2zm4 0L80 32v2L74 40h-2zm4 0L80 36v2L78 40h-2zm4 0L80 40v0h-2l2-2v2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }}
       />
 
-      {/* Key Visual */}
-      <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 hidden xl:block">
-        <Image
-          src="/images/kv.png"
-          alt="AIRDC 2026"
-          fill
-          className="object-cover object-left"
-          priority
-        />
-      </div>
+      {/* Gold top accent line */}
+      <div className="absolute top-0 left-0 right-0 h-1" style={{ background: "linear-gradient(90deg, #D4AF37 0%, #F4C542 50%, #D4AF37 100%)" }} />
 
-      {/* Gold accent line */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gold-gradient" />
+      {/* Decorative glow blobs */}
+      <div className="absolute -bottom-32 -right-32 w-[600px] h-[600px] rounded-full opacity-[0.06]" style={{ background: "radial-gradient(circle, #D4AF37 0%, transparent 70%)" }} />
+      <div className="absolute top-20 -left-20 w-[400px] h-[400px] rounded-full opacity-[0.05]" style={{ background: "radial-gradient(circle, #2A9D8F 0%, transparent 70%)" }} />
 
-      <div className="container relative z-10 pt-24 pb-20">
+      <div className="container relative z-10 pt-28 pb-32">
         <div className="max-w-4xl">
+
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8">
-            <span className="w-2 h-2 bg-secondary rounded-full animate-pulse" />
-            <span className="text-white/90 text-sm font-medium">23rd Annual Conference</span>
+          <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#D4AF37" }} />
+            <span className="text-white/90 text-sm font-medium tracking-wide">23rd Annual Conference • Harare, Zimbabwe</span>
           </div>
 
-          {/* Title */}
-          <h1 className="font-heading font-black text-white mb-6 leading-tight">
-            <span className="block text-4xl sm:text-5xl lg:text-6xl xl:text-7xl">AIRDC</span>
-            <span className="block text-4xl sm:text-5xl lg:text-6xl xl:text-7xl">Zimbabwe</span>
-            <span className="block text-2xl sm:text-3xl lg:text-4xl text-secondary mt-2 font-semibold">
-              Conference 2026
+          {/* Main title */}
+          <h1 className="font-heading font-black text-white leading-[1.05] mb-6">
+            <span className="block text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">AIRDC</span>
+            <span className="block text-5xl sm:text-6xl lg:text-7xl xl:text-8xl" style={{ color: "#D4AF37" }}>2026</span>
+            <span className="block text-2xl sm:text-3xl lg:text-4xl text-white/80 font-semibold mt-2 tracking-wide">
+              Zimbabwe Conference
             </span>
           </h1>
 
-          {/* Theme */}
-          <div className="bg-white/10 backdrop-blur-sm border-l-4 border-secondary rounded-r-xl px-6 py-4 mb-8 max-w-3xl">
-            <p className="text-white/60 text-xs uppercase tracking-widest mb-1 font-medium">Conference Theme</p>
-            <p className="text-white font-semibold text-lg sm:text-xl leading-snug">
+          {/* Theme box */}
+          <div className="mb-10 max-w-3xl border-l-4 pl-6 py-3 rounded-r-lg" style={{ borderColor: "#D4AF37", background: "rgba(255,255,255,0.07)" }}>
+            <p className="text-white/50 text-xs uppercase tracking-[0.15em] mb-1.5 font-semibold">Conference Theme</p>
+            <p className="text-white font-medium text-lg sm:text-xl leading-snug">
               "Insurance Resilience in the Face of Geopolitical and Technological Disruption for Developing Markets"
             </p>
           </div>
 
-          {/* Meta */}
+          {/* Meta info */}
           <div className="flex flex-wrap gap-6 mb-10">
-            <div className="flex items-center gap-2 text-white/80">
-              <Calendar size={18} className="text-secondary flex-shrink-0" />
-              <span className="font-medium">September 2026</span>
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,175,55,0.2)" }}>
+                <Calendar size={17} style={{ color: "#D4AF37" }} />
+              </div>
+              <div>
+                <p className="text-white/50 text-xs">Conference Dates</p>
+                <p className="text-white font-semibold">26–30 September 2026</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2 text-white/80">
-              <MapPin size={18} className="text-secondary flex-shrink-0" />
-              <span className="font-medium">Harare, Zimbabwe</span>
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,175,55,0.2)" }}>
+                <MapPin size={17} style={{ color: "#D4AF37" }} />
+              </div>
+              <div>
+                <p className="text-white/50 text-xs">Venue</p>
+                <p className="text-white font-semibold">Rainbow Towers Hotel, Harare</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,175,55,0.2)" }}>
+                <Globe size={17} style={{ color: "#D4AF37" }} />
+              </div>
+              <div>
+                <p className="text-white/50 text-xs">Website</p>
+                <p className="text-white font-semibold">www.airdczim.co.zw</p>
+              </div>
             </div>
           </div>
 
-          {/* CTAs */}
+          {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/register" className="btn-secondary text-base px-8 py-4 group">
-              Register Now
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            <Link
+              href="/register"
+              className="inline-flex items-center justify-center gap-2 font-bold text-base px-8 py-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5"
+              style={{ background: "linear-gradient(135deg, #D4AF37, #F4C542)", color: "#0D3B66", boxShadow: "0 4px 20px rgba(212,175,55,0.4)" }}
+            >
+              Register Now <ArrowRight size={18} />
             </Link>
-            <a href="/brochure.pdf" download className="btn-outline text-base px-8 py-4 group">
+            <a
+              href="/brochure.pdf"
+              download
+              className="inline-flex items-center justify-center gap-2 font-semibold text-base px-8 py-4 rounded-xl border-2 border-white/30 text-white transition-all duration-200 hover:bg-white/10 hover:-translate-y-0.5"
+            >
               <Download size={18} />
               Download Brochure
             </a>
@@ -80,10 +101,23 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50 animate-bounce">
-        <span className="text-xs uppercase tracking-widest">Scroll</span>
-        <ChevronDown size={20} />
+      {/* Stats strip pinned to hero bottom */}
+      <div className="absolute bottom-0 left-0 right-0 border-t border-white/10" style={{ background: "rgba(0,0,0,0.3)", backdropFilter: "blur(12px)" }}>
+        <div className="container">
+          <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-white/10">
+            {[
+              { num: "500+", label: "Delegates" },
+              { num: "40+", label: "Countries" },
+              { num: "30+", label: "Sessions" },
+              { num: "5", label: "Conference Days" },
+            ].map((s) => (
+              <div key={s.label} className="text-center py-5 px-4">
+                <p className="font-heading font-black text-2xl" style={{ color: "#D4AF37" }}>{s.num}</p>
+                <p className="text-white/60 text-xs uppercase tracking-wide mt-0.5">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

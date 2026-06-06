@@ -114,7 +114,7 @@ export function GalleryGrid() {
 
         <div className="mt-10 text-center p-6 bg-white rounded-2xl border border-border">
           <p className="text-foreground font-semibold mb-2">📸 Photos from AIRDC 2026 will be added during and after the conference</p>
-          <p className="text-muted-foreground text-sm">Check back in September 2026 for live conference photography</p>
+          <p className="text-muted-foreground text-sm">Check back after September 2026 for live conference photography</p>
         </div>
       </div>
     </section>

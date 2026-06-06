@@ -52,7 +52,7 @@ export function WelcomeSection() {
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
                   <p className="text-white font-bold text-lg">23rd AIRDC Conference</p>
-                  <p className="text-secondary text-sm">Harare, Zimbabwe • September 2026</p>
+                  <p className="text-secondary text-sm">Rainbow Towers Hotel, Harare • 26–30 September 2026</p>
                 </div>
               </div>
             </div>

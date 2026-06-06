@@ -48,7 +48,7 @@ export default function AboutPage() {
               <div className="space-y-4 text-foreground/70 leading-relaxed">
                 <p>
                   The 23rd Annual Conference of the Association of Insurers and Reinsurers of Developing Countries (AIRDC) 
-                  will be held in Harare, Zimbabwe in September 2026, hosted by the Insurance Council of Zimbabwe.
+                  will be held in Harare, Zimbabwe, 26–30 September 2026, hosted by the Insurance Council of Zimbabwe.
                 </p>
                 <p>
                   This landmark conference brings together insurance professionals, regulators, reinsurers, policymakers, 

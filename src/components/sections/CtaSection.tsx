@@ -17,7 +17,7 @@ export function CtaSection() {
         <div className="flex flex-wrap justify-center gap-6 mb-10 text-white/80">
           <div className="flex items-center gap-2">
             <Calendar size={18} className="text-secondary" />
-            <span>September 2026</span>
+            <span>26–30 September 2026</span>
           </div>
           <div className="flex items-center gap-2">
             <MapPin size={18} className="text-secondary" />
