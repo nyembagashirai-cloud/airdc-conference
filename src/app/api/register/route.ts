@@ -130,7 +130,7 @@ export async function POST(req: NextRequest) {
           organisation: data.organisation,
           jobTitle: data.jobTitle,
           country: data.country,
-          delegateType: data.delegateType,
+          delegateType: data.delegateType as import("@prisma/client").DelegateType,
           workshopChoice: data.workshopChoice,
           dietaryRequirements: data.dietaryRequirements,
           specialNeeds: data.specialNeeds,
