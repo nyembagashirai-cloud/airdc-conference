@@ -1,22 +1,105 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Users, Download, Search, Mail, Building } from "lucide-react";
+import { Users, Download, Search, Mail, Building, X, Plane, FileText, Phone, MapPin } from "lucide-react";
 
 type Registration = {
   id: string;
+  civility?: string;
   firstName: string;
   lastName: string;
   email: string;
+  phone?: string;
+  passportId?: string;
   organisation: string;
+  jobTitle?: string;
+  companyAddress?: string;
   country: string;
   delegateType: string;
+  branchOfActivity?: string;
+  visaInvitation?: string;
+  arrivalDate?: string;
+  arrivalTime?: string;
+  departureDate?: string;
+  departureTime?: string;
+  airlineCompany?: string;
+  flightNumber?: string;
+  confirmationCode?: string;
+  paymentStatus?: string;
   createdAt: string;
 };
+
+function DetailModal({ reg, onClose }: { reg: Registration; onClose: () => void }) {
+  const row = (label: string, value?: string | null) =>
+    value ? (
+      <div className="flex gap-3 py-2 border-b border-gray-100 last:border-0">
+        <span className="text-xs text-gray-500 w-40 flex-shrink-0 pt-0.5">{label}</span>
+        <span className="text-sm text-gray-900 font-medium">{value}</span>
+      </div>
+    ) : null;
+
+  return (
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+        <div className="flex items-start justify-between p-6 border-b border-gray-100">
+          <div>
+            <h2 className="font-bold text-xl text-gray-900">{reg.civility} {reg.firstName} {reg.lastName}</h2>
+            <p className="text-sm text-gray-500 mt-0.5">{reg.jobTitle} · {reg.organisation}</p>
+            {reg.confirmationCode && (
+              <span className="inline-block mt-2 bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full tracking-widest">{reg.confirmationCode}</span>
+            )}
+          </div>
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X size={20} /></button>
+        </div>
+
+        <div className="p-6 space-y-6">
+          {/* Personal */}
+          <div>
+            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Personal Information</h3>
+            {row("Email", reg.email)}
+            {row("Phone", reg.phone)}
+            {row("Passport / ID", reg.passportId)}
+            {row("Country", reg.country)}
+          </div>
+
+          {/* Professional */}
+          <div>
+            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Professional Details</h3>
+            {row("Job Title", reg.jobTitle)}
+            {row("Company", reg.organisation)}
+            {row("Company Address", reg.companyAddress)}
+            {row("Category", reg.delegateType?.replace(/_/g, " "))}
+            {row("Branch of Activity", reg.branchOfActivity)}
+          </div>
+
+          {/* Visa */}
+          <div>
+            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Visa & Travel</h3>
+            {row("Visa Invitation Required", reg.visaInvitation)}
+            {row("Arrival Date", reg.arrivalDate)}
+            {row("Arrival Time", reg.arrivalTime)}
+            {row("Departure Date", reg.departureDate)}
+            {row("Departure Time", reg.departureTime)}
+            {row("Airline", reg.airlineCompany)}
+            {row("Flight Number", reg.flightNumber)}
+          </div>
+
+          {/* Status */}
+          <div>
+            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Registration Status</h3>
+            {row("Payment Status", reg.paymentStatus)}
+            {row("Registered On", new Date(reg.createdAt).toLocaleString())}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminRegistrationsPage() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState<Registration | null>(null);
 
   useEffect(() => {
     fetch("/api/register")
@@ -30,16 +113,23 @@ export default function AdminRegistrationsPage() {
   );
 
   const downloadCSV = () => {
-    const headers = ["First Name", "Last Name", "Email", "Organisation", "Country", "Type", "Date"];
-    const rows = filtered.map(r => [r.firstName, r.lastName, r.email, r.organisation, r.country, r.delegateType, new Date(r.createdAt).toLocaleDateString()]);
+    const headers = ["Civility","First Name","Last Name","Email","Phone","Passport/ID","Organisation","Job Title","Company Address","Country","Category","Branch","Visa Invitation","Arrival Date","Arrival Time","Departure Date","Departure Time","Airline","Flight No","Confirmation Code","Payment Status","Date Registered"];
+    const rows = filtered.map(r => [
+      r.civility,r.firstName,r.lastName,r.email,r.phone,r.passportId,r.organisation,r.jobTitle,
+      r.companyAddress,r.country,r.delegateType,r.branchOfActivity,r.visaInvitation,
+      r.arrivalDate,r.arrivalTime,r.departureDate,r.departureTime,r.airlineCompany,r.flightNumber,
+      r.confirmationCode,r.paymentStatus,new Date(r.createdAt).toLocaleDateString()
+    ].map(v => `"${v ?? ""}"`));
     const csv = [headers, ...rows].map(r => r.join(",")).join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a"); a.href = url; a.download = "registrations.csv"; a.click();
+    const a = document.createElement("a"); a.href = url; a.download = "airdc-registrations.csv"; a.click();
   };
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
+      {selected && <DetailModal reg={selected} onClose={() => setSelected(null)} />}
+
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Registrations</h1>
@@ -75,6 +165,8 @@ export default function AdminRegistrationsPage() {
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by name, email, organisation..." className="w-full border border-gray-200 rounded-lg pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-900/20" />
       </div>
 
+      <p className="text-xs text-gray-400 mb-3">Click any row to view full registration details</p>
+
       {/* Table */}
       {loading ? (
         <div className="text-center py-16 text-gray-400">Loading registrations...</div>
@@ -82,26 +174,27 @@ export default function AdminRegistrationsPage() {
         <div className="text-center py-16 text-gray-400">
           <Users size={40} className="mx-auto mb-3 opacity-30" />
           <p className="font-medium">{search ? "No results found" : "No registrations yet"}</p>
-          <p className="text-sm mt-1">Registrations will appear here as delegates sign up</p>
         </div>
       ) : (
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                {["Name", "Email", "Organisation", "Country", "Type", "Date"].map(h => (
+                {["Name","Email","Organisation","Country","Category","Visa","Payment","Date"].map(h => (
                   <th key={h} className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.map(r => (
-                <tr key={r.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 font-medium text-gray-900">{r.firstName} {r.lastName}</td>
+                <tr key={r.id} className="hover:bg-primary/5 cursor-pointer transition-colors" onClick={() => setSelected(r)}>
+                  <td className="px-4 py-3 font-medium text-gray-900">{r.civility} {r.firstName} {r.lastName}</td>
                   <td className="px-4 py-3 text-gray-600">{r.email}</td>
                   <td className="px-4 py-3 text-gray-600">{r.organisation}</td>
                   <td className="px-4 py-3 text-gray-600">{r.country}</td>
-                  <td className="px-4 py-3"><span className="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded-full">{r.delegateType}</span></td>
+                  <td className="px-4 py-3"><span className="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded-full">{r.delegateType?.replace(/_/g," ")}</span></td>
+                  <td className="px-4 py-3"><span className={`text-xs px-2 py-0.5 rounded-full ${r.visaInvitation === "YES" ? "bg-amber-100 text-amber-800" : "bg-gray-100 text-gray-500"}`}>{r.visaInvitation ?? "—"}</span></td>
+                  <td className="px-4 py-3"><span className={`text-xs px-2 py-0.5 rounded-full ${r.paymentStatus === "PAID" ? "bg-green-100 text-green-800" : "bg-orange-100 text-orange-700"}`}>{r.paymentStatus ?? "PENDING"}</span></td>
                   <td className="px-4 py-3 text-gray-400 text-xs">{new Date(r.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}
