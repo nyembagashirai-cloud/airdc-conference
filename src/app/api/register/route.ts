@@ -105,7 +105,7 @@ async function sendConfirmationEmail(data: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "AIRDC 2026 <noreply@airdczim.co.zw>",
+      from: "AIRDC 2026 <onboarding@resend.dev>",
       to: data.email,
       subject: `Registration Confirmed — AIRDC 2026 · ${data.confirmationCode}`,
       html,
