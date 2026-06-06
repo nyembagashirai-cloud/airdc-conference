@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 
-const handler = NextAuth({
+const { handlers } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -16,13 +16,13 @@ const handler = NextAuth({
         if (!credentials?.email || !credentials?.password) return null;
 
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+          where: { email: String(credentials.email) },
         });
 
         if (!user || !user.password) return null;
 
         // In production: use bcrypt.compare(credentials.password, user.password)
-        if (credentials.password !== user.password) return null;
+        if (String(credentials.password) !== user.password) return null;
 
         return { id: user.id, email: user.email, name: user.name, role: user.role };
       },
@@ -44,4 +44,4 @@ const handler = NextAuth({
   },
 });
 
-export { handler as GET, handler as POST };
+export const { GET, POST } = handlers;

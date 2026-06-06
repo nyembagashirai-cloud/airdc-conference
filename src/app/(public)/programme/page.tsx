@@ -80,10 +80,12 @@ export default function ProgrammePage() {
                 className="flex items-center gap-2 bg-secondary text-primary-dark font-semibold px-5 py-3 rounded-lg hover:bg-secondary-light transition-all text-sm">
                 <Download size={16} /> Download PDF
               </a>
-              <button onClick={() => window.print()}
-                className="flex items-center gap-2 bg-white/10 text-white font-semibold px-5 py-3 rounded-lg hover:bg-white/20 transition-all text-sm border border-white/20">
-                <Printer size={16} /> Print
-              </button>
+              <a
+  href="#"
+  className="flex items-center gap-2 bg-white/10 text-white font-semibold px-5 py-3 rounded-lg hover:bg-white/20 transition-all text-sm border border-white/20"
+>
+  <Printer size={16} /> Print
+</a>
             </div>
           </div>
         </div>
