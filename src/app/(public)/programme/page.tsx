@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Download, Clock, MapPin, Users } from "lucide-react";
+import { Download, Clock, MapPin, Users, CalendarClock } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Programme",
@@ -61,15 +61,14 @@ export default async function ProgrammePage() {
         </div>
       </div>
 
-      {/* Legend */}
-      <div className="bg-white border-b border-border py-4">
-        <div className="container flex flex-wrap gap-4 text-xs">
-          {Object.entries(typeStyles).map(([key, val]) => (
-            <div key={key} className="flex items-center gap-1.5">
-              <span className={`w-2.5 h-2.5 rounded-full ${val.dot}`} />
-              <span className="text-muted-foreground font-medium">{val.label}</span>
-            </div>
-          ))}
+      {/* Coming soon notice */}
+      <div className="bg-secondary/10 border-b border-secondary/20 py-4">
+        <div className="container flex items-center gap-3">
+          <CalendarClock size={18} className="text-secondary flex-shrink-0" />
+          <p className="text-sm font-medium text-foreground">
+            <span className="font-bold text-secondary">Programme in progress —</span>{" "}
+            The full conference programme will be announced soon. Check back for session times, speakers and workshops.
+          </p>
         </div>
       </div>
 
@@ -77,16 +76,22 @@ export default async function ProgrammePage() {
         <div className="container space-y-12">
           {grouped.length === 0 ? (
             <div className="text-center py-20 bg-white rounded-2xl border border-border shadow-card">
-              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
-                <span className="text-3xl">📋</span>
+              <div className="w-20 h-20 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-6">
+                <CalendarClock size={36} className="text-secondary" />
               </div>
-              <h2 className="font-heading font-bold text-primary text-2xl mb-3">Programme Coming Soon</h2>
-              <p className="text-muted-foreground max-w-md mx-auto">
-                The full conference programme will be published here soon. Download the brochure for an overview of planned sessions.
+              <h2 className="font-heading font-bold text-primary text-2xl mb-3">Final Programme to Be Announced Soon</h2>
+              <p className="text-muted-foreground max-w-lg mx-auto leading-relaxed">
+                Our team is finalising an exceptional programme of keynote addresses, panel discussions, workshops, and networking sessions.
+                The full schedule will be published here ahead of the conference.
               </p>
-              <a href="/brochure.pdf" className="btn-primary mt-6 inline-flex items-center gap-2">
-                <Download size={16} /> Download Brochure
-              </a>
+              <div className="flex flex-wrap gap-3 justify-center mt-6">
+                <a href="/brochure.pdf" className="btn-primary inline-flex items-center gap-2">
+                  <Download size={16} /> Download Brochure
+                </a>
+                <a href="/register" className="btn-secondary inline-flex items-center gap-2">
+                  Register Now
+                </a>
+              </div>
             </div>
           ) : (
             grouped.map((day) => (
