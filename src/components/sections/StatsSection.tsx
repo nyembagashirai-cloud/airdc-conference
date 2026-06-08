@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 const stats = [
-  { value: 23, suffix: "rd", label: "Annual Edition", desc: "Years of excellence" },
+  { value: 24, suffix: "th", label: "Annual Edition", desc: "Years of excellence" },
   { value: 500, suffix: "+", label: "Delegates", desc: "Industry professionals" },
-  { value: 40, suffix: "+", label: "Countries", desc: "Developing markets" },
-  { value: 30, suffix: "+", label: "Sessions", desc: "Panels & workshops" },
+  { value: 28, suffix: "", label: "Countries", desc: "Member countries worldwide" },
+  { value: 121, suffix: "", label: "Members", desc: "Full & associate members" },
 ];
 
 function Counter({ target, suffix }: { target: number; suffix: string }) {

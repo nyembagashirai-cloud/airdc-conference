@@ -17,7 +17,7 @@ export function AboutSection() {
           <p className="section-subtitle mx-auto">
             The Association of Insurers and Reinsurers of Developing Countries (AIRDC) is the premier 
             body representing the insurance industry across developing nations, bringing together 
-            stakeholders from over 40 countries.
+            stakeholders from 28 member countries across Asia, Africa, the Middle East, North America and Europe.
           </p>
         </div>
 

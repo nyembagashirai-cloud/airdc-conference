@@ -69,8 +69,8 @@ export function HeroSection() {
                 <Globe size={17} style={{ color: "#C8941C" }} />
               </div>
               <div>
-                <p className="text-white/50 text-xs">Delegates From</p>
-                <p className="text-white font-semibold">50+ Countries</p>
+                <p className="text-white/50 text-xs">Member Countries</p>
+                <p className="text-white font-semibold">28 Countries</p>
               </div>
             </div>
           </div>
