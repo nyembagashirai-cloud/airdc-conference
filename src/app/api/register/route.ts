@@ -118,8 +118,6 @@ async function sendConfirmationEmail(data: {
     '<p style="color:rgba(255,255,255,.6);font-size:12px;margin:0">2026 AIRDC &mdash; 24th Annual Conference &mdash; Harare, Zimbabwe</p>' +
     '<p style="color:rgba(255,255,255,.4);font-size:11px;margin:4px 0 0">www.airdczim.co.zw</p></div></div>';
 
-  const fee = getRegistrationFee(data.delegateType);
-  const isComplimentary = fee === "0.00";
   const invoicePdfBuffer = await generateInvoicePdf({
     fullName: (data.civility ? data.civility + " " : "") + data.firstName + " " + data.lastName,
     email: data.email,
