@@ -96,10 +96,10 @@ export function HeroSection() {
           </div>
 
           {/* Organiser Logos */}
-          <div className="inline-block rounded-2xl px-6 py-4 backdrop-blur-sm border border-white/15"
-            style={{ background: "rgba(255,255,255,0.08)" }}>
-            <p className="text-white/50 text-xs uppercase tracking-[0.15em] font-semibold mb-3">Organised by</p>
-            <div className="relative h-14 w-[340px] sm:w-[420px]">
+          <div className="inline-block rounded-2xl px-8 py-5 backdrop-blur-sm border border-white/20"
+            style={{ background: "rgba(255,255,255,0.12)" }}>
+            <p className="text-white/60 text-xs uppercase tracking-[0.15em] font-semibold mb-4">Organised by</p>
+            <div className="relative h-20 w-[420px] sm:w-[560px]">
               <Image
                 src="/images/organiser-logos.png"
                 alt="24th AIRDC Conference | AIRDC | Insurance Council of Zimbabwe"
