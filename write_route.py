@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+content = r'''import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 export const dynamic = "force-dynamic";
@@ -315,3 +315,8 @@ export async function GET() {
     return NextResponse.json({ registrations: [] });
   }
 }
+'''
+
+with open('src/app/api/register/route.ts', 'w', encoding='utf-8') as f:
+    f.write(content)
+print('Written:', len(content), 'chars')

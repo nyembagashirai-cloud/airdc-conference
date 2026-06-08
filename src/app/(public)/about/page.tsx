@@ -256,7 +256,7 @@ export default function AboutPage() {
           <div className="mt-8 bg-secondary/10 border border-secondary/30 rounded-2xl p-6 text-left">
             <p className="text-xs text-secondary font-bold uppercase tracking-widest mb-2">Next</p>
             <h3 className="font-heading font-black text-primary text-xl">24th AIRDC Conference</h3>
-            <p className="text-foreground/80 font-medium">Harare, Zimbabwe &middot; 27–30 September 2026</p>
+            <p className="text-foreground/80 font-medium">Harare, Zimbabwe &middot; 27&ndash;30 September 2026</p>
             <p className="text-muted-foreground text-sm mt-1">Rainbow Towers Hotel &amp; Conference Centre (HICC)</p>
           </div>
         </div>

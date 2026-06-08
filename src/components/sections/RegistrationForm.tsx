@@ -82,6 +82,18 @@ const delegateTypes = [
   { value: "MEDIA", label: "Media (approved by AIRDC)" },
 ];
 
+const feeMap: Record<string, string> = {
+  AIRDC_MEMBER: "$350 USD",
+  SUPERVISORY_AUTHORITY_MEMBER: "$350 USD",
+  NATIONAL_ASSOCIATION: "$350 USD",
+  NON_MEMBER: "$500 USD",
+  SUPERVISORY_AUTHORITY_NON_MEMBER: "$500 USD",
+  SPONSOR: "Complimentary (per sponsorship agreement)",
+  SPEAKER: "Complimentary (per invitation)",
+  ORGANISER: "Complimentary",
+  MEDIA: "Contact us — media@airdczim.co.zw",
+};
+
 const branches = [
   "Insurance","Reinsurance","Insurance Broker","Reinsurance Broker",
   "Association","Supervisory Authority","Public Institution","Other",
@@ -97,10 +109,13 @@ export function RegistrationForm() {
   const [confirmationCode, setConfirmationCode] = useState("");
   const [error, setError] = useState("");
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { visaInvitation: "NO" },
   });
+
+  const selectedDelegateType = watch("delegateType");
+  const displayFee = selectedDelegateType ? feeMap[selectedDelegateType] : null;
 
   const onSubmit = async (data: FormData) => {
     setSubmitting(true);
@@ -142,7 +157,7 @@ export function RegistrationForm() {
           </div>
         )}
         <p className="text-foreground/70 mb-2 mt-4">
-          A confirmation email has been sent to your inbox with full details.
+          A confirmation email with your proforma invoice has been sent to your inbox.
         </p>
         <p className="text-sm text-muted-foreground">
           Our team will contact you with payment instructions within 48 hours.
@@ -251,6 +266,17 @@ export function RegistrationForm() {
             </select>
             {errors.delegateType && <p className="text-red-500 text-xs mt-1">{errors.delegateType.message}</p>}
           </div>
+          {displayFee && (
+            <div className="mt-4 flex items-center justify-between bg-primary/5 border border-primary/20 rounded-xl px-5 py-4">
+              <div>
+                <p className="text-xs text-muted-foreground uppercase tracking-widest mb-0.5">Registration Fee</p>
+                <p className="font-heading font-black text-primary text-2xl">{displayFee}</p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
+                <CheckCircle2 size={20} className="text-secondary" />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Visa & Travel */}
