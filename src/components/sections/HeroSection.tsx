@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar, MapPin, Download, ArrowRight, ChevronDown, Globe } from "lucide-react";
 
 export function HeroSection() {
@@ -76,7 +77,7 @@ export function HeroSection() {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 mb-12">
             <Link
               href="/register"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-base transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
@@ -92,6 +93,20 @@ export function HeroSection() {
             >
               <Download size={18} /> Download Brochure
             </a>
+          </div>
+
+          {/* Organiser Logos */}
+          <div className="inline-block rounded-2xl px-6 py-4 backdrop-blur-sm border border-white/15"
+            style={{ background: "rgba(255,255,255,0.08)" }}>
+            <p className="text-white/50 text-xs uppercase tracking-[0.15em] font-semibold mb-3">Organised by</p>
+            <div className="relative h-14 w-[340px] sm:w-[420px]">
+              <Image
+                src="/images/organiser-logos.png"
+                alt="24th AIRDC Conference | AIRDC | Insurance Council of Zimbabwe"
+                fill
+                className="object-contain object-left"
+              />
+            </div>
           </div>
         </div>
       </div>

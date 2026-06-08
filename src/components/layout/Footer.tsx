@@ -26,11 +26,11 @@ export function Footer() {
               Building resilience across developing markets.
             </p>
             <div className="flex gap-3">
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.linkedin.com/company/insurance-council-of-zimbabwe" target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 rounded-lg bg-white/10 hover:bg-secondary flex items-center justify-center transition-colors">
                 <Linkedin size={16} />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://x.com/InsuranceZw" target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 rounded-lg bg-white/10 hover:bg-secondary flex items-center justify-center transition-colors">
                 <Twitter size={16} />
               </a>
@@ -67,7 +67,7 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin size={16} className="text-secondary mt-0.5 flex-shrink-0" />
                 <span className="text-white/70 text-sm">
-                  Harare International Conference Centre<br />
+                  Rainbow Towers Hotel<br />
                   Harare, Zimbabwe
                 </span>
               </li>
@@ -101,6 +101,21 @@ export function Footer() {
               className="btn-outline w-full text-center block text-sm">
               Enquire
             </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Organiser logos bar */}
+      <div className="border-t border-white/10">
+        <div className="container py-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <p className="text-white/40 text-xs uppercase tracking-widest">Organised by</p>
+          <div className="relative h-10 w-[300px] sm:w-[380px]">
+            <Image
+              src="/images/organiser-logos.png"
+              alt="AIRDC | Insurance Council of Zimbabwe"
+              fill
+              className="object-contain brightness-0 invert opacity-60"
+            />
           </div>
         </div>
       </div>
