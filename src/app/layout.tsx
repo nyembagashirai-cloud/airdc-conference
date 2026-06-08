@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import { Inter, Poppins, Montserrat } from "next/font/google";
 import "./globals.css";
 
@@ -85,6 +86,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${poppins.variable} ${montserrat.variable}`}>
       <body className="font-sans antialiased bg-white text-foreground">
         {children}
+        <Analytics />
       </body>
     </html>
   );
