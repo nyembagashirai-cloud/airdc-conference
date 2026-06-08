@@ -3,7 +3,7 @@ import { Download, Clock, MapPin, Users, CalendarClock } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Programme",
-  description: "Full conference programme for the 23rd AIRDC Conference 2026.",
+  description: "Full conference programme for the 24th AIRDC Conference 2026.",
 };
 
 const typeStyles: Record<string, { bg: string; border: string; dot: string; label: string }> = {

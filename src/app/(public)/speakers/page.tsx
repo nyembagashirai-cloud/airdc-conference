@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Speakers",
-  description: "Meet the world-class speakers at the 23rd AIRDC Conference 2026.",
+  description: "Meet the world-class speakers at the 24th AIRDC Conference 2026.",
 };
 
 const typeColors: Record<string, string> = {

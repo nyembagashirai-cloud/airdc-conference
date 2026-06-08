@@ -154,7 +154,7 @@ export function RegistrationForm() {
   return (
     <div className="card-premium p-8">
       <h2 className="font-heading font-bold text-primary text-2xl mb-2">Delegate Registration</h2>
-      <p className="text-muted-foreground text-sm mb-8">23rd AIRDC Annual Conference · 27–30 September 2026 · Harare, Zimbabwe</p>
+      <p className="text-muted-foreground text-sm mb-8">24th AIRDC Annual Conference · 27–30 September 2026 · Harare, Zimbabwe</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8" noValidate>
 
@@ -303,7 +303,7 @@ export function RegistrationForm() {
             <input type="checkbox" {...register("terms")} className="mt-1 accent-primary w-4 h-4 flex-shrink-0" />
             <span className="text-sm text-foreground/80">
               I confirm that the information provided is accurate and I agree to the{" "}
-              <a href="/contact" className="text-primary underline">terms and conditions</a> of the 23rd AIRDC Annual Conference.
+              <a href="/contact" className="text-primary underline">terms and conditions</a> of the 24th AIRDC Annual Conference.
             </span>
           </label>
           {errors.terms && <p className="text-red-500 text-xs mt-2">{errors.terms.message}</p>}

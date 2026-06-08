@@ -63,7 +63,7 @@ export function Navbar() {
                 isDark ? "text-white" : "text-primary")}>AIRDC</p>
               <p className={cn("text-xs font-medium",
                 isDark ? "text-secondary-light" : "text-secondary")}>
-                23rd Annual Conference 2026
+                24th Annual Conference 2026
               </p>
             </div>
           </Link>
@@ -124,9 +124,4 @@ export function Navbar() {
                 {link.label}
               </Link>
                         ))}
-          </div>
-        </div>
-      )}
-    </header>
-  );
-}
+        

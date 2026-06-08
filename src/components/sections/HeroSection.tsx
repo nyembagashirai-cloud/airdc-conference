@@ -24,7 +24,7 @@ export function HeroSection() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#C8941C" }} />
-            <span className="text-white/90 text-sm font-medium tracking-wide">23rd Annual Conference • Harare, Zimbabwe</span>
+            <span className="text-white/90 text-sm font-medium tracking-wide">24th Annual Conference • Harare, Zimbabwe</span>
           </div>
 
           {/* Main title */}

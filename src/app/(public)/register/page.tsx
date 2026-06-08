@@ -4,7 +4,7 @@ import { CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Register",
-  description: "Register for the 23rd AIRDC Conference 2026 in Harare, Zimbabwe.",
+  description: "Register for the 24th AIRDC Conference 2026 in Harare, Zimbabwe.",
 };
 
 const fees = [

@@ -4,7 +4,7 @@ import { CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Sponsors & Partners",
-  description: "Sponsorship packages and partner opportunities at the 23rd AIRDC Conference 2026.",
+  description: "Sponsorship packages and partner opportunities at the 24th AIRDC Conference 2026.",
 };
 
 const packages = [

@@ -23,7 +23,7 @@ export function WhyAttendSection() {
             6 Compelling Reasons to Join Us
           </h2>
           <p className="text-white/70 text-lg">
-            The 23rd AIRDC Conference is the unmissable event for insurance professionals in developing markets.
+            The 24th AIRDC Conference is the unmissable event for insurance professionals in developing markets.
           </p>
         </div>
 

@@ -61,7 +61,7 @@ export default async function AdminDashboard() {
     <div>
       <div className="mb-8">
         <h1 className="font-heading font-bold text-2xl text-foreground">Dashboard</h1>
-        <p className="text-muted-foreground mt-1">AIRDC 23rd Conference 2026 — Admin Overview</p>
+        <p className="text-muted-foreground mt-1">AIRDC 24th Conference 2026 — Admin Overview</p>
       </div>
 
       {/* Stats */}

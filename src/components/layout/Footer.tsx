@@ -18,7 +18,7 @@ export function Footer() {
               </div>
               <div>
                 <p className="font-heading font-bold text-white">AIRDC</p>
-                <p className="text-secondary text-sm">23rd Conference 2026</p>
+                <p className="text-secondary text-sm">24th Conference 2026</p>
               </div>
             </div>
             <p className="text-white/70 text-sm leading-relaxed mb-6">
@@ -109,7 +109,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-white/50 text-sm">
-            © 2026 AIRDC. 23rd Annual Conference. All rights reserved.
+            © 2026 AIRDC. 24th Annual Conference. All rights reserved.
           </p>
           <div className="flex gap-6">
             <Link href="/privacy" className="text-white/50 hover:text-white text-xs transition-colors">Privacy Policy</Link>
