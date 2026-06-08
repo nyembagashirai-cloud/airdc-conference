@@ -220,4 +220,107 @@ export function RegistrationForm() {
               {errors.jobTitle && <p className="text-red-500 text-xs mt-1">{errors.jobTitle.message}</p>}
             </div>
             <div>
-     
+                   <label className={labelClass}>Company / Organisation *</label>
+              <input {...register("organisation")} className={inputClass} placeholder="Company name" />
+              {errors.organisation && <p className="text-red-500 text-xs mt-1">{errors.organisation.message}</p>}
+            </div>
+          </div>
+          <div>
+            <label className={labelClass}>Company Address *</label>
+            <input {...register("companyAddress")} className={inputClass} placeholder="Full company address" />
+            {errors.companyAddress && <p className="text-red-500 text-xs mt-1">{errors.companyAddress.message}</p>}
+          </div>
+          <div>
+            <label className={labelClass}>Branch of Activity *</label>
+            <select {...register("branchOfActivity")} className={inputClass}>
+              <option value="">Select branch...</option>
+              {branches.map(b => <option key={b} value={b}>{b}</option>)}
+            </select>
+            {errors.branchOfActivity && <p className="text-red-500 text-xs mt-1">{errors.branchOfActivity.message}</p>}
+          </div>
+        </div>
+
+        {/* Delegate Category */}
+        <div>
+          <h3 className={sectionHeadingClass}>Delegate Category</h3>
+          <div>
+            <label className={labelClass}>Category *</label>
+            <select {...register("delegateType")} className={inputClass}>
+              <option value="">Select category...</option>
+              {delegateTypes.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
+            </select>
+            {errors.delegateType && <p className="text-red-500 text-xs mt-1">{errors.delegateType.message}</p>}
+          </div>
+        </div>
+
+        {/* Visa & Travel */}
+        <div>
+          <h3 className={sectionHeadingClass}>Visa & Travel Information</h3>
+          <div className="mb-4">
+            <label className={labelClass}>Do you require a visa invitation letter? *</label>
+            <div className="flex gap-6">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" {...register("visaInvitation")} value="YES" className="accent-primary" />
+                <span className="text-sm">Yes</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" {...register("visaInvitation")} value="NO" className="accent-primary" />
+                <span className="text-sm">No</span>
+              </label>
+            </div>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label className={labelClass}>Arrival Date</label>
+              <input type="date" {...register("arrivalDate")} className={inputClass} />
+            </div>
+            <div>
+              <label className={labelClass}>Arrival Time</label>
+              <input type="time" {...register("arrivalTime")} className={inputClass} />
+            </div>
+            <div>
+              <label className={labelClass}>Departure Date</label>
+              <input type="date" {...register("departureDate")} className={inputClass} />
+            </div>
+            <div>
+              <label className={labelClass}>Departure Time</label>
+              <input type="time" {...register("departureTime")} className={inputClass} />
+            </div>
+            <div>
+              <label className={labelClass}>Airline Company</label>
+              <input {...register("airlineCompany")} className={inputClass} placeholder="e.g. Ethiopian Airlines" />
+            </div>
+            <div>
+              <label className={labelClass}>Flight Number</label>
+              <input {...register("flightNumber")} className={inputClass} placeholder="e.g. ET301" />
+            </div>
+          </div>
+        </div>
+
+        {/* Terms */}
+        <div>
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" {...register("terms")} className="mt-1 accent-primary w-4 h-4 flex-shrink-0" />
+            <span className="text-sm text-foreground/80">
+              I confirm that the information provided is accurate and I agree to the{" "}
+              <a href="/contact" className="text-primary underline">terms and conditions</a> of the 23rd AIRDC Annual Conference.
+            </span>
+          </label>
+          {errors.terms && <p className="text-red-500 text-xs mt-2">{errors.terms.message}</p>}
+        </div>
+
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm">{error}</div>
+        )}
+
+        <button
+          type="submit"
+          disabled={submitting}
+          className="w-full btn-primary py-4 text-base font-bold flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {submitting ? <><Loader2 size={18} className="animate-spin" /> Submitting...</> : "Submit Registration"}
+        </button>
+      </form>
+    </div>
+  );
+}

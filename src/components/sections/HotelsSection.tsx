@@ -179,4 +179,31 @@ export function HotelsSection() {
                     </div>
                   )}
                 </div>
+              </div>              </div>
+
+              {/* Card body */}
+              <div className="p-4 flex flex-col flex-1">
+                <div className="flex items-start justify-between gap-2 mb-1">
+                  <h3 className="font-heading font-bold text-foreground text-base leading-snug group-hover:text-primary transition-colors">{hotel.name}</h3>
+                  <StarRating count={hotel.stars} />
+                </div>
+                <p className="text-muted-foreground text-xs mb-3">{hotel.address}</p>
+
+                <div className="mt-auto pt-3 border-t border-border flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">{hotel.rooms} rooms</span>
+                  <span className="text-xs font-semibold text-primary flex items-center gap-1">
+                    Book Now <ExternalLink size={11} />
+                  </span>
+                </div>
               </div>
+            </a>
+          ))}
+        </div>
+
+        <p className="text-center text-muted-foreground text-sm mt-8">
+          All accommodation costs are at the delegate&apos;s own expense. Early booking recommended — rooms are limited.
+        </p>
+      </div>
+    </section>
+  );
+}
