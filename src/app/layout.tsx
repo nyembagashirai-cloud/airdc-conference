@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://airdc2026.org",
+    url: "https://www.airdczim.co.zw",
     siteName: "24th AIRDC Conference 2026",
     title: "24th AIRDC Conference 2026 | Zimbabwe",
     description:

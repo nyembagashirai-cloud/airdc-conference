@@ -38,7 +38,7 @@ export function ContactForm() {
       if (!res.ok) throw new Error();
       setSubmitted(true);
     } catch {
-      setError("Failed to send message. Please email us directly at info@airdc2026.org");
+      setError("Failed to send message. Please email us directly at info@airdczim.co.zw");
     } finally {
       setSubmitting(false);
     }

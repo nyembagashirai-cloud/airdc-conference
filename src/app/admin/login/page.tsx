@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-              placeholder="admin@airdc2026.org"
+              placeholder="admin@airdczim.co.zw"
             />
           </div>
           <div>
@@ -97,10 +97,10 @@ export default function AdminLoginPage() {
         <p className="text-center text-xs text-muted-foreground mt-6">
           For access, contact{" "}
           <a
-            href="mailto:admin@airdc2026.org"
+            href="mailto:admin@airdczim.co.zw"
             className="text-primary underline"
           >
-            admin@airdc2026.org
+            admin@airdczim.co.zw
           </a>
         </p>
       </div>

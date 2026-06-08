@@ -8,10 +8,10 @@ export const metadata: Metadata = {
 };
 
 const contacts = [
-  { name: "Conference Secretariat", role: "General Enquiries", email: "info@airdc2026.org", phone: "+263 4 123 456" },
-  { name: "Registration Team", role: "Delegate Registration", email: "registration@airdc2026.org", phone: "+263 4 123 457" },
-  { name: "Sponsorship Team", role: "Sponsorship & Exhibition", email: "sponsorship@airdc2026.org", phone: "+263 4 123 458" },
-  { name: "Media Relations", role: "Press & Media", email: "media@airdc2026.org", phone: "+263 4 123 459" },
+  { name: "Conference Secretariat", role: "General Enquiries", email: "info@airdczim.co.zw", phone: "+263 4 123 456" },
+  { name: "Registration Team", role: "Delegate Registration", email: "registration@airdczim.co.zw", phone: "+263 4 123 457" },
+  { name: "Sponsorship Team", role: "Sponsorship & Exhibition", email: "sponsorship@airdczim.co.zw", phone: "+263 4 123 458" },
+  { name: "Media Relations", role: "Press & Media", email: "media@airdczim.co.zw", phone: "+263 4 123 459" },
 ];
 
 export default function ContactPage() {

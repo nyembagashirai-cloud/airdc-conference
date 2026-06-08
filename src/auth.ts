@@ -22,7 +22,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!credentials?.email || !credentials?.password) return null;
 
         const adminEmail =
-          process.env.ADMIN_EMAIL ?? "admin@airdc2026.org";
+          process.env.ADMIN_EMAIL ?? "admin@airdczim.co.zw";
         const adminPassword =
           process.env.ADMIN_PASSWORD ?? "airdc2026!";
 

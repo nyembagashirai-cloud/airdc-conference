@@ -7,11 +7,11 @@ async function main() {
 
   // Create admin user
   await prisma.user.upsert({
-    where: { email: "admin@airdc2026.org" },
+    where: { email: "admin@airdczim.co.zw" },
     update: {},
     create: {
       name: "AIRDC Admin",
-      email: "admin@airdc2026.org",
+      email: "admin@airdczim.co.zw",
       password: "airdc2026!", // Change in production!
       role: "SUPER_ADMIN",
     },
