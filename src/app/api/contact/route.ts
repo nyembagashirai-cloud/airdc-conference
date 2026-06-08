@@ -47,4 +47,15 @@ export async function POST(req: NextRequest) {
         },
       });
     } else {
-   
+         return NextResponse.json({ error: "Database not available" }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: error.errors }, { status: 400 });
+    }
+    console.error("Contact error:", error);
+    return NextResponse.json({ error: "Submission failed" }, { status: 500 });
+  }
+}

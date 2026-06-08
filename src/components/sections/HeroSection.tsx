@@ -66,4 +66,41 @@ export function HeroSection() {
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,175,55,0.2)" }}>
-                <Globe size={17} s
+                <Globe size={17} style={{ color: "#C8941C" }} />
+              </div>
+              <div>
+                <p className="text-white/50 text-xs">Delegates From</p>
+                <p className="text-white font-semibold">50+ Countries</p>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href="/register"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-base transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+              style={{ background: "linear-gradient(135deg, #C8941C, #E8B832)", color: "#0F3018" }}
+            >
+              Register Now <ArrowRight size={18} />
+            </Link>
+            <a
+              href="/brochure.pdf"
+              target="_blank"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-base border-2 text-white transition-all duration-200 hover:bg-white/10 backdrop-blur-sm"
+              style={{ borderColor: "rgba(255,255,255,0.3)" }}
+            >
+              <Download size={18} /> Download Brochure
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60 animate-bounce">
+        <span className="text-white/60 text-xs uppercase tracking-widest">Scroll</span>
+        <ChevronDown size={20} className="text-white/60" />
+      </div>
+    </section>
+  );
+}
