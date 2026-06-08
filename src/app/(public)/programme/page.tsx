@@ -129,4 +129,19 @@ export default async function ProgrammePage() {
                           {session.description && (
                             <p className="text-muted-foreground text-xs mt-2 leading-relaxed">{session.description}</p>
                           )}
-     
+                             </div>
+                        <span className={`self-start text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full border ${style.bg} ${style.border} flex-shrink-0`}>
+                          {style.label}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}

@@ -92,4 +92,9 @@ export default async function ArticlePage({ params }: Props) {
             <h3 className="font-heading font-bold text-primary mb-2">Stay Updated</h3>
             <p className="text-muted-foreground text-sm mb-4">Get the latest AIRDC 2026 news and announcements</p>
             <Link href="/contact" className="btn-primary text-sm">Contact Us</Link>
-      
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
