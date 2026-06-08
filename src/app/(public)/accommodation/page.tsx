@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Star, ExternalLink, MapPin, Mail, Info, CheckCircle2 } from "lucide-react";
+import { Star, ExternalLink, MapPin, Mail, Info, CheckCircle2, Phone, User } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Accommodation",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const hotels = [
   {
     name: "Rainbow Towers Hotel & Conference Centre",
-    stars: 5,
+    stars: 4,
     address: "Pennefather Avenue, Harare",
     badge: "Conference Venue",
     featured: true,
@@ -20,6 +20,7 @@ const hotels = [
     rateType: "B&B",
     description: "The official conference venue — home to the Harare International Conference Centre (HICC). Delegates staying here will be steps from all plenary sessions and networking events. The hotel offers stunning city views and on-site facilities including an adventure park.",
     features: ["Official conference venue (HICC)", "City views", "On-site adventure park", "Wi-Fi"],
+    contact: { name: "Fadzai Dube", phone: "+263 777 305 932", email: "fadzai@africansun.com" },
   },
   {
     name: "Holiday Inn Harare",
@@ -33,6 +34,7 @@ const hotels = [
     rateType: "B&B",
     description: "An internationally recognised 4-star hotel in central Harare. Visit the hotel website for full details on rooms and facilities.",
     features: null,
+    contact: null,
   },
   {
     name: "Cresta Jameson Hotel",
@@ -46,11 +48,12 @@ const hotels = [
     rateType: "B&B",
     description: "Harare's first four-star hotel (opened 1958), set in the heart of the central business district. Features a rooftop pool with city views, a gym, and an Activities Desk for arranging local excursions. Near the National Gallery of Zimbabwe.",
     features: ["Rooftop pool", "Gym", "Wi-Fi", "Mini bar", "Air conditioning", "Satellite TV", "Activities Desk"],
+    contact: { name: "Anyway", phone: "+263 773 920 404", email: "fom@jameson.cresta.co.zw" },
   },
   {
     name: "N1 Hotel Harare",
     stars: 3,
-    address: "126 Samora Machel Avenue, Harare (also at Rotten Row)",
+    address: "Rotten Row, Harare",
     badge: "Budget-Friendly",
     featured: false,
     image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
@@ -59,6 +62,7 @@ const hotels = [
     rateType: "Bed only",
     description: "A practical, affordable option with two Harare locations (Samora Machel Avenue and Rotten Row). All rooms include en-suite bathroom, room safe, satellite TV, Wi-Fi, work area, and tea & coffee station. Note: standard rooms have ceiling fans; superior and executive rooms are air-conditioned.",
     features: ["En-suite bathroom", "Room safe", "Satellite TV", "Wi-Fi", "Work area", "Tea & coffee", "AC in superior/executive rooms"],
+    contact: { name: "Reservations", phone: "+263 777 604 291", email: "rottenrow@n1hotel.co.zw" },
   },
   {
     name: "Cresta Lodge Harare",
@@ -72,6 +76,7 @@ const hotels = [
     rateType: null,
     description: "Set in tranquil garden surroundings on the outskirts of Harare, near Mukuvisi Woodlands. Recently refurbished to modern standards. Rooms feature Wi-Fi, air conditioning, mini bar, satellite TV, and safe. Contact the hotel directly for AIRDC 2026 delegate rates.",
     features: ["Garden setting", "Recently refurbished", "Wi-Fi", "Air conditioning", "Mini bar", "Satellite TV", "In-room safe"],
+    contact: { name: "Clifford Kudubya", phone: "+263 777 651 097", email: "fom@lodge.cresta.co.zw" },
   },
 ];
 
@@ -146,7 +151,6 @@ export default function AccommodationPage() {
                       <h2 className="font-heading font-black text-primary text-xl leading-tight">{hotel.name}</h2>
                       <StarRating count={hotel.stars} />
                     </div>
-                    {/* Rate box */}
                     {hotel.singleRate ? (
                       <div className="text-right flex-shrink-0 bg-primary/5 rounded-xl px-4 py-3 border border-primary/10">
                         <p className="text-xs text-muted-foreground">{hotel.rateType}</p>
@@ -169,14 +173,34 @@ export default function AccommodationPage() {
 
                   <p className="text-foreground/75 text-sm leading-relaxed mb-4">{hotel.description}</p>
 
-                  {/* Features — only shown if verified */}
                   {hotel.features && (
-                    <div className="flex flex-wrap gap-2 mb-5">
+                    <div className="flex flex-wrap gap-2 mb-4">
                       {hotel.features.map((f) => (
                         <span key={f} className="flex items-center gap-1 text-xs bg-muted text-foreground/70 px-2.5 py-1 rounded-full">
                           <CheckCircle2 size={10} className="text-primary" /> {f}
                         </span>
                       ))}
+                    </div>
+                  )}
+
+                  {/* Contact details */}
+                  {hotel.contact && (
+                    <div className="bg-primary/5 border border-primary/10 rounded-xl px-4 py-3 mb-4">
+                      <p className="text-xs font-bold text-primary uppercase tracking-wide mb-2">Direct Contact — Quote &quot;AIRDC 2026&quot;</p>
+                      <div className="flex flex-wrap gap-x-6 gap-y-1.5">
+                        <span className="flex items-center gap-1.5 text-sm text-foreground/80">
+                          <User size={13} className="text-primary flex-shrink-0" />
+                          <span className="font-medium">{hotel.contact.name}</span>
+                        </span>
+                        <a href={`tel:${hotel.contact.phone.replace(/\s/g, "")}`} className="flex items-center gap-1.5 text-sm text-foreground/80 hover:text-primary transition-colors">
+                          <Phone size={13} className="text-primary flex-shrink-0" />
+                          {hotel.contact.phone}
+                        </a>
+                        <a href={`mailto:${hotel.contact.email}`} className="flex items-center gap-1.5 text-sm text-foreground/80 hover:text-primary transition-colors">
+                          <Mail size={13} className="text-primary flex-shrink-0" />
+                          {hotel.contact.email}
+                        </a>
+                      </div>
                     </div>
                   )}
 
@@ -202,7 +226,7 @@ export default function AccommodationPage() {
 
       {/* Rates Summary Table */}
       <section className="section-padding bg-white">
-        <div className="container max-w-3xl mx-auto">
+        <div className="container max-w-4xl mx-auto">
           <h2 className="font-heading font-bold text-primary text-2xl mb-6 text-center">Delegate Rate Summary</h2>
           <div className="rounded-2xl border border-border overflow-hidden shadow-card">
             <table className="w-full text-sm">
@@ -210,7 +234,8 @@ export default function AccommodationPage() {
                 <tr className="bg-primary text-white">
                   <th className="text-left px-5 py-3 font-semibold">Hotel</th>
                   <th className="text-center px-4 py-3 font-semibold">Stars</th>
-                  <th className="text-right px-5 py-3 font-semibold">Rate / Night</th>
+                  <th className="text-right px-4 py-3 font-semibold">Rate / Night</th>
+                  <th className="text-left px-5 py-3 font-semibold">Contact</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
@@ -224,13 +249,24 @@ export default function AccommodationPage() {
                         ))}
                       </div>
                     </td>
-                    <td className="px-5 py-3 text-right">
+                    <td className="px-4 py-3 text-right">
                       {hotel.singleRate ? (
                         <span className="font-bold text-primary">
                           {hotel.singleRate} <span className="text-xs font-normal text-muted-foreground">({hotel.rateType})</span>
                         </span>
                       ) : (
                         <span className="text-muted-foreground text-xs">On request</span>
+                      )}
+                    </td>
+                    <td className="px-5 py-3">
+                      {hotel.contact ? (
+                        <div className="space-y-0.5">
+                          <p className="text-xs font-medium text-foreground">{hotel.contact.name}</p>
+                          <a href={`mailto:${hotel.contact.email}`} className="text-xs text-primary hover:underline block">{hotel.contact.email}</a>
+                          <a href={`tel:${hotel.contact.phone.replace(/\s/g, "")}`} className="text-xs text-muted-foreground hover:text-primary block">{hotel.contact.phone}</a>
+                        </div>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">See hotel website</span>
                       )}
                     </td>
                   </tr>
