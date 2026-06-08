@@ -122,19 +122,4 @@ export function Navbar() {
               >
                 {link.label}
               </Link>
-            ))}
-            <div className="pt-3 border-t border-border mt-3">
-              <Link
-                href="/register"
-                onClick={() => setIsOpen(false)}
-                className="bg-secondary text-white font-semibold px-5 py-3 rounded-lg text-sm w-full text-center block hover:bg-secondary-light transition-colors"
-              >
-                Register Now
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-    </header>
-  );
-}
+            

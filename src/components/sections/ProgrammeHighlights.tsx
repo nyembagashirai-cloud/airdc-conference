@@ -4,7 +4,7 @@ import { ArrowRight, Clock, Users, Mic, Coffee } from "lucide-react";
 const days = [
   {
     day: "Day 1",
-    date: "26–30 September 2026",
+    date: "27–30 September 2026",
     theme: "Opening & Foundations",
     sessions: [
       { time: "08:00", title: "Registration & Welcome Coffee", type: "break" },
@@ -17,7 +17,7 @@ const days = [
   },
   {
     day: "Day 2",
-    date: "26–30 September 2026",
+    date: "27–30 September 2026",
     theme: "Innovation & Resilience",
     sessions: [
       { time: "09:00", title: "Keynote: Climate Risk & Parametric Insurance", type: "plenary" },
@@ -30,7 +30,7 @@ const days = [
   },
   {
     day: "Day 3",
-    date: "26–30 September 2026",
+    date: "27–30 September 2026",
     theme: "Action & Partnerships",
     sessions: [
       { time: "09:00", title: "AI & Machine Learning in Underwriting", type: "workshop" },

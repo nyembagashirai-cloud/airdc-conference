@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
         edition: 23,
         title: "23rd AIRDC Annual Conference",
         theme: "Insurance Resilience in the Face of Geopolitical and Technological Disruption for Developing Markets",
-        startDate: new Date("2026-09-26"),
+        startDate: new Date("2026-09-27"),
         endDate: new Date("2026-09-30"),
         venue: "Rainbow Towers Hotel",
         city: "Harare",

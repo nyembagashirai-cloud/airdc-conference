@@ -18,11 +18,10 @@ const typeStyles: Record<string, { bg: string; border: string; dot: string; labe
 };
 
 const DAY_DATES: Record<string, string> = {
-  "Day 1": "Saturday, 26 September 2026",
-  "Day 2": "Sunday, 27 September 2026",
-  "Day 3": "Monday, 28 September 2026",
-  "Day 4": "Tuesday, 29 September 2026",
-  "Day 5": "Wednesday, 30 September 2026",
+  "Day 1": "Sunday, 27 September 2026",
+  "Day 2": "Monday, 28 September 2026",
+  "Day 3": "Tuesday, 29 September 2026",
+  "Day 4": "Wednesday, 30 September 2026",
 };
 
 async function getSessions() {
@@ -51,7 +50,7 @@ export default async function ProgrammePage() {
         <div className="container">
           <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-4">Programme</p>
           <h1 className="font-heading font-black text-white text-4xl md:text-5xl mb-2">Conference Programme</h1>
-          <p className="text-white/70 text-lg">26–30 September 2026 · Rainbow Towers Hotel, Harare</p>
+          <p className="text-white/70 text-lg">27–30 September 2026 · Rainbow Towers Hotel, Harare</p>
           <div className="flex gap-4 mt-6">
             <a href="/brochure.pdf" target="_blank"
               className="flex items-center gap-2 bg-secondary hover:bg-secondary-light text-primary-dark font-bold px-5 py-2.5 rounded-lg text-sm transition-colors">
@@ -130,19 +129,4 @@ export default async function ProgrammePage() {
                           {session.description && (
                             <p className="text-muted-foreground text-xs mt-2 leading-relaxed">{session.description}</p>
                           )}
-                        </div>
-                        <span className={`self-start text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full border ${style.bg} ${style.border} flex-shrink-0`}>
-                          {style.label}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </section>
-    </div>
-  );
-}
+     

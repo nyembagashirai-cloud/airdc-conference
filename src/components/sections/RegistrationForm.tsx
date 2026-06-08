@@ -154,7 +154,7 @@ export function RegistrationForm() {
   return (
     <div className="card-premium p-8">
       <h2 className="font-heading font-bold text-primary text-2xl mb-2">Delegate Registration</h2>
-      <p className="text-muted-foreground text-sm mb-8">23rd AIRDC Annual Conference · 26–30 September 2026 · Harare, Zimbabwe</p>
+      <p className="text-muted-foreground text-sm mb-8">23rd AIRDC Annual Conference · 27–30 September 2026 · Harare, Zimbabwe</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8" noValidate>
 
@@ -220,101 +220,4 @@ export function RegistrationForm() {
               {errors.jobTitle && <p className="text-red-500 text-xs mt-1">{errors.jobTitle.message}</p>}
             </div>
             <div>
-              <label className={labelClass}>Company Name *</label>
-              <input {...register("organisation")} className={inputClass} placeholder="Your company" />
-              {errors.organisation && <p className="text-red-500 text-xs mt-1">{errors.organisation.message}</p>}
-            </div>
-            <div className="sm:col-span-2">
-              <label className={labelClass}>Company Address *</label>
-              <input {...register("companyAddress")} className={inputClass} placeholder="Full company address" />
-              {errors.companyAddress && <p className="text-red-500 text-xs mt-1">{errors.companyAddress.message}</p>}
-            </div>
-            <div>
-              <label className={labelClass}>Category *</label>
-              <select {...register("delegateType")} className={inputClass}>
-                <option value="">Select category...</option>
-                {delegateTypes.map(dt => <option key={dt.value} value={dt.value}>{dt.label}</option>)}
-              </select>
-              {errors.delegateType && <p className="text-red-500 text-xs mt-1">{errors.delegateType.message}</p>}
-            </div>
-            <div>
-              <label className={labelClass}>Branch of Activity *</label>
-              <select {...register("branchOfActivity")} className={inputClass}>
-                <option value="">Select branch...</option>
-                {branches.map(b => <option key={b} value={b}>{b}</option>)}
-              </select>
-              {errors.branchOfActivity && <p className="text-red-500 text-xs mt-1">{errors.branchOfActivity.message}</p>}
-            </div>
-          </div>
-        </div>
-
-        {/* Visa Invitation */}
-        <div>
-          <h3 className={sectionHeadingClass}>Visa Invitation Letter</h3>
-          <p className="text-sm text-muted-foreground mb-3">Do you require a letter of invitation for your visa to Zimbabwe?</p>
-          <div className="flex gap-6">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input {...register("visaInvitation")} type="radio" value="YES" className="accent-primary w-4 h-4" />
-              <span className="text-sm font-medium">Yes</span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input {...register("visaInvitation")} type="radio" value="NO" className="accent-primary w-4 h-4" />
-              <span className="text-sm font-medium">No</span>
-            </label>
-          </div>
-        </div>
-
-        {/* Flight Details */}
-        <div>
-          <h3 className={sectionHeadingClass}>Flight Details <span className="text-muted-foreground font-normal text-sm">(optional — can be added later)</span></h3>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label className={labelClass}>Arrival Date</label>
-              <input {...register("arrivalDate")} type="date" className={inputClass} />
-            </div>
-            <div>
-              <label className={labelClass}>Arrival Time</label>
-              <input {...register("arrivalTime")} type="time" className={inputClass} />
-            </div>
-            <div>
-              <label className={labelClass}>Departure Date</label>
-              <input {...register("departureDate")} type="date" className={inputClass} />
-            </div>
-            <div>
-              <label className={labelClass}>Departure Time</label>
-              <input {...register("departureTime")} type="time" className={inputClass} />
-            </div>
-            <div>
-              <label className={labelClass}>Airline Company</label>
-              <input {...register("airlineCompany")} className={inputClass} placeholder="e.g. Ethiopian Airlines" />
-            </div>
-            <div>
-              <label className={labelClass}>Flight Number</label>
-              <input {...register("flightNumber")} className={inputClass} placeholder="e.g. ET 846" />
-            </div>
-          </div>
-        </div>
-
-        {/* Terms */}
-        <div className="flex items-start gap-3 p-4 bg-muted rounded-lg">
-          <input {...register("terms")} type="checkbox" id="terms" className="mt-0.5 w-4 h-4 accent-primary" />
-          <label htmlFor="terms" className="text-sm text-foreground/70 leading-relaxed">
-            I agree to the <a href="/terms" className="text-primary underline">Terms & Conditions</a> and <a href="/privacy" className="text-primary underline">Privacy Policy</a>. I consent to AIRDC processing my personal data for conference administration and networking purposes. *
-          </label>
-        </div>
-        {errors.terms && <p className="text-red-500 text-xs">{errors.terms.message}</p>}
-
-        {error && <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{error}</div>}
-
-        <button type="submit" disabled={submitting}
-          className="btn-primary w-full text-base py-4 disabled:opacity-60 disabled:cursor-not-allowed">
-          {submitting ? <><Loader2 size={18} className="animate-spin" /> Submitting...</> : "Register Now"}
-        </button>
-
-        <p className="text-xs text-muted-foreground text-center">
-          After submission, our team will send payment instructions within 48 hours. For enquiries contact <a href="mailto:info@airdczim.co.zw" className="text-primary hover:underline">info@airdczim.co.zw</a>
-        </p>
-      </form>
-    </div>
-  );
-}
+     

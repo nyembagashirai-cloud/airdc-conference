@@ -8,11 +8,10 @@ type Session = {
 };
 
 const DAYS = [
-  { label: "Day 1 – 26 Sep", value: "Day 1", date: "2026-09-26" },
-  { label: "Day 2 – 27 Sep", value: "Day 2", date: "2026-09-27" },
-  { label: "Day 3 – 28 Sep", value: "Day 3", date: "2026-09-28" },
-  { label: "Day 4 – 29 Sep", value: "Day 4", date: "2026-09-29" },
-  { label: "Day 5 – 30 Sep", value: "Day 5", date: "2026-09-30" },
+  { label: "Day 1 – 27 Sep", value: "Day 1", date: "2026-09-27" },
+  { label: "Day 2 – 28 Sep", value: "Day 2", date: "2026-09-28" },
+  { label: "Day 3 – 29 Sep", value: "Day 3", date: "2026-09-29" },
+  { label: "Day 4 – 30 Sep", value: "Day 4", date: "2026-09-30" },
 ];
 const TYPES = ["PLENARY", "KEYNOTE", "PANEL", "WORKSHOP", "BREAK", "SOCIAL", "MEETING", "NETWORKING"];
 const TYPE_COLORS: Record<string, string> = {
@@ -22,7 +21,7 @@ const TYPE_COLORS: Record<string, string> = {
   MEETING: "bg-orange-100 text-orange-800", NETWORKING: "bg-teal-100 text-teal-800",
 };
 
-const empty = { day: "Day 1", date: "2026-09-26", startTime: "09:00", endTime: "10:00", title: "", subtitle: "", description: "", type: "PLENARY", venue: "Rainbow Towers Hotel, Harare" };
+const empty = { day: "Day 1", date: "2026-09-27", startTime: "09:00", endTime: "10:00", title: "", subtitle: "", description: "", type: "PLENARY", venue: "Rainbow Towers Hotel, Harare" };
 
 export default function AdminProgrammePage() {
   const [sessions, setSessions] = useState<Session[]>([]);

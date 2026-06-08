@@ -52,7 +52,7 @@ export function HeroSection() {
               </div>
               <div>
                 <p className="text-white/50 text-xs">Conference Dates</p>
-                <p className="text-white font-semibold">26–30 September 2026</p>
+                <p className="text-white font-semibold">27–30 September 2026</p>
               </div>
             </div>
             <div className="flex items-center gap-2.5">
@@ -66,54 +66,4 @@ export function HeroSection() {
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,175,55,0.2)" }}>
-                <Globe size={17} style={{ color: "#C8941C" }} />
-              </div>
-              <div>
-                <p className="text-white/50 text-xs">Website</p>
-                <p className="text-white font-semibold">www.airdczim.co.zw</p>
-              </div>
-            </div>
-          </div>
-
-          {/* CTA buttons */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/register"
-              className="inline-flex items-center justify-center gap-2 font-bold text-base px-8 py-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5"
-              style={{ background: "linear-gradient(135deg, #C8941C, #E8B832)", color: "#0F3018", boxShadow: "0 4px 20px rgba(212,175,55,0.4)" }}
-            >
-              Register Now <ArrowRight size={18} />
-            </Link>
-            <a
-              href="/brochure.pdf"
-              download
-              className="inline-flex items-center justify-center gap-2 font-semibold text-base px-8 py-4 rounded-xl border-2 border-white/30 text-white transition-all duration-200 hover:bg-white/10 hover:-translate-y-0.5"
-            >
-              <Download size={18} />
-              Download Brochure
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Stats strip pinned to hero bottom */}
-      <div className="absolute bottom-0 left-0 right-0 border-t border-white/10" style={{ background: "rgba(0,0,0,0.3)", backdropFilter: "blur(12px)" }}>
-        <div className="container">
-          <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-white/10">
-            {[
-              { num: "500+", label: "Delegates" },
-              { num: "40+", label: "Countries" },
-              { num: "30+", label: "Sessions" },
-              { num: "5", label: "Conference Days" },
-            ].map((s) => (
-              <div key={s.label} className="text-center py-5 px-4">
-                <p className="font-heading font-black text-2xl" style={{ color: "#C8941C" }}>{s.num}</p>
-                <p className="text-white/60 text-xs uppercase tracking-wide mt-0.5">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+                <Globe size={17} s

@@ -47,36 +47,4 @@ export async function POST(req: NextRequest) {
         },
       });
     } else {
-      // No DB configured — log only (useful during development)
-      console.log("Contact submission (no DB):", data);
-    }
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
-    }
-    console.error("Contact form error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
-  }
-}
-
-// GET — fetch all contact submissions for admin dashboard
-export async function GET() {
-  if (!process.env.DATABASE_URL) {
-    return NextResponse.json({ submissions: [] });
-  }
-  try {
-    const { prisma } = await import("@/lib/prisma");
-    const submissions = await prisma.contactSubmission.findMany({
-      orderBy: { createdAt: "desc" },
-    });
-    return NextResponse.json({ submissions });
-  } catch (error) {
-    console.error("Fetch contacts error:", error);
-    return NextResponse.json({ submissions: [] });
-  }
-}
+   

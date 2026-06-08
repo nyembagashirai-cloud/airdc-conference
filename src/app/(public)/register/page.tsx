@@ -23,7 +23,7 @@ export default function RegisterPage() {
           <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-4">Registration</p>
           <h1 className="font-heading font-black text-white text-4xl md:text-5xl mb-4">Register for AIRDC 2026</h1>
           <p className="text-white/70 text-lg max-w-2xl mx-auto">
-            Secure your place at Africa's premier insurance conference. 26–30 September 2026 · Rainbow Towers Hotel, Harare.
+            Secure your place at Africa's premier insurance conference. 27–30 September 2026 · Rainbow Towers Hotel, Harare.
           </p>
         </div>
       </div>
@@ -74,47 +74,4 @@ export default function RegisterPage() {
                           <span className="text-muted-foreground text-xs">Early Bird</span>
                           <p className="font-bold text-accent">${fee.early}</p>
                         </div>
-                        <div>
-                          <span className="text-muted-foreground text-xs">Standard</span>
-                          <p className="font-bold text-primary">${fee.standard}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 p-3 bg-secondary/10 rounded-lg">
-                  <p className="text-xs text-secondary font-medium">⚡ Early Bird ends 30 April 2026</p>
-                </div>
-              </div>
-
-              <div className="card-premium p-6">
-                <h3 className="font-heading font-bold text-primary mb-4">Registration Includes</h3>
-                <ul className="space-y-2">
-                  {[
-                    "Access to all plenary sessions",
-                    "Workshop participation",
-                    "Conference materials & bag",
-                    "Welcome reception",
-                    "Daily lunches & refreshments",
-                    "Delegate networking app",
-                    "CPD certificate",
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-foreground/70">
-                      <CheckCircle2 size={15} className="text-accent flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Form */}
-            <div className="lg:col-span-2">
-              <RegistrationForm />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+                        <div

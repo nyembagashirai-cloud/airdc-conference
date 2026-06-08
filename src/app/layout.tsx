@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | 23rd AIRDC Conference 2026",
   },
   description:
-    "The 23rd Annual Conference of the Association of Insurers and Reinsurers of Developing Countries. Theme: Insurance Resilience in the Face of Geopolitical and Technological Disruption for Developing Markets. Harare, Zimbabwe — 26–30 September 2026.",
+    "The 23rd Annual Conference of the Association of Insurers and Reinsurers of Developing Countries. Theme: Insurance Resilience in the Face of Geopolitical and Technological Disruption for Developing Markets. Harare, Zimbabwe — 27–30 September 2026.",
   keywords: [
     "AIRDC",
     "insurance conference",

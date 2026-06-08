@@ -180,28 +180,3 @@ export function HotelsSection() {
                   )}
                 </div>
               </div>
-
-              {/* Content */}
-              <div className="p-4 flex flex-col flex-1">
-                <div className="flex items-start justify-between gap-2 mb-1">
-                  <h3 className="font-heading font-bold text-primary text-sm leading-tight">{hotel.name}</h3>
-                  <ExternalLink size={13} className="text-gray-300 group-hover:text-secondary transition-colors flex-shrink-0 mt-0.5" />
-                </div>
-                <StarRating count={hotel.stars} />
-                <div className="flex items-center gap-1 text-muted-foreground text-xs mt-2">
-                  <MapPin size={11} />
-                  <span>{hotel.address}</span>
-                  <span className="ml-auto bg-muted text-muted-foreground px-2 py-0.5 rounded-full text-xs">{hotel.rooms} rooms</span>
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
-
-        <p className="text-center text-xs text-muted-foreground mt-6">
-          All rates in USD per room per night. Click any hotel to book directly on their website.
-        </p>
-      </div>
-    </section>
-  );
-}

@@ -13,7 +13,7 @@ async function getStats() {
       prisma.contactSubmission.findMany({ orderBy: { createdAt: "desc" }, take: 3, select: { name: true, subject: true, createdAt: true } }),
     ]);
 
-    const conferenceDate = new Date("2026-09-26");
+    const conferenceDate = new Date("2026-09-27");
     const today = new Date();
     const daysToConference = Math.max(0, Math.ceil((conferenceDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)));
 
@@ -41,7 +41,7 @@ export default async function AdminDashboard() {
     { label: "Sponsors", value: sponsors, icon: Award, color: "bg-secondary", sub: "Active" },
     { label: "Unread Messages", value: contacts, icon: MessageSquare, color: "bg-purple-500", sub: "New" },
     { label: "News Published", value: articles, icon: Newspaper, color: "bg-pink-500", sub: "Live" },
-    { label: "Days to Conference", value: daysToConference ?? "—", icon: Calendar, color: "bg-orange-500", sub: "26 Sep 2026" },
+    { label: "Days to Conference", value: daysToConference ?? "—", icon: Calendar, color: "bg-orange-500", sub: "27 Sep 2026" },
   ];
 
   const recentActivity = [

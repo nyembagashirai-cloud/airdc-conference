@@ -46,7 +46,7 @@ export default function ContactPage() {
                     <Clock size={18} className="text-secondary flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="font-medium text-foreground text-sm">Conference Dates</p>
-                      <p className="text-muted-foreground text-xs">26–30 September 2026</p>
+                      <p className="text-muted-foreground text-xs">27–30 September 2026</p>
                     </div>
                   </div>
                 </div>

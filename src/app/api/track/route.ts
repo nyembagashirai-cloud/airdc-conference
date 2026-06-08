@@ -15,11 +15,4 @@ export async function POST(req: NextRequest) {
 
       await prisma.pageView.create({
         data: { page, userAgent, ip, referrer },
-      });
-    }
-
-    return NextResponse.json({ ok: true });
-  } catch {
-    return NextResponse.json({ ok: false });
-  }
-}
+    
