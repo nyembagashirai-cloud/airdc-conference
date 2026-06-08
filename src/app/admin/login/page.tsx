@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-              placeholder="admin@airdczim.co.zw"
+              placeholder="Email address"
             />
           </div>
           <div>
@@ -95,13 +95,7 @@ export default function AdminLoginPage() {
         </form>
 
         <p className="text-center text-xs text-muted-foreground mt-6">
-          For access, contact{" "}
-          <a
-            href="mailto:admin@airdczim.co.zw"
-            className="text-primary underline"
-          >
-            admin@airdczim.co.zw
-          </a>
+          Authorised personnel only
         </p>
       </div>
     </div>
