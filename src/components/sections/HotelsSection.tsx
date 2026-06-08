@@ -179,7 +179,7 @@ export function HotelsSection() {
                     </div>
                   )}
                 </div>
-              </div>              </div>
+              </div>
 
               {/* Card body */}
               <div className="p-4 flex flex-col flex-1">
