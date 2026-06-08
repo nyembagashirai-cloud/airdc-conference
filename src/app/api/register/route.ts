@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { generateInvoicePdf } from "@/lib/invoice-pdf";
 
 export const dynamic = "force-dynamic";
 
@@ -57,107 +58,6 @@ function getDelegateLabel(delegateType: string): string {
     MEDIA: "Media",
   };
   return labels[delegateType] ?? delegateType;
-}
-
-function buildInvoiceHtml(
-  fullName: string,
-  email: string,
-  organisation: string,
-  country: string,
-  delegateLabel: string,
-  confirmationCode: string,
-  invoiceDate: string,
-  feeDisplay: string,
-  totalDisplay: string,
-  paymentBlock: string
-): string {
-  return (
-    '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>AIRDC 2026 Invoice ' +
-    confirmationCode +
-    '</title></head><body style="margin:0;padding:0;font-family:Arial,sans-serif;background:#F8F9FA;">' +
-    '<div style="max-width:700px;margin:40px auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)">' +
-    '<div style="background:linear-gradient(135deg,#0D3B66,#1D4E89);padding:40px 48px;text-align:center">' +
-    '<h1 style="margin:0;color:#D4AF37;font-size:32px;font-weight:900;letter-spacing:2px">AIRDC 2026</h1>' +
-    '<p style="margin:8px 0 0;color:rgba(255,255,255,.85);font-size:15px">24th Annual Conference &mdash; Harare, Zimbabwe</p>' +
-    '<p style="margin:4px 0 0;color:rgba(255,255,255,.55);font-size:13px">27&ndash;30 September 2026 &middot; Rainbow Towers Hotel</p></div>' +
-    '<div style="background:#D4AF37;padding:14px 48px;display:flex;justify-content:space-between">' +
-    '<span style="font-size:18px;font-weight:700;color:#0D3B66;letter-spacing:1px">PROFORMA INVOICE</span>' +
-    '<span style="font-size:13px;color:#0D3B66;font-weight:600">' + confirmationCode + '</span></div>' +
-    '<div style="padding:32px 48px 0;display:flex;justify-content:space-between;gap:24px">' +
-    '<div><p style="margin:0 0 4px;color:#6B7280;font-size:11px;text-transform:uppercase;letter-spacing:1px">Invoice Date</p>' +
-    '<p style="margin:0;color:#111827;font-size:14px;font-weight:600">' + invoiceDate + '</p></div>' +
-    '<div><p style="margin:0 0 4px;color:#6B7280;font-size:11px;text-transform:uppercase;letter-spacing:1px">Reference</p>' +
-    '<p style="margin:0;color:#111827;font-size:14px;font-weight:600">' + confirmationCode + '</p></div>' +
-    '<div><p style="margin:0 0 4px;color:#6B7280;font-size:11px;text-transform:uppercase;letter-spacing:1px">Status</p>' +
-    '<p style="margin:0;color:#D97706;font-size:14px;font-weight:700">PENDING</p></div></div>' +
-    '<div style="padding:24px 48px 0">' +
-    '<p style="margin:0 0 8px;color:#6B7280;font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:600">Bill To</p>' +
-    '<div style="background:#F8F9FA;border-radius:8px;padding:20px 24px">' +
-    '<p style="margin:0 0 4px;color:#111827;font-size:15px;font-weight:700">' + fullName + '</p>' +
-    '<p style="margin:0 0 2px;color:#374151;font-size:13px">' + organisation + '</p>' +
-    '<p style="margin:0 0 2px;color:#374151;font-size:13px">' + country + '</p>' +
-    '<p style="margin:0;color:#374151;font-size:13px">' + email + '</p></div></div>' +
-    '<div style="padding:24px 48px 0"><table style="width:100%;border-collapse:collapse">' +
-    '<thead><tr style="background:#0D3B66">' +
-    '<th style="padding:12px 16px;text-align:left;color:#fff;font-size:12px;text-transform:uppercase">Description</th>' +
-    '<th style="padding:12px 16px;text-align:center;color:#fff;font-size:12px;text-transform:uppercase">Qty</th>' +
-    '<th style="padding:12px 16px;text-align:right;color:#fff;font-size:12px;text-transform:uppercase">Amount</th>' +
-    '</tr></thead><tbody>' +
-    '<tr style="border-bottom:1px solid #E5E7EB">' +
-    '<td style="padding:16px;color:#111827;font-size:14px">Conference Registration &mdash; ' + delegateLabel +
-    '<br><span style="color:#6B7280;font-size:12px">24th AIRDC Annual Conference &middot; 27&ndash;30 Sep 2026 &middot; Harare</span></td>' +
-    '<td style="padding:16px;text-align:center;color:#111827;font-size:14px">1</td>' +
-    '<td style="padding:16px;text-align:right;color:#111827;font-size:14px;font-weight:600">' + feeDisplay + '</td></tr>' +
-    '</tbody><tfoot><tr style="background:#F8F9FA">' +
-    '<td colspan="2" style="padding:16px;text-align:right;color:#374151;font-size:14px;font-weight:700">Total Due:</td>' +
-    '<td style="padding:16px;text-align:right;color:#0D3B66;font-size:20px;font-weight:900">' + totalDisplay + '</td>' +
-    '</tr></tfoot></table></div>' +
-    paymentBlock +
-    '<div style="padding:24px 48px 0"><p style="margin:0 0 8px;color:#6B7280;font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:600">Event Details</p>' +
-    '<table style="width:100%;border-collapse:collapse">' +
-    '<tr style="border-bottom:1px solid #E5E7EB"><td style="padding:10px 0;color:#6B7280;font-size:13px;width:40%">Conference</td>' +
-    '<td style="padding:10px 0;color:#111827;font-size:13px;font-weight:600">24th AIRDC Annual Conference 2026</td></tr>' +
-    '<tr style="border-bottom:1px solid #E5E7EB"><td style="padding:10px 0;color:#6B7280;font-size:13px">Dates</td>' +
-    '<td style="padding:10px 0;color:#111827;font-size:13px;font-weight:600">27&ndash;30 September 2026</td></tr>' +
-    '<tr style="border-bottom:1px solid #E5E7EB"><td style="padding:10px 0;color:#6B7280;font-size:13px">Venue</td>' +
-    '<td style="padding:10px 0;color:#111827;font-size:13px;font-weight:600">Rainbow Towers Hotel &amp; Conference Centre, Harare, Zimbabwe</td></tr>' +
-    '<tr><td style="padding:10px 0;color:#6B7280;font-size:13px">Confirmation Code</td>' +
-    '<td style="padding:10px 0;color:#0D3B66;font-size:13px;font-weight:900;letter-spacing:1px">' + confirmationCode + '</td></tr>' +
-    '</table></div>' +
-    '<div style="margin-top:40px;background:#0D3B66;padding:28px 48px;text-align:center">' +
-    '<p style="margin:0 0 6px;color:#D4AF37;font-size:13px;font-weight:600">AIRDC 2026 Local Organising Committee</p>' +
-    '<p style="margin:0 0 4px;color:rgba(255,255,255,.6);font-size:12px">info@airdczim.co.zw &middot; www.airdczim.co.zw</p>' +
-    '<p style="margin:8px 0 0;color:rgba(255,255,255,.35);font-size:11px">This is a proforma invoice. It is not a receipt of payment.</p>' +
-    '</div></div></body></html>'
-  );
-}
-
-function generateInvoiceHtml(data: {
-  civility?: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  organisation: string;
-  country: string;
-  delegateType: string;
-  confirmationCode: string;
-}): string {
-  const fee = getRegistrationFee(data.delegateType);
-  const isComplimentary = fee === "0.00";
-  const delegateLabel = getDelegateLabel(data.delegateType);
-  const invoiceDate = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-  const fullName = [data.civility, data.firstName, data.lastName].filter(Boolean).join(" ");
-  const feeDisplay = isComplimentary ? "Complimentary" : ("USD $" + fee);
-  const totalDisplay = isComplimentary ? "Complimentary" : ("USD $" + fee);
-  const paymentBlock = isComplimentary ? "" :
-    '<div style="padding:24px 48px 0">' +
-    '<div style="background:#FEF3C7;border:1px solid #D97706;border-radius:8px;padding:20px 24px">' +
-    '<p style="margin:0 0 8px;color:#92400E;font-size:13px;font-weight:700;text-transform:uppercase">Payment Instructions</p>' +
-    '<p style="margin:0;color:#78350F;font-size:13px;line-height:1.6">A member of the AIRDC 2026 Local Organising Committee will contact you within 48 hours with full payment instructions including bank transfer details. ' +
-    'Please reference your confirmation code <strong>' + data.confirmationCode + '</strong> in all payment correspondence.</p>' +
-    '</div></div>';
-
-  return buildInvoiceHtml(fullName, data.email, data.organisation, data.country, delegateLabel, data.confirmationCode, invoiceDate, feeDisplay, totalDisplay, paymentBlock);
 }
 
 async function sendConfirmationEmail(data: {
@@ -218,8 +118,19 @@ async function sendConfirmationEmail(data: {
     '<p style="color:rgba(255,255,255,.6);font-size:12px;margin:0">2026 AIRDC &mdash; 24th Annual Conference &mdash; Harare, Zimbabwe</p>' +
     '<p style="color:rgba(255,255,255,.4);font-size:11px;margin:4px 0 0">www.airdczim.co.zw</p></div></div>';
 
-  const invoiceHtml = generateInvoiceHtml(data);
-  const invoiceBase64 = Buffer.from(invoiceHtml).toString("base64");
+  const fee = getRegistrationFee(data.delegateType);
+  const isComplimentary = fee === "0.00";
+  const invoicePdfBuffer = await generateInvoicePdf({
+    fullName: (data.civility ? data.civility + " " : "") + data.firstName + " " + data.lastName,
+    email: data.email,
+    organisation: data.organisation,
+    country: data.country,
+    delegateLabel: getDelegateLabel(data.delegateType),
+    confirmationCode: data.confirmationCode,
+    fee,
+    isComplimentary,
+  });
+  const invoiceBase64 = invoicePdfBuffer.toString("base64");
 
   await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -233,7 +144,7 @@ async function sendConfirmationEmail(data: {
       subject: `Registration Confirmed — AIRDC 2026 — ${data.confirmationCode}`,
       html,
       attachments: [
-        { filename: `AIRDC2026-Invoice-${data.confirmationCode}.html`, content: invoiceBase64 },
+        { filename: `AIRDC2026-Invoice-${data.confirmationCode}.pdf`, content: invoiceBase64 },
       ],
     }),
   });
