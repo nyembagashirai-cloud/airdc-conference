@@ -123,5 +123,10 @@ export function Navbar() {
               >
                 {link.label}
               </Link>
-                        ))}
-        
+            ))}
+          </div>
+        </div>
+      )}
+    </header>
+  );
+}
