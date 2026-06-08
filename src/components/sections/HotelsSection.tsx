@@ -1,26 +1,15 @@
 import Image from "next/image";
-import { Star, ExternalLink, MapPin } from "lucide-react";
+import Link from "next/link";
+import { Star, ExternalLink, MapPin, ArrowRight } from "lucide-react";
 
 const hotels = [
-  {
-    name: "Hyatt Regency Harare — The Meikles",
-    stars: 5,
-    rooms: 40,
-    address: "Jason Moyo Avenue, Harare",
-    badge: "20% Delegate Discount",
-    featured: true,
-    image: "https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2025/05/12/0511/HRERH-P0085-Daytime-Hotel-Exterior.jpg/HRERH-P0085-Daytime-Hotel-Exterior.16x9.jpg?imwidth=800",
-    website: "https://www.hyatt.com/hyatt-regency/en-US/hrerh-hyatt-regency-harare-the-meikles",
-    fromRate: "$228",
-    rateNote: "B&B · Single from",
-  },
   {
     name: "Rainbow Towers Hotel",
     stars: 4,
     rooms: 150,
     address: "Pennefather Avenue, Harare",
-    badge: null,
-    featured: false,
+    badge: "Conference Venue",
+    featured: true,
     image: "https://rtgafrica.com/wp-content/uploads/2021/08/Lobby-1.jpg",
     website: "https://rtgafrica.com/rainbow-towers-hotel/",
     fromRate: "$130",
@@ -74,42 +63,6 @@ const hotels = [
     fromRate: null,
     rateNote: "Contact for delegate rates",
   },
-  {
-    name: "Cresta Oasis Hotel",
-    stars: 3,
-    rooms: 50,
-    address: "Harare",
-    badge: null,
-    featured: false,
-    image: "/images/cresta-oasis.webp",
-    website: "https://www.crestahotels.com/hotels/zimbabwe/cresta-oasis",
-    fromRate: null,
-    rateNote: "Contact for delegate rates",
-  },
-  {
-    name: "Purpose International Hotel",
-    stars: 3,
-    rooms: 70,
-    address: "Harare",
-    badge: null,
-    featured: false,
-    image: "https://images.unsplash.com/photo-1587213811864-46e59f653b75?w=800&q=80",
-    website: "https://www.purposeinternationalhotel.com/",
-    fromRate: null,
-    rateNote: "Contact for delegate rates",
-  },
-  {
-    name: "The Gray Luxury Apartments",
-    stars: 4,
-    rooms: 25,
-    address: "Harare",
-    badge: null,
-    featured: false,
-    image: "/images/the-gray.webp",
-    website: "https://thegray.co.zw/",
-    fromRate: null,
-    rateNote: "Contact for delegate rates",
-  },
 ];
 
 function StarRating({ count }: { count: number }) {
@@ -130,7 +83,7 @@ export function HotelsSection() {
           <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-3">Accommodation</p>
           <h2 className="section-title">Official Conference Hotels</h2>
           <p className="section-subtitle mx-auto">
-            Special delegate rates negotiated at all hotels below. Quote <strong>"AIRDC 2026"</strong> when booking.
+            Special delegate rates negotiated at all hotels below. Quote <strong>&quot;AIRDC 2026&quot;</strong> when booking.
           </p>
         </div>
 
@@ -141,7 +94,7 @@ export function HotelsSection() {
               href={hotel.website}
               target="_blank"
               rel="noopener noreferrer"
-              className={`group bg-white rounded-2xl overflow-hidden shadow-card border transition-all duration-200 hover:-translate-y-1 hover:shadow-premium flex flex-col ${hotel.featured ? "border-secondary border-2 sm:col-span-2 lg:col-span-1" : "border-border"}`}
+              className={`group bg-white rounded-2xl overflow-hidden shadow-card border transition-all duration-200 hover:-translate-y-1 hover:shadow-premium flex flex-col ${hotel.featured ? "border-secondary border-2" : "border-border"}`}
             >
               {/* Image */}
               <div className="relative h-44 overflow-hidden">
@@ -155,16 +108,13 @@ export function HotelsSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
 
                 {/* Badges */}
-                <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                  {hotel.featured && (
+                {hotel.badge && (
+                  <div className="absolute top-3 left-3">
                     <span className="bg-secondary text-primary text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
-                      <Star size={10} className="fill-primary" /> Partner Hotel
+                      <Star size={10} className="fill-primary" /> {hotel.badge}
                     </span>
-                  )}
-                  {hotel.badge && !hotel.featured && (
-                    <span className="bg-secondary text-primary text-xs font-bold px-2.5 py-1 rounded-full">{hotel.badge}</span>
-                  )}
-                </div>
+                  </div>
+                )}
 
                 {/* Rate pill */}
                 <div className="absolute bottom-3 right-3">
@@ -187,7 +137,9 @@ export function HotelsSection() {
                   <h3 className="font-heading font-bold text-foreground text-base leading-snug group-hover:text-primary transition-colors">{hotel.name}</h3>
                   <StarRating count={hotel.stars} />
                 </div>
-                <p className="text-muted-foreground text-xs mb-3">{hotel.address}</p>
+                <p className="text-muted-foreground text-xs mb-3 flex items-center gap-1">
+                  <MapPin size={10} /> {hotel.address}
+                </p>
 
                 <div className="mt-auto pt-3 border-t border-border flex items-center justify-between">
                   <span className="text-xs text-muted-foreground">{hotel.rooms} rooms</span>
@@ -200,9 +152,17 @@ export function HotelsSection() {
           ))}
         </div>
 
-        <p className="text-center text-muted-foreground text-sm mt-8">
-          All accommodation costs are at the delegate&apos;s own expense. Early booking recommended — rooms are limited.
-        </p>
+        <div className="mt-10 text-center">
+          <p className="text-muted-foreground text-sm mb-4">
+            All accommodation costs are at the delegate&apos;s own expense. Early booking recommended — rooms are limited.
+          </p>
+          <Link
+            href="/accommodation"
+            className="inline-flex items-center gap-2 btn-primary"
+          >
+            Full Accommodation Guide <ArrowRight size={16} />
+          </Link>
+        </div>
       </div>
     </section>
   );
