@@ -2,23 +2,36 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
-  const token = await getToken({
-    req,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+  const { pathname } = req.nextUrl;
 
-  const isLoggedIn = !!token;
+  // ── Admin route protection ──────────────────────────────────────────────
+  if (pathname.startsWith("/admin")) {
+    // Always add noindex header to every admin response
+    const res = NextResponse.next();
+    res.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
 
-  if (!isLoggedIn) {
-    const loginUrl = new URL("/admin/login", req.url);
-    loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
-    return NextResponse.redirect(loginUrl);
+    // Allow the login page through
+    if (pathname === "/admin/login") return res;
+
+    // All other /admin/* routes require a valid JWT
+    const token = await getToken({
+      req,
+      secret: process.env.NEXTAUTH_SECRET,
+    });
+
+    if (!token) {
+      const loginUrl = req.nextUrl.clone();
+      loginUrl.pathname = "/admin/login";
+      loginUrl.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    return res;
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  // Protect ALL /admin routes except /admin/login
-  matcher: ["/admin/((?!login).*)"],
+  matcher: ["/admin/:path*"],
 };

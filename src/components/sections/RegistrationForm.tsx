@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -108,11 +108,33 @@ export function RegistrationForm() {
   const [submitting, setSubmitting] = useState(false);
   const [confirmationCode, setConfirmationCode] = useState("");
   const [error, setError] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const turnstileRef = useRef<string | null>(null);
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { visaInvitation: "NO" },
   });
+
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
+
+  const onTurnstileSuccess = useCallback((token: string) => {
+    setTurnstileToken(token);
+  }, []);
+
+  useEffect(() => {
+    if (!siteKey) return;
+    // Expose callback globally for Turnstile
+    (window as unknown as Record<string, unknown>)["_turnstileCb"] = onTurnstileSuccess;
+    if (document.querySelector("#turnstile-script")) return;
+    const script = document.createElement("script");
+    script.id = "turnstile-script";
+    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    return () => { delete (window as unknown as Record<string, unknown>)["_turnstileCb"]; };
+  }, [siteKey, onTurnstileSuccess]);
 
   const selectedDelegateType = watch("delegateType");
   const displayFee = selectedDelegateType ? feeMap[selectedDelegateType] : null;
@@ -129,6 +151,7 @@ export function RegistrationForm() {
           workshopChoice: undefined,
           dietaryRequirements: undefined,
           specialNeeds: undefined,
+          turnstileToken: turnstileToken || undefined,
         }),
       });
       const json = await res.json();
@@ -334,6 +357,16 @@ export function RegistrationForm() {
           </label>
           {errors.terms && <p className="text-red-500 text-xs mt-2">{errors.terms.message}</p>}
         </div>
+
+        {/* Cloudflare Turnstile CAPTCHA */}
+        {siteKey && (
+          <div
+            className="cf-turnstile"
+            data-sitekey={siteKey}
+            data-callback="_turnstileCb"
+            data-theme="light"
+          />
+        )}
 
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm">{error}</div>

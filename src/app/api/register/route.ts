@@ -28,7 +28,25 @@ const schema = z.object({
   dietaryRequirements: z.string().optional(),
   specialNeeds: z.string().optional(),
   terms: z.boolean(),
+  turnstileToken: z.string().optional(),
 });
+
+
+async function verifyTurnstile(token: string): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) return true; // Skip if not configured
+  try {
+    const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ secret, response: token }),
+    });
+    const json = await res.json() as { success: boolean };
+    return json.success === true;
+  } catch {
+    return false;
+  }
+}
 
 function generateCode(): string {
   return "AIRDC26-" + Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -152,6 +170,14 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const data = schema.parse(body);
+
+  // Verify Turnstile CAPTCHA if secret key is configured
+  if (process.env.TURNSTILE_SECRET_KEY) {
+    const tokenOk = await verifyTurnstile(data.turnstileToken ?? "");
+    if (!tokenOk) {
+      return NextResponse.json({ error: "CAPTCHA verification failed. Please refresh and try again." }, { status: 400 });
+    }
+  }
     const confirmationCode = generateCode();
 
     if (process.env.DATABASE_URL) {
