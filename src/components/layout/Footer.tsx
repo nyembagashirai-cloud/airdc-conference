@@ -107,15 +107,17 @@ export function Footer() {
 
       {/* Organiser logos bar */}
       <div className="border-t border-white/10">
-        <div className="container py-8 flex flex-col items-center gap-4">
-          <p className="text-white/50 text-xs uppercase tracking-widest font-semibold">Organised by</p>
-          <div className="relative h-16 w-[380px] sm:w-[500px]">
-            <Image
-              src="/images/organiser-logos.png"
-              alt="AIRDC | Insurance Council of Zimbabwe"
-              fill
-              className="object-contain brightness-0 invert opacity-80"
-            />
+        <div className="container py-10 flex flex-col items-center gap-5">
+          <p className="text-white/60 text-xs uppercase tracking-widest font-semibold">Organised by</p>
+          <div className="bg-white rounded-2xl px-8 py-5 shadow-lg">
+            <div className="relative h-20 w-[420px] sm:w-[580px]">
+              <Image
+                src="/images/organiser-logos.png"
+                alt="24th AIRDC Conference | AIRDC | Insurance Council of Zimbabwe"
+                fill
+                className="object-contain"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -154,18 +154,20 @@ export function HeroSection() {
 
             {/* Organiser Logos card */}
             <motion.div
-              className="rounded-2xl px-6 py-5 backdrop-blur-sm border border-white/15"
+              className="rounded-2xl px-6 py-6 backdrop-blur-sm border border-white/15"
               style={{ background: "rgba(255,255,255,0.09)" }}
               variants={fadeIn} initial="hidden" animate="show" custom={0.85}
             >
-              <p className="text-white/50 text-xs uppercase tracking-[0.15em] font-semibold mb-4">Organised by</p>
-              <div className="relative h-20 w-full">
-                <Image
-                  src="/images/organiser-logos.png"
-                  alt="24th AIRDC Conference | AIRDC | Insurance Council of Zimbabwe"
-                  fill
-                  className="object-contain object-left"
-                />
+              <p className="text-white/60 text-xs uppercase tracking-[0.15em] font-semibold mb-5">Organised by</p>
+              <div className="bg-white rounded-xl px-4 py-3">
+                <div className="relative h-16 w-full">
+                  <Image
+                    src="/images/organiser-logos.png"
+                    alt="24th AIRDC Conference | AIRDC | Insurance Council of Zimbabwe"
+                    fill
+                    className="object-contain object-left"
+                  />
+                </div>
               </div>
             </motion.div>
           </div>
