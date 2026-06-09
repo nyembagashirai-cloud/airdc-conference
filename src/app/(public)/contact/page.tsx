@@ -7,13 +7,6 @@ export const metadata: Metadata = {
   description: "Get in touch with the AIRDC 2026 organising team.",
 };
 
-const contacts = [
-  { name: "Conference Secretariat", role: "General Enquiries", email: "info@airdczim.co.zw", phone: "+263 4 123 456" },
-  { name: "Registration Team", role: "Delegate Registration", email: "registration@airdczim.co.zw", phone: "+263 4 123 457" },
-  { name: "Sponsorship Team", role: "Sponsorship & Exhibition", email: "sponsorship@airdczim.co.zw", phone: "+263 4 123 458" },
-  { name: "Media Relations", role: "Press & Media", email: "media@airdczim.co.zw", phone: "+263 4 123 459" },
-];
-
 export default function ContactPage() {
   return (
     <div className="pt-20">
@@ -38,8 +31,8 @@ export default function ContactPage() {
                   <div className="flex gap-3">
                     <MapPin size={18} className="text-secondary flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-medium text-foreground text-sm">Harare International Conference Centre</p>
-                      <p className="text-muted-foreground text-xs mt-0.5">Corner Samora Machel Ave & Rotten Row<br />Harare, Zimbabwe</p>
+                      <p className="font-medium text-foreground text-sm">Rainbow Towers Hotel &amp; Conference Centre</p>
+                      <p className="text-muted-foreground text-xs mt-0.5">Harare, Zimbabwe</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -61,19 +54,15 @@ export default function ContactPage() {
 
               <div className="card-premium p-6">
                 <h2 className="font-heading font-bold text-primary mb-5">Contact Directory</h2>
-                <div className="space-y-5">
-                  {contacts.map((contact) => (
-                    <div key={contact.name} className="pb-4 border-b border-border last:border-0">
-                      <p className="font-semibold text-foreground text-sm">{contact.name}</p>
-                      <p className="text-secondary text-xs mb-2">{contact.role}</p>
-                      <a href={`mailto:${contact.email}`} className="flex items-center gap-2 text-primary hover:text-accent text-xs transition-colors mb-1">
-                        <Mail size={12} /> {contact.email}
-                      </a>
-                      <a href={`tel:${contact.phone}`} className="flex items-center gap-2 text-muted-foreground hover:text-primary text-xs transition-colors">
-                        <Phone size={12} /> {contact.phone}
-                      </a>
-                    </div>
-                  ))}
+                <div className="space-y-3">
+                  <p className="font-semibold text-foreground text-sm">Conference Secretariat</p>
+                  <p className="text-secondary text-xs">General Enquiries</p>
+                  <a href="mailto:info@airdczim.co.zw" className="flex items-center gap-2 text-primary hover:text-accent text-sm transition-colors">
+                    <Mail size={14} /> info@airdczim.co.zw
+                  </a>
+                  <a href="tel:+26308677007101" className="flex items-center gap-2 text-muted-foreground hover:text-primary text-sm transition-colors">
+                    <Phone size={14} /> +263 08677007101
+                  </a>
                 </div>
               </div>
             </div>
