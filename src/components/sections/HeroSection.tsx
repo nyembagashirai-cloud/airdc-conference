@@ -159,13 +159,13 @@ export function HeroSection() {
               variants={fadeIn} initial="hidden" animate="show" custom={0.85}
             >
               <p className="text-white/60 text-xs uppercase tracking-[0.15em] font-semibold mb-5">Organised by</p>
-              <div className="bg-white rounded-xl px-4 py-3">
-                <div className="relative h-16 w-full">
+              <div className="bg-white rounded-xl px-6 py-4">
+                <div className="relative h-28 w-full">
                   <Image
                     src="/images/organiser-logos.png"
                     alt="24th AIRDC Conference | AIRDC | Insurance Council of Zimbabwe"
                     fill
-                    className="object-contain object-left"
+                    className="object-contain object-center"
                   />
                 </div>
               </div>

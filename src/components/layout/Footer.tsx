@@ -109,8 +109,8 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container py-10 flex flex-col items-center gap-5">
           <p className="text-white/60 text-xs uppercase tracking-widest font-semibold">Organised by</p>
-          <div className="bg-white rounded-2xl px-8 py-5 shadow-lg">
-            <div className="relative h-20 w-[420px] sm:w-[580px]">
+          <div className="bg-white rounded-2xl px-10 py-6 shadow-lg">
+            <div className="relative h-28 w-[480px] sm:w-[660px]">
               <Image
                 src="/images/organiser-logos.png"
                 alt="24th AIRDC Conference | AIRDC | Insurance Council of Zimbabwe"
