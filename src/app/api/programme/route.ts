@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
       conference = await prisma.conference.create({ data: {
         edition: 24,
         title: "24th AIRDC Annual Conference",
-        theme: "Insurance Resilience in the Face of Geopolitical and Technological Disruption for Developing Markets",
+        theme: "Strengthening Insurance Resilience for Developing Countries Amid Geopolitical and Technological Disruptions",
         startDate: new Date("2026-09-27"),
         endDate: new Date("2026-09-30"),
         venue: "Rainbow Towers Hotel",

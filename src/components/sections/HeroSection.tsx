@@ -99,7 +99,7 @@ export function HeroSection() {
             >
               <p className="text-white/50 text-xs uppercase tracking-[0.15em] mb-1.5 font-semibold">Conference Theme</p>
               <p className="text-white font-medium text-base sm:text-lg leading-snug">
-                "Insurance Resilience in the Face of Geopolitical and Technological Disruption for Developing Markets"
+                "Strengthening Insurance Resilience for Developing Countries Amid Geopolitical and Technological Disruptions"
               </p>
             </motion.div>
 

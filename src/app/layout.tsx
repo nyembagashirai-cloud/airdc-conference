@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s | 24th AIRDC Conference 2026",
   },
   description:
-    "The 24th Annual Conference of the Association of Insurers and Reinsurers of Developing Countries. Theme: Insurance Resilience in the Face of Geopolitical and Technological Disruption for Developing Markets. Harare, Zimbabwe — 27–30 September 2026.",
+    "The 24th Annual Conference of the Association of Insurers and Reinsurers of Developing Countries. Theme: Strengthening Insurance Resilience for Developing Countries Amid Geopolitical and Technological Disruptions. Harare, Zimbabwe — 27–30 September 2026.",
   keywords: [
     "AIRDC",
     "insurance conference",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     siteName: "24th AIRDC Conference 2026",
     title: "24th AIRDC Conference 2026 | Zimbabwe",
     description:
-      "Insurance Resilience in the Face of Geopolitical and Technological Disruption for Developing Markets",
+      "Strengthening Insurance Resilience for Developing Countries Amid Geopolitical and Technological Disruptions",
     images: [
       {
         url: "/images/og-image.jpg",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "24th AIRDC Conference 2026 | Zimbabwe",
-    description: "Insurance Resilience in Developing Markets — Harare, Zimbabwe",
+    description: "Strengthening Insurance Resilience for Developing Countries — Harare, Zimbabwe",
     images: ["/images/og-image.jpg"],
   },
   robots: {

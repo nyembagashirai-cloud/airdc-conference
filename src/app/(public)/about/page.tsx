@@ -29,7 +29,7 @@ export default function AboutPage() {
             24th AIRDC Conference 2026
           </h1>
           <p className="text-white/70 text-xl max-w-3xl mx-auto leading-relaxed">
-            &ldquo;Insurance Resilience in the Face of Geopolitical and Technological Disruption for Developing Markets&rdquo;
+            &ldquo;Strengthening Insurance Resilience for Developing Countries Amid Geopolitical and Technological Disruptions&rdquo;
           </p>
           <p className="text-white/50 text-sm mt-4">27&ndash;30 September 2026 &middot; Rainbow Towers Hotel &amp; Conference Centre, Harare, Zimbabwe</p>
         </div>
@@ -70,7 +70,7 @@ export default function AboutPage() {
                     On behalf of the Local Organising Committee, it is my profound honour and privilege to welcome you to the 24th Conference of the Association of Insurers and Reinsurers of Developing Countries. That this conference is being held on African soil here in Zimbabwe, is a source of immense pride for us, and we have spared no effort to ensure that your experience here is both productive and memorable.
                   </p>
                   <p>
-                    We gather under a theme that could not be more timely: &ldquo;Insurance Resilience in the Face of Geo-Political and Technological Disruption for Developing Markets.&rdquo; These are not words chosen lightly. They are a direct reflection of the world our industry inhabits today.
+                    We gather under a theme that could not be more timely: &ldquo;Strengthening Insurance Resilience for Developing Countries Amid Geopolitical and Technological Disruptions.&rdquo; These are not words chosen lightly. They are a direct reflection of the world our industry inhabits today.
                   </p>
 
                   <h4 className="font-heading font-bold text-primary pt-2">The Climate Crisis Is Here</h4>
@@ -205,18 +205,18 @@ export default function AboutPage() {
             <div className="grid md:grid-cols-3 gap-6 text-left">
               {[
                 {
-                  title: "Geopolitical Disruption",
-                  desc: "Trade wars, sanctions, conflict, and shifting alliances are reshaping global supply chains and insurance risk profiles. Developing markets are disproportionately exposed yet often underinsured.",
+                  title: "Strengthening Resilience",
+                  desc: "The conference calls on developing countries to actively build stronger, more adaptive insurance ecosystems — not merely to survive disruption, but to emerge from it more capable and inclusive.",
                   color: "border-secondary",
                 },
                 {
-                  title: "Technological Disruption",
-                  desc: "AI, blockchain, IoT, and mobile technology are transforming insurance distribution, underwriting, and claims — creating opportunities for leapfrogging traditional models in developing markets.",
+                  title: "Geopolitical Disruptions",
+                  desc: "Trade wars, sanctions, conflict, and shifting alliances are reshaping global supply chains and risk profiles. Developing markets bear outsized exposure, making cross-border solidarity and smart risk transfer more urgent than ever.",
                   color: "border-accent",
                 },
                 {
-                  title: "Insurance Resilience",
-                  desc: "Building insurance ecosystems that are robust, adaptive, and inclusive — capable of withstanding external shocks while continuing to deliver on the promise of risk protection.",
+                  title: "Technological Disruptions",
+                  desc: "AI, blockchain, IoT, and mobile platforms are transforming insurance delivery, underwriting, and claims — presenting developing countries with a historic opportunity to leapfrog legacy models and accelerate financial inclusion.",
                   color: "border-white/30",
                 },
               ].map((item) => (
