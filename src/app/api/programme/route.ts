@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/auth";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
@@ -15,6 +16,8 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const session = await auth();
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   if (!process.env.DATABASE_URL) return NextResponse.json({ error: "No DB" }, { status: 500 });
   try {
     const body = await req.json();
@@ -24,8 +27,8 @@ export async function POST(req: NextRequest) {
     let conference = await prisma.conference.findFirst({ where: { isActive: true } });
     if (!conference) {
       conference = await prisma.conference.create({ data: {
-        edition: 23,
-        title: "23rd AIRDC Annual Conference",
+        edition: 24,
+        title: "24th AIRDC Annual Conference",
         theme: "Insurance Resilience in the Face of Geopolitical and Technological Disruption for Developing Markets",
         startDate: new Date("2026-09-27"),
         endDate: new Date("2026-09-30"),
