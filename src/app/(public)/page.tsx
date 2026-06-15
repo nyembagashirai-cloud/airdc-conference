@@ -1,6 +1,5 @@
 import { HeroSection } from "@/components/sections/HeroSection";
 import { WelcomeSection } from "@/components/sections/WelcomeSection";
-import { AboutSection } from "@/components/sections/AboutSection";
 import { WhyAttendSection } from "@/components/sections/WhyAttendSection";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { SpeakersPreview } from "@/components/sections/SpeakersPreview";
@@ -15,7 +14,23 @@ export default function HomePage() {
     <>
       <HeroSection />
       <WelcomeSection />
-      <AboutSection />
+      <section className="section-padding bg-white">
+        <div className="container text-center max-w-2xl mx-auto">
+          <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-3">About AIRDC</p>
+          <h2 className="section-title mb-4">Association of Insurers and Reinsurers of Developing Countries</h2>
+          <p className="section-subtitle mx-auto mb-8">
+            Learn more about AIRDC — its history, membership, objectives, and work across developing insurance markets worldwide.
+          </p>
+          <a
+            href="https://www.airdevc.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 btn-primary"
+          >
+            Visit AIRDC Website →
+          </a>
+        </div>
+      </section>
       <WhyAttendSection />
       <StatsSection />
       <SpeakersPreview />

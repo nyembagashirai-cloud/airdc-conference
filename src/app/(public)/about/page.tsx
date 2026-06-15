@@ -1,22 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { CheckCircle2, Globe2, Users2, BookOpen, Handshake } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About the Conference",
   description: "About the 24th AIRDC Conference 2026 in Harare, Zimbabwe. Learn about the Association of Insurers and Reinsurers of Developing Countries.",
 };
 
-const airdcObjectives = [
-  "Cooperate in the establishment and promotion of permanent contacts among members",
-  "Gather, process and exchange statistical data and information relating to the insurance industry",
-  "Develop programmes of insurance education and research on common problems of the insurance market",
-  "Implement concrete means of technical cooperation among member organisations",
-  "Encourage the development of reinsurance relations amongst developing countries",
-  "Cooperate with public and private entities and regional organisations devoted to the promotion of the insurance industry",
-  "Conduct trainings, forums and conferences, and engage in discourse and dialogue",
-  "Promote and undertake studies and research, and publish articles and communications",
-];
 
 export default function AboutPage() {
   return (
