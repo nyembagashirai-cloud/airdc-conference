@@ -42,7 +42,6 @@ export function Footer() {
             <h3 className="font-heading font-bold text-white mb-6">Quick Links</h3>
             <ul className="space-y-3">
               {[
-                { href: "/about", label: "About the Conference" },
                 { href: "/programme", label: "Programme" },
                 { href: "/speakers", label: "Speakers" },
                 { href: "/sponsors", label: "Sponsors & Partners" },
