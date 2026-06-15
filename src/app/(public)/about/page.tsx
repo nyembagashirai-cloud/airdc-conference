@@ -98,90 +98,22 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* About AIRDC */}
+      {/* About AIRDC — link out */}
       <section className="section-padding bg-muted">
-        <div className="container">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            <div>
-              <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-3">The Organisation</p>
-              <h2 className="section-title mb-6">About AIRDC</h2>
-              <div className="space-y-4 text-foreground/70 leading-relaxed">
-                <p>
-                  The <strong className="text-foreground">Association of Insurers and Reinsurers of Developing Countries (AIRDC)</strong> is an international organisation composed of insurance companies, reinsurance companies and other insurance groups that bonded together to develop and expand international collaboration and cooperation in the fields of insurance and reinsurance among them.
-                </p>
-                <p>
-                  The AIRDC is <strong className="text-foreground">non-political, non-government, non-religious, and non-profit making.</strong> Its main objective is to strengthen the insurance market in developing countries and to foster inter-regional cooperation within the insurance industry.
-                </p>
-                <p>
-                  The vision for the association came from Commissioner Gregoria Cruz Arnaldo, the longest-serving Insurance Commissioner of the Philippines, who was also instrumental in uniting insurance supervisory authorities across the ASEAN region. AIRDC was formally established during the 2nd Third World Insurance Congress (TWIC) in Buenos Aires, Argentina in 1980, following an initial draft constitution submitted at the 1st TWIC in Manila, Philippines in 1977. Its constitution and by-laws were approved at the 4th TWIC in Casablanca, Morocco in 1984.
-                </p>
-              </div>
-
-              <div className="mt-6 p-5 rounded-xl bg-white border border-border shadow-card">
-                <p className="text-xs text-muted-foreground uppercase tracking-widest font-semibold mb-2">Secretariat</p>
-                <p className="text-sm text-foreground font-medium">26F, BPI-Philam Life Building</p>
-                <p className="text-sm text-foreground">6811 Ayala Avenue, Makati City, Philippines</p>
-                <p className="text-sm text-primary mt-1">
-                  <a href="mailto:airdc@iiap.com.ph" className="hover:underline">airdc@iiap.com.ph</a>
-                </p>
-                <p className="text-sm text-muted-foreground">Tel: +632 8 887-7446</p>
-              </div>
-            </div>
-
-            <div className="space-y-5">
-              {[
-                {
-                  icon: Globe2,
-                  title: "International Reach",
-                  desc: "AIRDC unites insurers and reinsurers from developing countries across Asia, Africa, Latin America and the Middle East, fostering cross-regional dialogue and cooperation.",
-                },
-                {
-                  icon: Users2,
-                  title: "Membership",
-                  desc: "Membership is open to insurance companies, reinsurance companies, and other insurance groups operating in developing countries who share the association's objectives.",
-                },
-                {
-                  icon: BookOpen,
-                  title: "Education & Research",
-                  desc: "AIRDC develops programmes of insurance education and research, promotes knowledge exchange, and publishes articles and communications relevant to developing market insurance.",
-                },
-                {
-                  icon: Handshake,
-                  title: "Technical Cooperation",
-                  desc: "The association implements concrete means of technical cooperation and encourages the development of reinsurance relations among developing countries.",
-                },
-              ].map((item) => (
-                <div key={item.title} className="flex gap-4 p-5 rounded-xl bg-white border border-border shadow-card">
-                  <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-                    <item.icon size={20} className="text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-heading font-bold text-primary mb-1">{item.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* AIRDC Objectives */}
-      <section className="section-padding bg-white">
-        <div className="container max-w-4xl">
-          <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-3">Mandate</p>
-          <h2 className="section-title mb-10">AIRDC Objectives</h2>
-          <div className="space-y-3">
-            {airdcObjectives.map((obj, i) => (
-              <div key={i} className="flex items-start gap-4 p-4 rounded-xl hover:bg-muted transition-colors border border-transparent hover:border-border">
-                <CheckCircle2 size={20} className="text-secondary mt-0.5 flex-shrink-0" />
-                <p className="text-foreground/80 leading-relaxed">{obj}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-muted-foreground mt-6 italic">
-            Source: <a href="https://www.airdevc.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">airdevc.org</a>
+        <div className="container text-center max-w-2xl mx-auto">
+          <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-3">The Organisation</p>
+          <h2 className="section-title mb-4">About AIRDC</h2>
+          <p className="section-subtitle mx-auto mb-8">
+            Learn more about the Association of Insurers and Reinsurers of Developing Countries — its history, membership, objectives, and work across developing insurance markets worldwide.
           </p>
+          <a
+            href="https://www.airdevc.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 btn-primary"
+          >
+            Visit AIRDC Website →
+          </a>
         </div>
       </section>
 
