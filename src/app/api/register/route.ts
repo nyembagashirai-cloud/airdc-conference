@@ -56,9 +56,9 @@ function getRegistrationFee(delegateType: string): string {
   const feeMap: Record<string, string> = {
     AIRDC_MEMBER: "350.00",
     SUPERVISORY_AUTHORITY_MEMBER: "350.00",
-    NATIONAL_ASSOCIATION: "350.00",
     NON_MEMBER: "500.00",
     SUPERVISORY_AUTHORITY_NON_MEMBER: "500.00",
+    MEDIA_SPEAKER_ORGANISER: "0.00",
   };
   return feeMap[delegateType] ?? "0.00";
 }
@@ -69,11 +69,7 @@ function getDelegateLabel(delegateType: string): string {
     NON_MEMBER: "Non Member",
     SUPERVISORY_AUTHORITY_MEMBER: "Supervisory Authority / AIRDC Member",
     SUPERVISORY_AUTHORITY_NON_MEMBER: "Supervisory Authority / Non Member",
-    NATIONAL_ASSOCIATION: "National Association / Training Institution",
-    SPONSOR: "Sponsor",
-    SPEAKER: "Speaker",
-    ORGANISER: "Organiser",
-    MEDIA: "Media",
+    MEDIA_SPEAKER_ORGANISER: "Media / Speaker / Organiser",
   };
   return labels[delegateType] ?? delegateType;
 }
@@ -93,7 +89,7 @@ async function sendConfirmationEmail(data: {
   const fee = getRegistrationFee(data.delegateType);
   const isComplimentary = fee === "0.00";
   const delegateLabel = getDelegateLabel(data.delegateType);
-  const feeDisplay = isComplimentary ? "Complimentary" : ("USD $" + fee);
+  const feeDisplay = isComplimentary ? "USD $0.00" : ("USD $" + fee);
   const paymentEmailBlock = isComplimentary ? "" :
     '<div style="background:#FEF3C7;border:1px solid #D97706;border-radius:8px;padding:16px 20px;margin:20px 0">' +
     '<p style="margin:0 0 6px;color:#92400E;font-size:13px;font-weight:700">Payment Instructions</p>' +
@@ -148,7 +144,7 @@ async function sendConfirmationEmail(data: {
   });
   const invoiceBase64 = invoicePdfBuffer.toString("base64");
 
-  await fetch("https://api.resend.com/emails", {
+  const resendRes = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
@@ -164,6 +160,11 @@ async function sendConfirmationEmail(data: {
       ],
     }),
   });
+  if (!resendRes.ok) {
+    const resendError = await resendRes.json().catch(() => ({}));
+    console.error("Resend API error:", resendRes.status, JSON.stringify(resendError));
+    throw new Error(`Resend ${resendRes.status}: ${JSON.stringify(resendError)}`);
+  }
 }
 
 export async function POST(req: NextRequest) {

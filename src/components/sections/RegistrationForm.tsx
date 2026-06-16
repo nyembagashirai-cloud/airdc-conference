@@ -21,11 +21,7 @@ const schema = z.object({
     "NON_MEMBER",
     "SUPERVISORY_AUTHORITY_MEMBER",
     "SUPERVISORY_AUTHORITY_NON_MEMBER",
-    "NATIONAL_ASSOCIATION",
-    "SPONSOR",
-    "SPEAKER",
-    "ORGANISER",
-    "MEDIA",
+    "MEDIA_SPEAKER_ORGANISER",
   ]),
   branchOfActivity: z.enum([
     "Insurance",
@@ -75,23 +71,15 @@ const delegateTypes = [
   { value: "NON_MEMBER", label: "Non Member" },
   { value: "SUPERVISORY_AUTHORITY_MEMBER", label: "Supervisory Authority / AIRDC Member" },
   { value: "SUPERVISORY_AUTHORITY_NON_MEMBER", label: "Supervisory Authority / Non Member" },
-  { value: "NATIONAL_ASSOCIATION", label: "National Association / Training Institution" },
-  { value: "SPONSOR", label: "Sponsor" },
-  { value: "SPEAKER", label: "Speaker" },
-  { value: "ORGANISER", label: "Organiser" },
-  { value: "MEDIA", label: "Media (approved by AIRDC)" },
+  { value: "MEDIA_SPEAKER_ORGANISER", label: "Media / Speaker / Organiser" },
 ];
 
 const feeMap: Record<string, string> = {
   AIRDC_MEMBER: "$350 USD",
   SUPERVISORY_AUTHORITY_MEMBER: "$350 USD",
-  NATIONAL_ASSOCIATION: "$350 USD",
   NON_MEMBER: "$500 USD",
   SUPERVISORY_AUTHORITY_NON_MEMBER: "$500 USD",
-  SPONSOR: "Complimentary (per sponsorship agreement)",
-  SPEAKER: "Complimentary (per invitation)",
-  ORGANISER: "Complimentary",
-  MEDIA: "Contact us — media@airdczim.co.zw",
+  MEDIA_SPEAKER_ORGANISER: "$0.00",
 };
 
 const branches = [

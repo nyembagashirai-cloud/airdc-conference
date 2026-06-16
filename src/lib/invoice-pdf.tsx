@@ -325,7 +325,7 @@ function InvoiceDocument(props: InvoicePdfData) {
     month: "long",
     year: "numeric",
   });
-  const feeDisplay = isComplimentary ? "Complimentary" : ("USD $" + fee);
+  const feeDisplay = isComplimentary ? "USD $0.00" : ("USD $" + fee);
   const totalDisplay = isComplimentary ? "USD $0.00" : ("USD $" + fee);
 
   return (
@@ -367,7 +367,7 @@ function InvoiceDocument(props: InvoicePdfData) {
             <View style={styles.invoiceMetaRow}>
               <Text style={styles.invoiceMetaLabel}>Status:</Text>
               <Text style={[styles.invoiceMetaValue, { color: isComplimentary ? "#16A34A" : AMBER_BORDER }]}>
-                {isComplimentary ? "Complimentary" : "Awaiting Payment"}
+                {isComplimentary ? "No Payment Required" : "Awaiting Payment"}
               </Text>
             </View>
           </View>
@@ -415,7 +415,7 @@ function InvoiceDocument(props: InvoicePdfData) {
           {isComplimentary ? (
             <View style={styles.complimentaryBox}>
               <Text style={styles.complimentaryText}>
-                ✓  This registration is complimentary. No payment is required.
+                ✓  This delegate is fee-exempt. No payment is required.
               </Text>
             </View>
           ) : (
