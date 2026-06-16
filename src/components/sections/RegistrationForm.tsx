@@ -146,6 +146,7 @@ export function RegistrationForm() {
       if (!res.ok) throw new Error("Submission failed");
       setConfirmationCode(json.confirmationCode ?? "");
       setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
       setError("Something went wrong. Please try again or email us at info@airdczim.co.zw");
     } finally {
