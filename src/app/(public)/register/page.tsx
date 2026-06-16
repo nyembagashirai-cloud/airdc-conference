@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { RegistrationForm } from "@/components/sections/RegistrationForm";
-import { CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Register",
@@ -73,27 +72,6 @@ export default function RegisterPage() {
                 </p>
               </div>
 
-              {/* What's included */}
-              <div className="card-premium p-6">
-                <h3 className="font-heading font-bold text-primary mb-4">What&apos;s Included</h3>
-                <ul className="space-y-2">
-                  {[
-                    "Access to all plenary sessions",
-                    "Workshops & breakout sessions",
-                    "Conference materials",
-                    "Welcome Reception",
-                    "Networking events",
-                    "Gala Dinner",
-                    "Tea/Coffee & Lunch breaks",
-                    "Certificate of attendance",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-foreground/80">
-                      <CheckCircle2 size={16} className="text-primary mt-0.5 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </div>
 
             {/* Registration Form */}
