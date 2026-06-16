@@ -10,7 +10,7 @@ const hotels = [
     address: "Pennefather Avenue, Harare",
     badge: "Conference Venue",
     featured: true,
-    image: "https://rtgafrica.com/wp-content/uploads/2021/08/Lobby-1.jpg",
+    image: "/images/rainbow-hotel.webp",
     website: "https://rtgafrica.com/rainbow-towers-hotel/",
     fromRate: "$130",
     rateNote: "B&B · Single/Twin from",
