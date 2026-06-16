@@ -1,6 +1,5 @@
 import { HeroSection } from "@/components/sections/HeroSection";
 import { WelcomeSection } from "@/components/sections/WelcomeSection";
-import { WhyAttendSection } from "@/components/sections/WhyAttendSection";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { SpeakersPreview } from "@/components/sections/SpeakersPreview";
 import { ProgrammeHighlights } from "@/components/sections/ProgrammeHighlights";
@@ -31,7 +30,6 @@ export default function HomePage() {
           </a>
         </div>
       </section>
-      <WhyAttendSection />
       <StatsSection />
       <SpeakersPreview />
       <ProgrammeHighlights />
