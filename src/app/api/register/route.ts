@@ -276,7 +276,7 @@ export async function GET() {
   }
 }
 
-export async function DELETE() {
+export async function DELETE(req: NextRequest) {
   const { auth } = await import("@/auth");
   const session = await auth();
   if (!session) {
@@ -287,11 +287,20 @@ export async function DELETE() {
   }
   try {
     const { prisma } = await import("@/lib/prisma");
-    const { count } = await prisma.registration.deleteMany({});
-    console.log(`Admin deleted all ${count} registrations`);
+    // If IDs provided in body, delete only those; otherwise delete all
+    let ids: string[] | undefined;
+    try {
+      const body = await req.json();
+      if (Array.isArray(body.ids) && body.ids.length > 0) ids = body.ids;
+    } catch { /* no body = delete all */ }
+
+    const { count } = await prisma.registration.deleteMany(
+      ids ? { where: { id: { in: ids } } } : {}
+    );
+    console.log(`Admin deleted ${count} registrations${ids ? ` (selected)` : ` (all)`}`);
     return NextResponse.json({ success: true, deleted: count });
   } catch (error) {
-    console.error("Delete all registrations error:", error);
+    console.error("Delete registrations error:", error);
     return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
   }
 }
