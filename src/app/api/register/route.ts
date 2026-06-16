@@ -132,17 +132,35 @@ async function sendConfirmationEmail(data: {
     '<p style="color:rgba(255,255,255,.6);font-size:12px;margin:0">2026 AIRDC &mdash; 24th Annual Conference &mdash; Harare, Zimbabwe</p>' +
     '<p style="color:rgba(255,255,255,.4);font-size:11px;margin:4px 0 0">www.airdczim.co.zw</p></div></div>';
 
-  const invoicePdfBuffer = await generateInvoicePdf({
-    fullName: (data.civility ? data.civility + " " : "") + data.firstName + " " + data.lastName,
-    email: data.email,
-    organisation: data.organisation,
-    country: data.country,
-    delegateLabel: getDelegateLabel(data.delegateType),
-    confirmationCode: data.confirmationCode,
-    fee,
-    isComplimentary,
-  });
-  const invoiceBase64 = invoicePdfBuffer.toString("base64");
+  // Try to generate PDF — if it fails, still send the email without attachment
+  let attachments: { filename: string; content: string }[] = [];
+  try {
+    const invoicePdfBuffer = await generateInvoicePdf({
+      fullName: (data.civility ? data.civility + " " : "") + data.firstName + " " + data.lastName,
+      email: data.email,
+      organisation: data.organisation,
+      country: data.country,
+      delegateLabel: getDelegateLabel(data.delegateType),
+      confirmationCode: data.confirmationCode,
+      fee,
+      isComplimentary,
+    });
+    const invoiceBase64 = invoicePdfBuffer.toString("base64");
+    attachments = [{ filename: `AIRDC2026-Invoice-${data.confirmationCode}.pdf`, content: invoiceBase64 }];
+    console.log("PDF generated successfully for", data.confirmationCode);
+  } catch (pdfError) {
+    console.error("PDF generation failed (sending email without attachment):", pdfError);
+  }
+
+  const emailPayload = {
+    from: "AIRDC 2026 <noreply@airdczim.co.zw>",
+    to: data.email,
+    subject: `Registration Confirmed — AIRDC 2026 — ${data.confirmationCode}`,
+    html,
+    ...(attachments.length > 0 && { attachments }),
+  };
+
+  console.log("Sending email to:", data.email, "with attachment:", attachments.length > 0);
 
   const resendRes = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -150,21 +168,15 @@ async function sendConfirmationEmail(data: {
       "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      from: "AIRDC 2026 <noreply@airdczim.co.zw>",
-      to: data.email,
-      subject: `Registration Confirmed — AIRDC 2026 — ${data.confirmationCode}`,
-      html,
-      attachments: [
-        { filename: `AIRDC2026-Invoice-${data.confirmationCode}.pdf`, content: invoiceBase64 },
-      ],
-    }),
+    body: JSON.stringify(emailPayload),
   });
+
+  const resendBody = await resendRes.json().catch(() => ({}));
   if (!resendRes.ok) {
-    const resendError = await resendRes.json().catch(() => ({}));
-    console.error("Resend API error:", resendRes.status, JSON.stringify(resendError));
-    throw new Error(`Resend ${resendRes.status}: ${JSON.stringify(resendError)}`);
+    console.error("Resend API error:", resendRes.status, JSON.stringify(resendBody));
+    throw new Error(`Resend ${resendRes.status}: ${JSON.stringify(resendBody)}`);
   }
+  console.log("Email sent successfully:", JSON.stringify(resendBody));
 }
 
 export async function POST(req: NextRequest) {
