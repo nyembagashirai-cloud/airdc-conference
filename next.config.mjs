@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  serverExternalPackages: ["@react-pdf/renderer", "canvas"],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
