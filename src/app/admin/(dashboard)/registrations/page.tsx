@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Users, Download, Search, Mail, Building, X, Plane, FileText, Phone, MapPin } from "lucide-react";
+import { Users, Download, Search, Mail, Building, X, Plane, FileText, Phone, MapPin, Trash2 } from "lucide-react";
 
 type Registration = {
   id: string;
@@ -100,6 +100,27 @@ export default function AdminRegistrationsPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<Registration | null>(null);
+  const [clearing, setClearing] = useState(false);
+
+  const clearAllRegistrations = async () => {
+    if (!confirm(`⚠️ This will permanently delete ALL ${registrations.length} registrations. This cannot be undone.\n\nAre you sure?`)) return;
+    if (!confirm("Second confirmation: Delete ALL registrations permanently?")) return;
+    setClearing(true);
+    try {
+      const res = await fetch("/api/register", { method: "DELETE" });
+      const data = await res.json();
+      if (res.ok) {
+        setRegistrations([]);
+        alert(`✅ Done — ${data.deleted} registrations deleted.`);
+      } else {
+        alert("Error: " + (data.error || "Failed to delete"));
+      }
+    } catch {
+      alert("Network error. Please try again.");
+    } finally {
+      setClearing(false);
+    }
+  };
 
   useEffect(() => {
     fetch("/api/register")
@@ -135,9 +156,16 @@ export default function AdminRegistrationsPage() {
           <h1 className="text-2xl font-bold text-gray-900">Registrations</h1>
           <p className="text-gray-500 text-sm mt-1">{registrations.length} delegates registered</p>
         </div>
-        <button onClick={downloadCSV} className="flex items-center gap-2 bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-600">
-          <Download size={16} /> Export CSV
-        </button>
+        <div className="flex gap-3">
+          <button onClick={downloadCSV} className="flex items-center gap-2 bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-600">
+            <Download size={16} /> Export CSV
+          </button>
+          {registrations.length > 0 && (
+            <button onClick={clearAllRegistrations} disabled={clearing} className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 disabled:opacity-50">
+              <Trash2 size={16} /> {clearing ? "Clearing..." : "Clear All Test Data"}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Stats */}

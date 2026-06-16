@@ -275,3 +275,23 @@ export async function GET() {
     return NextResponse.json({ registrations: [] });
   }
 }
+
+export async function DELETE() {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (!process.env.DATABASE_URL) {
+    return NextResponse.json({ error: "No database" }, { status: 500 });
+  }
+  try {
+    const { prisma } = await import("@/lib/prisma");
+    const { count } = await prisma.registration.deleteMany({});
+    console.log(`Admin deleted all ${count} registrations`);
+    return NextResponse.json({ success: true, deleted: count });
+  } catch (error) {
+    console.error("Delete all registrations error:", error);
+    return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
+  }
+}
