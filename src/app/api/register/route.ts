@@ -135,6 +135,17 @@ async function sendConfirmationEmail(data: {
   // Try to generate PDF — if it fails, still send the email without attachment
   let attachments: { filename: string; content: string }[] = [];
   try {
+    const fs = await import("fs");
+    const path = await import("path");
+    const logoPath = path.join(process.cwd(), "public", "images", "logo.png");
+    let logoBase64: string | undefined;
+    try {
+      const logoBuffer = fs.readFileSync(logoPath);
+      logoBase64 = "data:image/png;base64," + logoBuffer.toString("base64");
+    } catch {
+      console.warn("Logo not found at", logoPath, "— PDF will render without logo");
+    }
+
     const invoicePdfBuffer = await generateInvoicePdf({
       fullName: (data.civility ? data.civility + " " : "") + data.firstName + " " + data.lastName,
       email: data.email,
@@ -144,6 +155,7 @@ async function sendConfirmationEmail(data: {
       confirmationCode: data.confirmationCode,
       fee,
       isComplimentary,
+      logoBase64,
     });
     const invoiceBase64 = invoicePdfBuffer.toString("base64");
     attachments = [{ filename: `AIRDC2026-Invoice-${data.confirmationCode}.pdf`, content: invoiceBase64 }];

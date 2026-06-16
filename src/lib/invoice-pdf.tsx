@@ -8,7 +8,6 @@ import {
   StyleSheet,
   renderToBuffer,
 } from "@react-pdf/renderer";
-import path from "path";
 
 const PRIMARY = "#0D3B66";
 const PRIMARY_MID = "#1D4E89";
@@ -305,6 +304,7 @@ export interface InvoicePdfData {
   confirmationCode: string;
   fee: string;
   isComplimentary: boolean;
+  logoBase64?: string;
 }
 
 function InvoiceDocument(props: InvoicePdfData) {
@@ -317,9 +317,9 @@ function InvoiceDocument(props: InvoicePdfData) {
     confirmationCode,
     fee,
     isComplimentary,
+    logoBase64,
   } = props;
 
-  const logoPath = path.join(process.cwd(), "public", "images", "logo.png");
   const today = new Date().toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "long",
@@ -338,7 +338,7 @@ function InvoiceDocument(props: InvoicePdfData) {
 
         {/* ── Header ── */}
         <View style={styles.header}>
-          <Image src={logoPath} style={styles.logo} />
+          {logoBase64 && <Image src={logoBase64} style={styles.logo} />}
           <View style={styles.headerTextBlock}>
             <Text style={styles.headerTitle}>AIRDC 2026</Text>
             <Text style={styles.headerSub}>24th Annual Conference • Harare, Zimbabwe</Text>
