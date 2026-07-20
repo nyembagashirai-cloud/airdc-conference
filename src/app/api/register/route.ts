@@ -295,7 +295,7 @@ export async function DELETE(req: NextRequest) {
     } catch { /* no body = delete all */ }
 
     const { count } = await prisma.registration.deleteMany(
-      ids ? { where: { id: { in: ids } } } : {}
+      ids ? { where: { id: { in: ids } } } : undefined
     );
     console.log(`Admin deleted ${count} registrations${ids ? ` (selected)` : ` (all)`}`);
     return NextResponse.json({ success: true, deleted: count });
