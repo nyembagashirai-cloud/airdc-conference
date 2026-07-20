@@ -231,15 +231,63 @@ const styles = StyleSheet.create({
     color: AMBER_LABEL,
     letterSpacing: 1,
     textTransform: "uppercase",
-    marginBottom: 6,
+    marginBottom: 8,
   },
   paymentText: {
     fontSize: 9,
     color: AMBER_TEXT,
     lineHeight: 1.6,
+    marginBottom: 8,
   },
   paymentCode: {
     fontFamily: "Helvetica-Bold",
+  },
+  // ── Bank details table ───────────────────────────
+  bankTable: {
+    borderWidth: 1,
+    borderColor: AMBER_BORDER,
+    borderRadius: 2,
+    marginTop: 6,
+    marginBottom: 4,
+    overflow: "hidden",
+  },
+  bankRow: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderBottomColor: AMBER_BORDER,
+  },
+  bankRowLast: {
+    flexDirection: "row",
+  },
+  bankCell: {
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+  },
+  bankCellLabel: {
+    width: 120,
+    backgroundColor: "#FEF3C7",
+    borderRightWidth: 1,
+    borderRightColor: AMBER_BORDER,
+  },
+  bankCellValue: {
+    flex: 1,
+    backgroundColor: AMBER_BG,
+  },
+  bankCellLabelText: {
+    fontSize: 8,
+    fontFamily: "Helvetica-Bold",
+    color: AMBER_LABEL,
+  },
+  bankCellValueText: {
+    fontSize: 8,
+    color: AMBER_TEXT,
+    fontFamily: "Helvetica-Bold",
+  },
+  bankNote: {
+    fontSize: 8,
+    color: AMBER_TEXT,
+    lineHeight: 1.5,
+    marginTop: 6,
   },
   // ── Event details ────────────────────────────────
   eventBox: {
@@ -422,10 +470,67 @@ function InvoiceDocument(props: InvoicePdfData) {
             <View style={styles.paymentBox}>
               <Text style={styles.paymentLabel}>Payment Instructions</Text>
               <Text style={styles.paymentText}>
-                A member of the AIRDC 2026 Local Organising Committee will contact you within 48 hours
-                with full bank transfer details. Please reference your confirmation code{" "}
-                <Text style={styles.paymentCode}>{confirmationCode}</Text> in all payment correspondence.
-                {" "}All payments must be made in USD. Bank charges are the responsibility of the delegate.
+                Please transfer the amount due to the bank account below. Use your confirmation code{" "}
+                <Text style={styles.paymentCode}>{confirmationCode}</Text> as the payment reference.
+                Bank charges are the responsibility of the delegate.
+              </Text>
+
+              {/* Bank details table */}
+              <View style={styles.bankTable}>
+                <View style={styles.bankRow}>
+                  <View style={[styles.bankCell, styles.bankCellLabel]}>
+                    <Text style={styles.bankCellLabelText}>Bank</Text>
+                  </View>
+                  <View style={[styles.bankCell, styles.bankCellValue]}>
+                    <Text style={styles.bankCellValueText}>FBC Bank</Text>
+                  </View>
+                </View>
+                <View style={styles.bankRow}>
+                  <View style={[styles.bankCell, styles.bankCellLabel]}>
+                    <Text style={styles.bankCellLabelText}>Account Name</Text>
+                  </View>
+                  <View style={[styles.bankCell, styles.bankCellValue]}>
+                    <Text style={styles.bankCellValueText}>
+                      ASSOCIATION OF INSURERS AND REINSURERS OF DEVELOPING COUNTRIES
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.bankRow}>
+                  <View style={[styles.bankCell, styles.bankCellLabel]}>
+                    <Text style={styles.bankCellLabelText}>Account Number (USD)</Text>
+                  </View>
+                  <View style={[styles.bankCell, styles.bankCellValue]}>
+                    <Text style={styles.bankCellValueText}>1070455180152</Text>
+                  </View>
+                </View>
+                <View style={styles.bankRow}>
+                  <View style={[styles.bankCell, styles.bankCellLabel]}>
+                    <Text style={styles.bankCellLabelText}>Branch Name</Text>
+                  </View>
+                  <View style={[styles.bankCell, styles.bankCellValue]}>
+                    <Text style={styles.bankCellValueText}>FBC Centre</Text>
+                  </View>
+                </View>
+                <View style={styles.bankRow}>
+                  <View style={[styles.bankCell, styles.bankCellLabel]}>
+                    <Text style={styles.bankCellLabelText}>Branch Sort Code</Text>
+                  </View>
+                  <View style={[styles.bankCell, styles.bankCellValue]}>
+                    <Text style={styles.bankCellValueText}>8120</Text>
+                  </View>
+                </View>
+                <View style={styles.bankRowLast}>
+                  <View style={[styles.bankCell, styles.bankCellLabel]}>
+                    <Text style={styles.bankCellLabelText}>Swift Code</Text>
+                  </View>
+                  <View style={[styles.bankCell, styles.bankCellValue]}>
+                    <Text style={styles.bankCellValueText}>FBCPZWHA</Text>
+                  </View>
+                </View>
+              </View>
+
+              <Text style={styles.bankNote}>
+                After payment, please email your proof of payment to info@airdczim.co.zw with your confirmation code.
               </Text>
             </View>
           )}
