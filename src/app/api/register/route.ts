@@ -91,11 +91,37 @@ async function sendConfirmationEmail(data: {
   const delegateLabel = getDelegateLabel(data.delegateType);
   const feeDisplay = isComplimentary ? "USD $0.00" : ("USD $" + fee);
   const paymentEmailBlock = isComplimentary ? "" :
-    '<div style="background:#FEF3C7;border:1px solid #D97706;border-radius:8px;padding:16px 20px;margin:20px 0">' +
-    '<p style="margin:0 0 6px;color:#92400E;font-size:13px;font-weight:700">Payment Instructions</p>' +
-    '<p style="margin:0;color:#78350F;font-size:13px;line-height:1.6">Your proforma invoice is attached. ' +
-    'A member of our team will contact you within 48 hours with full payment instructions. ' +
-    'Please reference <strong>' + data.confirmationCode + '</strong> in all payment correspondence.</p></div>';
+    '<div style="background:#FEF9ED;border:1px solid #D97706;border-radius:8px;padding:16px 20px;margin:20px 0">' +
+    '<p style="margin:0 0 10px;color:#92400E;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Payment Instructions</p>' +
+    '<p style="margin:0 0 12px;color:#78350F;font-size:13px;line-height:1.6">Please transfer the registration fee to the bank account below. Use your confirmation code <strong>' + data.confirmationCode + '</strong> as the payment reference. Bank charges are the responsibility of the delegate.</p>' +
+    '<table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:10px">' +
+      '<tr style="border-bottom:1px solid #D97706">' +
+        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E;width:40%">Bank</td>' +
+        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">FBC Bank</td>' +
+      '</tr>' +
+      '<tr style="border-bottom:1px solid #D97706">' +
+        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E">Account Name</td>' +
+        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">ASSOCIATION OF INSURERS AND REINSURERS OF DEVELOPING COUNTRIES</td>' +
+      '</tr>' +
+      '<tr style="border-bottom:1px solid #D97706">' +
+        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E">Account Number (USD)</td>' +
+        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">1070455180152</td>' +
+      '</tr>' +
+      '<tr style="border-bottom:1px solid #D97706">' +
+        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E">Branch Name</td>' +
+        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">FBC Centre</td>' +
+      '</tr>' +
+      '<tr style="border-bottom:1px solid #D97706">' +
+        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E">Branch Sort Code</td>' +
+        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">8120</td>' +
+      '</tr>' +
+      '<tr>' +
+        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E">Swift Code</td>' +
+        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">FBCPZWHA</td>' +
+      '</tr>' +
+    '</table>' +
+    '<p style="margin:0;color:#78350F;font-size:12px;line-height:1.6">After payment, please email your proof of payment to <strong>info@airdczim.co.zw</strong> quoting your confirmation code.</p>' +
+    '</div>';
 
   const html =
     '<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff">' +
