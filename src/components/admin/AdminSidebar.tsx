@@ -16,7 +16,7 @@ const navItems = [
   { href: "/admin/programme", icon: CalendarDays, label: "Programme" },
   { href: "/admin/news", icon: Newspaper, label: "News & Updates" },
   { href: "/admin/gallery", icon: Images, label: "Gallery" },
-  { href: "/admin/contacts", icon: MessageSquare, label: "Contacts" },
+  { href: "/admin/contacts", icon: MessageSquare, label: "Messages" },
 ];
 
 export function AdminSidebar() {

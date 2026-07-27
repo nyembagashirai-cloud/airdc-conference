@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Users, UserCheck, MessageSquare, Calendar, Award, Newspaper } from "lucide-react";
 
 async function getStats() {
@@ -49,11 +50,13 @@ export default async function AdminDashboard() {
       text: `${r.firstName} ${r.lastName} (${r.organisation}) registered`,
       time: new Date(r.createdAt).toLocaleDateString(),
       color: "bg-primary",
+      href: "/admin/registrations",
     })),
     ...recentContacts.map(c => ({
       text: `New message from ${c.name} — ${c.subject}`,
       time: new Date(c.createdAt).toLocaleDateString(),
       color: "bg-purple-500",
+      href: "/admin/contacts",
     })),
   ].sort((a, b) => b.time.localeCompare(a.time)).slice(0, 6);
 
@@ -100,11 +103,11 @@ export default async function AdminDashboard() {
         ) : (
           <div className="space-y-3">
             {recentActivity.map((item, i) => (
-              <div key={i} className="flex items-center gap-3 py-2 border-b border-border last:border-0">
+              <Link key={i} href={item.href} className="flex items-center gap-3 py-2 border-b border-border last:border-0 hover:bg-gray-50 rounded-lg px-2 -mx-2 transition-colors">
                 <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.color}`} />
                 <p className="text-sm text-foreground flex-1">{item.text}</p>
                 <span className="text-xs text-muted-foreground">{item.time}</span>
-              </div>
+              </Link>
             ))}
           </div>
         )}
