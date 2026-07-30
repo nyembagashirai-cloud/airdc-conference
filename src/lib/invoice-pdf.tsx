@@ -6,8 +6,12 @@ import {
   View,
   Image,
   StyleSheet,
+  Font,
   renderToBuffer,
 } from "@react-pdf/renderer";
+
+// Never break words mid-syllable (avoids "Confer-ence")
+Font.registerHyphenationCallback((word) => [word]);
 
 const PRIMARY = "#0D3B66";
 const PRIMARY_MID = "#1D4E89";
@@ -29,12 +33,13 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     fontSize: 10,
     color: DARK,
+    paddingBottom: 48, // reserve room for the fixed footer
   },
   // ── Header ──────────────────────────────────────
   header: {
     backgroundColor: PRIMARY,
     paddingHorizontal: 40,
-    paddingVertical: 28,
+    paddingVertical: 22,
     flexDirection: "row",
     alignItems: "center",
     gap: 16,
@@ -81,7 +86,7 @@ const styles = StyleSheet.create({
   invoiceStrip: {
     backgroundColor: LIGHT_GRAY,
     paddingHorizontal: 40,
-    paddingVertical: 14,
+    paddingVertical: 12,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -117,11 +122,11 @@ const styles = StyleSheet.create({
   // ── Body ────────────────────────────────────────
   body: {
     paddingHorizontal: 40,
-    paddingTop: 24,
+    paddingTop: 16,
   },
   // ── Bill To ─────────────────────────────────────
   billToSection: {
-    marginBottom: 24,
+    marginBottom: 14,
   },
   sectionLabel: {
     fontSize: 8,
@@ -147,7 +152,7 @@ const styles = StyleSheet.create({
   },
   // ── Line items table ─────────────────────────────
   table: {
-    marginBottom: 16,
+    marginBottom: 10,
   },
   tableHeader: {
     flexDirection: "row",
@@ -183,7 +188,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
     backgroundColor: PRIMARY,
-    marginBottom: 20,
+    marginBottom: 14,
   },
   totalLabel: {
     flex: 1,
@@ -222,8 +227,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: AMBER_BORDER,
     borderRadius: 4,
-    padding: 14,
-    marginBottom: 20,
+    padding: 12,
+    marginBottom: 12,
   },
   paymentLabel: {
     fontSize: 9,
@@ -261,7 +266,7 @@ const styles = StyleSheet.create({
   },
   bankCell: {
     paddingHorizontal: 8,
-    paddingVertical: 5,
+    paddingVertical: 4,
   },
   bankCellLabel: {
     width: 120,
@@ -294,10 +299,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: BORDER,
     borderRadius: 4,
-    padding: 14,
-    marginBottom: 24,
+    padding: 12,
+    marginBottom: 12,
     flexDirection: "row",
-    gap: 32,
+    gap: 24,
   },
   eventItem: {
     flex: 1,
@@ -316,13 +321,16 @@ const styles = StyleSheet.create({
   },
   // ── Footer ───────────────────────────────────────
   footer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
     backgroundColor: PRIMARY,
     paddingHorizontal: 40,
-    paddingVertical: 14,
+    paddingVertical: 13,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: "auto",
   },
   footerText: {
     color: "rgba(255,255,255,0.5)",
@@ -338,7 +346,7 @@ const styles = StyleSheet.create({
     fontSize: 8,
     color: GRAY,
     textAlign: "center",
-    marginBottom: 12,
+    marginBottom: 4,
     lineHeight: 1.5,
   },
 });
@@ -463,7 +471,7 @@ function InvoiceDocument(props: InvoicePdfData) {
           {isComplimentary ? (
             <View style={styles.complimentaryBox}>
               <Text style={styles.complimentaryText}>
-                ✓  This delegate is fee-exempt. No payment is required.
+                This delegate is fee-exempt. No payment is required.
               </Text>
             </View>
           ) : (
@@ -548,7 +556,7 @@ function InvoiceDocument(props: InvoicePdfData) {
             </View>
             <View style={styles.eventItem}>
               <Text style={styles.eventItemLabel}>Venue</Text>
-              <Text style={styles.eventItemValue}>Rainbow Towers Hotel{" "}Harare, Zimbabwe</Text>
+              <Text style={styles.eventItemValue}>Rainbow Towers Hotel, Harare</Text>
             </View>
           </View>
 
@@ -561,7 +569,7 @@ function InvoiceDocument(props: InvoicePdfData) {
         </View>
 
         {/* ── Footer ── */}
-        <View style={styles.footer}>
+        <View style={styles.footer} fixed>
           <Text style={styles.footerText}>Association of Insurers and Reinsurers of Developing Countries</Text>
           <Text style={styles.footerBold}>www.airdczim.co.zw</Text>
         </View>

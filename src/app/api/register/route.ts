@@ -3,6 +3,9 @@ import { z } from "zod";
 import { generateInvoicePdf } from "@/lib/invoice-pdf";
 
 export const dynamic = "force-dynamic";
+// PDF rendering needs the Node runtime (fs + @react-pdf/renderer)
+export const runtime = "nodejs";
+export const maxDuration = 30;
 
 const schema = z.object({
   civility: z.enum(["Mr.", "Mrs.", "Ms."]).optional(),
@@ -123,6 +126,48 @@ async function sendConfirmationEmail(data: {
     '<p style="margin:0;color:#78350F;font-size:12px;line-height:1.6">After payment, please email your proof of payment to <strong>info@airdczim.co.zw</strong> quoting your confirmation code.</p>' +
     '</div>';
 
+  // Generate the PDF proforma invoice — if it fails, still send the email without it
+  let attachments: { filename: string; content: string }[] = [];
+  try {
+    const fs = await import("fs");
+    const path = await import("path");
+    const logoPath = path.join(process.cwd(), "public", "images", "logo.png");
+    let logoBase64: string | undefined;
+    try {
+      const logoBuffer = fs.readFileSync(logoPath);
+      logoBase64 = "data:image/png;base64," + logoBuffer.toString("base64");
+    } catch {
+      console.warn("Logo not found at", logoPath, "— PDF will render without logo");
+    }
+
+    const invoicePdfBuffer = await generateInvoicePdf({
+      fullName: (data.civility ? data.civility + " " : "") + data.firstName + " " + data.lastName,
+      email: data.email,
+      organisation: data.organisation,
+      country: data.country,
+      delegateLabel,
+      confirmationCode: data.confirmationCode,
+      fee,
+      isComplimentary,
+      logoBase64,
+    });
+    attachments = [{
+      filename: `AIRDC2026-Invoice-${data.confirmationCode}.pdf`,
+      content: invoicePdfBuffer.toString("base64"),
+    }];
+    console.log("PDF invoice generated for", data.confirmationCode, invoicePdfBuffer.length, "bytes");
+  } catch (pdfError) {
+    console.error("PDF generation failed (sending email without attachment):", pdfError);
+  }
+
+  const invoiceNotice = attachments.length === 0 ? "" :
+    '<div style="background:#F0F6FC;border:1px solid #C7D9EC;border-radius:8px;padding:14px 18px;margin:20px 0">' +
+    '<p style="margin:0;color:#0D3B66;font-size:13px;line-height:1.6">' +
+    '<strong>&#128206; Your invoice is attached to this email</strong><br/>' +
+    'A PDF proforma invoice (<strong>AIRDC2026-Invoice-' + data.confirmationCode + '.pdf</strong>) is attached, ' +
+    'including the full banking details for payment. Please forward it to your finance department if required.' +
+    '</p></div>';
+
   const html =
     '<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff">' +
     '<div style="background:linear-gradient(135deg,#0D3B66,#1D4E89);padding:40px 32px;text-align:center">' +
@@ -152,43 +197,12 @@ async function sendConfirmationEmail(data: {
     '<tr><td style="padding:10px 0;color:#6B7280;font-size:14px">Venue</td>' +
     '<td style="padding:10px 0;color:#111827;font-size:14px">Rainbow Towers Hotel, Harare, Zimbabwe</td></tr></table>' +
     paymentEmailBlock +
+    invoiceNotice +
     '<p style="color:#374151;font-size:14px">Further details including the full programme, accommodation guide and visa information will be sent closer to the conference date.</p>' +
     '<p style="color:#374151;font-size:14px">For enquiries, contact us at <a href="mailto:info@airdczim.co.zw" style="color:#0D3B66">info@airdczim.co.zw</a></p></div>' +
     '<div style="background:#0D3B66;padding:24px 32px;text-align:center">' +
     '<p style="color:rgba(255,255,255,.6);font-size:12px;margin:0">2026 AIRDC &mdash; 24th Annual Conference &mdash; Harare, Zimbabwe</p>' +
     '<p style="color:rgba(255,255,255,.4);font-size:11px;margin:4px 0 0">www.airdczim.co.zw</p></div></div>';
-
-  // Try to generate PDF — if it fails, still send the email without attachment
-  let attachments: { filename: string; content: string }[] = [];
-  try {
-    const fs = await import("fs");
-    const path = await import("path");
-    const logoPath = path.join(process.cwd(), "public", "images", "logo.png");
-    let logoBase64: string | undefined;
-    try {
-      const logoBuffer = fs.readFileSync(logoPath);
-      logoBase64 = "data:image/png;base64," + logoBuffer.toString("base64");
-    } catch {
-      console.warn("Logo not found at", logoPath, "— PDF will render without logo");
-    }
-
-    const invoicePdfBuffer = await generateInvoicePdf({
-      fullName: (data.civility ? data.civility + " " : "") + data.firstName + " " + data.lastName,
-      email: data.email,
-      organisation: data.organisation,
-      country: data.country,
-      delegateLabel: getDelegateLabel(data.delegateType),
-      confirmationCode: data.confirmationCode,
-      fee,
-      isComplimentary,
-      logoBase64,
-    });
-    const invoiceBase64 = invoicePdfBuffer.toString("base64");
-    attachments = [{ filename: `AIRDC2026-Invoice-${data.confirmationCode}.pdf`, content: invoiceBase64 }];
-    console.log("PDF generated successfully for", data.confirmationCode);
-  } catch (pdfError) {
-    console.error("PDF generation failed (sending email without attachment):", pdfError);
-  }
 
   const emailPayload = {
     from: "AIRDC 2026 <noreply@airdczim.co.zw>",

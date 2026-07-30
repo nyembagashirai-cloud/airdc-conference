@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   serverExternalPackages: ["@react-pdf/renderer", "canvas"],
+  // The PDF invoice reads the logo off disk at runtime. Vercel's file tracing
+  // can't see that dynamic read, so include it in the lambda explicitly —
+  // otherwise the invoice renders without the AIRDC logo in production.
+  outputFileTracingIncludes: {
+    "/api/register": ["./public/images/logo.png"],
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
