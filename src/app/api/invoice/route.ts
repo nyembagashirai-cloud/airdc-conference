@@ -31,7 +31,7 @@ function getDelegateLabel(delegateType: string): string {
  * Loads the AIRDC logo as a base64 data URI for embedding in the PDF.
  * Returns undefined (and logs) if the file isn't present in the deployment.
  */
-export async function loadLogoBase64(): Promise<{ logo?: string; logoError?: string }> {
+async function loadLogoBase64(): Promise<{ logo?: string; logoError?: string }> {
   try {
     const fs = await import("fs");
     const path = await import("path");
