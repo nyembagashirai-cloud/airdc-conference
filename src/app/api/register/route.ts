@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { generateInvoicePdf } from "@/lib/invoice-pdf";
+import { sendConfirmationEmail } from "@/lib/confirmation-email";
 
 export const dynamic = "force-dynamic";
 // PDF rendering needs the Node runtime (fs + @react-pdf/renderer)
@@ -53,182 +53,6 @@ async function verifyTurnstile(token: string): Promise<boolean> {
 
 function generateCode(): string {
   return "AIRDC26-" + Math.random().toString(36).substring(2, 8).toUpperCase();
-}
-
-function getRegistrationFee(delegateType: string): string {
-  const feeMap: Record<string, string> = {
-    AIRDC_MEMBER: "350.00",
-    SUPERVISORY_AUTHORITY_MEMBER: "350.00",
-    NON_MEMBER: "500.00",
-    SUPERVISORY_AUTHORITY_NON_MEMBER: "500.00",
-    MEDIA_SPEAKER_ORGANISER: "0.00",
-  };
-  return feeMap[delegateType] ?? "0.00";
-}
-
-function getDelegateLabel(delegateType: string): string {
-  const labels: Record<string, string> = {
-    AIRDC_MEMBER: "AIRDC Member",
-    NON_MEMBER: "Non Member",
-    SUPERVISORY_AUTHORITY_MEMBER: "Supervisory Authority / AIRDC Member",
-    SUPERVISORY_AUTHORITY_NON_MEMBER: "Supervisory Authority / Non Member",
-    MEDIA_SPEAKER_ORGANISER: "Media / Speaker / Organiser",
-  };
-  return labels[delegateType] ?? delegateType;
-}
-
-async function sendConfirmationEmail(data: {
-  civility?: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  organisation: string;
-  country: string;
-  delegateType: string;
-  confirmationCode: string;
-}) {
-  if (!process.env.RESEND_API_KEY) return;
-
-  const fee = getRegistrationFee(data.delegateType);
-  const isComplimentary = fee === "0.00";
-  const delegateLabel = getDelegateLabel(data.delegateType);
-  const feeDisplay = isComplimentary ? "USD $0.00" : ("USD $" + fee);
-  const paymentEmailBlock = isComplimentary ? "" :
-    '<div style="background:#FEF9ED;border:1px solid #D97706;border-radius:8px;padding:16px 20px;margin:20px 0">' +
-    '<p style="margin:0 0 10px;color:#92400E;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Payment Instructions</p>' +
-    '<p style="margin:0 0 12px;color:#78350F;font-size:13px;line-height:1.6">Please transfer the registration fee to the bank account below. Use your confirmation code <strong>' + data.confirmationCode + '</strong> as the payment reference. Bank charges are the responsibility of the delegate.</p>' +
-    '<table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:10px">' +
-      '<tr style="border-bottom:1px solid #D97706">' +
-        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E;width:40%">Bank</td>' +
-        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">FBC Bank</td>' +
-      '</tr>' +
-      '<tr style="border-bottom:1px solid #D97706">' +
-        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E">Account Name</td>' +
-        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">ASSOCIATION OF INSURERS AND REINSURERS OF DEVELOPING COUNTRIES</td>' +
-      '</tr>' +
-      '<tr style="border-bottom:1px solid #D97706">' +
-        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E">Account Number (USD)</td>' +
-        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">1070455180152</td>' +
-      '</tr>' +
-      '<tr style="border-bottom:1px solid #D97706">' +
-        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E">Branch Name</td>' +
-        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">FBC Centre</td>' +
-      '</tr>' +
-      '<tr style="border-bottom:1px solid #D97706">' +
-        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E">Branch Sort Code</td>' +
-        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">8120</td>' +
-      '</tr>' +
-      '<tr>' +
-        '<td style="padding:7px 10px;background:#FEF3C7;font-weight:700;color:#92400E">Swift Code</td>' +
-        '<td style="padding:7px 10px;background:#FEF9ED;color:#78350F;font-weight:700">FBCPZWHA</td>' +
-      '</tr>' +
-    '</table>' +
-    '<p style="margin:0;color:#78350F;font-size:12px;line-height:1.6">After payment, please email your proof of payment to <strong>info@airdczim.co.zw</strong> quoting your confirmation code.</p>' +
-    '</div>';
-
-  // Generate the PDF proforma invoice — if it fails, still send the email without it
-  let attachments: { filename: string; content: string }[] = [];
-  try {
-    const fs = await import("fs");
-    const path = await import("path");
-    const logoPath = path.join(process.cwd(), "public", "images", "logo.png");
-    let logoBase64: string | undefined;
-    try {
-      const logoBuffer = fs.readFileSync(logoPath);
-      logoBase64 = "data:image/png;base64," + logoBuffer.toString("base64");
-    } catch {
-      console.warn("Logo not found at", logoPath, "— PDF will render without logo");
-    }
-
-    const invoicePdfBuffer = await generateInvoicePdf({
-      fullName: (data.civility ? data.civility + " " : "") + data.firstName + " " + data.lastName,
-      email: data.email,
-      organisation: data.organisation,
-      country: data.country,
-      delegateLabel,
-      confirmationCode: data.confirmationCode,
-      fee,
-      isComplimentary,
-      logoBase64,
-    });
-    attachments = [{
-      filename: `AIRDC2026-Invoice-${data.confirmationCode}.pdf`,
-      content: invoicePdfBuffer.toString("base64"),
-    }];
-    console.log("PDF invoice generated for", data.confirmationCode, invoicePdfBuffer.length, "bytes");
-  } catch (pdfError) {
-    console.error("PDF generation failed (sending email without attachment):", pdfError);
-  }
-
-  const invoiceNotice = attachments.length === 0 ? "" :
-    '<div style="background:#F0F6FC;border:1px solid #C7D9EC;border-radius:8px;padding:14px 18px;margin:20px 0">' +
-    '<p style="margin:0;color:#0D3B66;font-size:13px;line-height:1.6">' +
-    '<strong>&#128206; Your invoice is attached to this email</strong><br/>' +
-    'A PDF proforma invoice (<strong>AIRDC2026-Invoice-' + data.confirmationCode + '.pdf</strong>) is attached, ' +
-    'including the full banking details for payment. Please forward it to your finance department if required.' +
-    '</p></div>';
-
-  const html =
-    '<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff">' +
-    '<div style="background:linear-gradient(135deg,#0D3B66,#1D4E89);padding:40px 32px;text-align:center">' +
-    '<h1 style="color:#D4AF37;font-size:28px;margin:0">AIRDC 2026</h1>' +
-    '<p style="color:rgba(255,255,255,.8);margin:8px 0 0">24th Annual Conference &mdash; Zimbabwe</p></div>' +
-    '<div style="padding:40px 32px">' +
-    '<h2 style="color:#0D3B66;margin-top:0">Registration Confirmed</h2>' +
-    '<p style="color:#374151">Dear ' + data.firstName + ',</p>' +
-    '<p style="color:#374151">Thank you for registering for the <strong>24th AIRDC Annual Conference</strong>. Your place is secured.</p>' +
-    '<div style="background:#F8F9FA;border-left:4px solid #D4AF37;padding:20px 24px;margin:24px 0;border-radius:0 8px 8px 0">' +
-    '<p style="margin:0 0 4px;color:#6B7280;font-size:12px;text-transform:uppercase;letter-spacing:1px">Your Confirmation Code</p>' +
-    '<p style="margin:0;font-size:28px;font-weight:bold;color:#0D3B66;letter-spacing:2px">' + data.confirmationCode + '</p>' +
-    '<p style="margin:8px 0 0;color:#6B7280;font-size:12px">Keep this code &mdash; you will need it at registration</p></div>' +
-    '<table style="width:100%;border-collapse:collapse;margin:24px 0">' +
-    '<tr style="border-bottom:1px solid #E5E7EB"><td style="padding:10px 0;color:#6B7280;font-size:14px">Name</td>' +
-    '<td style="padding:10px 0;color:#111827;font-weight:600;font-size:14px">' + data.firstName + ' ' + data.lastName + '</td></tr>' +
-    '<tr style="border-bottom:1px solid #E5E7EB"><td style="padding:10px 0;color:#6B7280;font-size:14px">Organisation</td>' +
-    '<td style="padding:10px 0;color:#111827;font-size:14px">' + data.organisation + '</td></tr>' +
-    '<tr style="border-bottom:1px solid #E5E7EB"><td style="padding:10px 0;color:#6B7280;font-size:14px">Country</td>' +
-    '<td style="padding:10px 0;color:#111827;font-size:14px">' + data.country + '</td></tr>' +
-    '<tr style="border-bottom:1px solid #E5E7EB"><td style="padding:10px 0;color:#6B7280;font-size:14px">Delegate Category</td>' +
-    '<td style="padding:10px 0;color:#111827;font-size:14px">' + delegateLabel + '</td></tr>' +
-    '<tr style="border-bottom:1px solid #E5E7EB"><td style="padding:10px 0;color:#6B7280;font-size:14px">Registration Fee</td>' +
-    '<td style="padding:10px 0;color:#0D3B66;font-weight:700;font-size:14px">' + feeDisplay + '</td></tr>' +
-    '<tr style="border-bottom:1px solid #E5E7EB"><td style="padding:10px 0;color:#6B7280;font-size:14px">Dates</td>' +
-    '<td style="padding:10px 0;color:#111827;font-size:14px">27&ndash;30 September 2026</td></tr>' +
-    '<tr><td style="padding:10px 0;color:#6B7280;font-size:14px">Venue</td>' +
-    '<td style="padding:10px 0;color:#111827;font-size:14px">Rainbow Towers Hotel, Harare, Zimbabwe</td></tr></table>' +
-    paymentEmailBlock +
-    invoiceNotice +
-    '<p style="color:#374151;font-size:14px">Further details including the full programme, accommodation guide and visa information will be sent closer to the conference date.</p>' +
-    '<p style="color:#374151;font-size:14px">For enquiries, contact us at <a href="mailto:info@airdczim.co.zw" style="color:#0D3B66">info@airdczim.co.zw</a></p></div>' +
-    '<div style="background:#0D3B66;padding:24px 32px;text-align:center">' +
-    '<p style="color:rgba(255,255,255,.6);font-size:12px;margin:0">2026 AIRDC &mdash; 24th Annual Conference &mdash; Harare, Zimbabwe</p>' +
-    '<p style="color:rgba(255,255,255,.4);font-size:11px;margin:4px 0 0">www.airdczim.co.zw</p></div></div>';
-
-  const emailPayload = {
-    from: "AIRDC 2026 <noreply@airdczim.co.zw>",
-    to: data.email,
-    subject: `Registration Confirmed — AIRDC 2026 — ${data.confirmationCode}`,
-    html,
-    ...(attachments.length > 0 && { attachments }),
-  };
-
-  console.log("Sending email to:", data.email, "with attachment:", attachments.length > 0);
-
-  const resendRes = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(emailPayload),
-  });
-
-  const resendBody = await resendRes.json().catch(() => ({}));
-  if (!resendRes.ok) {
-    console.error("Resend API error:", resendRes.status, JSON.stringify(resendBody));
-    throw new Error(`Resend ${resendRes.status}: ${JSON.stringify(resendBody)}`);
-  }
-  console.log("Email sent successfully:", JSON.stringify(resendBody));
 }
 
 export async function POST(req: NextRequest) {
@@ -303,6 +127,13 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
+  // Delegate records contain passport/ID numbers, phone numbers, addresses and
+  // travel details — this endpoint must never be publicly readable.
+  const { auth } = await import("@/auth");
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   if (!process.env.DATABASE_URL) {
     return NextResponse.json({ registrations: [] });
   }

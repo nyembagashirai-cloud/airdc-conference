@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Users, Download, Search, Mail, Building, X, Trash2 } from "lucide-react";
+import { Users, Download, Search, Mail, Building, X, Trash2, Send, Loader2, CheckCircle2, AlertTriangle } from "lucide-react";
 
 type Registration = {
   id: string;
@@ -100,6 +100,231 @@ function DetailModal({ reg, onClose }: { reg: Registration; onClose: () => void 
   );
 }
 
+type Recipient = {
+  confirmationCode: string;
+  email: string;
+  name: string;
+  organisation: string;
+  delegateLabel: string;
+  fee: string;
+  duplicatesSkipped: number;
+};
+
+type SendResult = {
+  email: string;
+  confirmationCode: string;
+  ok: boolean;
+  attached: boolean;
+  error?: string;
+};
+
+function ResendPanel({ onClose }: { onClose: () => void }) {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [recipients, setRecipients] = useState<Recipient[]>([]);
+  const [duplicates, setDuplicates] = useState(0);
+  const [maxBatch, setMaxBatch] = useState(4);
+  const [resendConfigured, setResendConfigured] = useState(true);
+
+  const [testEmail, setTestEmail] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [results, setResults] = useState<SendResult[]>([]);
+
+  useEffect(() => {
+    fetch("/api/register/resend")
+      .then(async r => {
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.error || "Failed to load recipients");
+        setRecipients(d.recipients || []);
+        setDuplicates(d.duplicatesCollapsed || 0);
+        setMaxBatch(d.maxBatch || 4);
+        setResendConfigured(Boolean(d.resendConfigured));
+        setLoading(false);
+      })
+      .catch(e => { setError(e.message); setLoading(false); });
+  }, []);
+
+  /** Sends the given codes in throttled batches, streaming results into state. */
+  const runSend = async (codes: string[], asTest?: string) => {
+    setBusy(true);
+    setResults([]);
+    setProgress(0);
+    const collected: SendResult[] = [];
+    try {
+      for (let i = 0; i < codes.length; i += maxBatch) {
+        const batch = codes.slice(i, i + maxBatch);
+        const res = await fetch("/api/register/resend", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ codes: batch, ...(asTest && { testEmail: asTest }) }),
+        });
+        const d = await res.json();
+        if (!res.ok) throw new Error(d.error ? JSON.stringify(d.error) : "Send failed");
+        collected.push(...(d.results || []));
+        setResults([...collected]);
+        setProgress(Math.min(i + batch.length, codes.length));
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const sendTest = () => {
+    if (!testEmail.trim()) { alert("Enter an email address to receive the test."); return; }
+    const first = recipients[0];
+    if (!first) return;
+    runSend([first.confirmationCode], testEmail.trim());
+  };
+
+  const sendAll = () => {
+    if (!confirm(
+      `Send the confirmation email with invoice to ${recipients.length} delegates?\n\n` +
+      `These are real delegates and the emails cannot be recalled.`
+    )) return;
+    if (!confirm(`Final confirmation — email all ${recipients.length} delegates now?`)) return;
+    runSend(recipients.map(r => r.confirmationCode));
+  };
+
+  const succeeded = results.filter(r => r.ok).length;
+  const failed = results.filter(r => !r.ok);
+  const isTestRun = results.length === 1 && Boolean(testEmail) && results[0]?.email === testEmail.trim();
+
+  return (
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center p-4 overflow-y-auto" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl my-8" onClick={e => e.stopPropagation()}>
+        <div className="flex items-start justify-between p-6 border-b border-gray-100">
+          <div>
+            <h2 className="font-bold text-xl text-gray-900">Resend confirmations with invoices</h2>
+            <p className="text-sm text-gray-500 mt-1">
+              Sends the confirmation email again, with the PDF invoice and banking details attached.
+            </p>
+          </div>
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X size={20} /></button>
+        </div>
+
+        <div className="p-6 space-y-5">
+          {loading && (
+            <p className="text-sm text-gray-500 flex items-center gap-2">
+              <Loader2 size={16} className="animate-spin" /> Loading recipients…
+            </p>
+          )}
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex gap-3">
+              <AlertTriangle size={18} className="text-red-600 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+          )}
+
+          {!loading && !resendConfigured && (
+            <div className="bg-amber-50 border border-amber-300 rounded-lg p-4 flex gap-3">
+              <AlertTriangle size={18} className="text-amber-600 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-amber-900">
+                RESEND_API_KEY is not set on the server — no email can be sent.
+              </p>
+            </div>
+          )}
+
+          {!loading && !error && recipients.length > 0 && (
+            <>
+              <div className="bg-[#F8F9FA] border border-gray-200 rounded-lg p-4">
+                <p className="text-sm text-gray-900 font-semibold">
+                  {recipients.length} recipient{recipients.length !== 1 ? "s" : ""}
+                </p>
+                {duplicates > 0 && (
+                  <p className="text-xs text-gray-600 mt-1">
+                    {duplicates} duplicate record{duplicates !== 1 ? "s" : ""} collapsed — one email per address,
+                    using each delegate&apos;s most recent registration.
+                  </p>
+                )}
+              </div>
+
+              {/* Step 1 — test */}
+              <div className="border border-gray-200 rounded-lg p-4">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Step 1 — send yourself a test</p>
+                <div className="flex gap-2 flex-wrap">
+                  <input
+                    type="email"
+                    value={testEmail}
+                    onChange={e => setTestEmail(e.target.value)}
+                    placeholder="your.name@icz.co.zw"
+                    className="flex-1 min-w-[220px] border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                  />
+                  <button
+                    onClick={sendTest}
+                    disabled={busy}
+                    className="flex items-center gap-2 border border-[#0D3B66] text-[#0D3B66] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#0D3B66]/5 disabled:opacity-50"
+                  >
+                    <Mail size={16} /> Send test
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  Uses {recipients[0]?.name || "the first delegate"}&apos;s details but delivers only to the address above.
+                </p>
+              </div>
+
+              {/* Step 2 — real send */}
+              <div className="border border-gray-200 rounded-lg p-4">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Step 2 — send to all delegates</p>
+                <button
+                  onClick={sendAll}
+                  disabled={busy || !resendConfigured}
+                  className="flex items-center gap-2 bg-[#0D3B66] hover:bg-[#1D4E89] text-white px-4 py-2.5 rounded-lg text-sm font-semibold disabled:opacity-50"
+                >
+                  {busy ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                  {busy ? `Sending… ${progress}/${recipients.length}` : `Send to all ${recipients.length} delegates`}
+                </button>
+                <p className="text-xs text-gray-500 mt-2">
+                  Sent in batches with a pause between each to respect rate limits. Do not close this window while sending.
+                </p>
+              </div>
+
+              {/* Results */}
+              {results.length > 0 && (
+                <div className="border border-gray-200 rounded-lg overflow-hidden">
+                  <div className="bg-[#F8F9FA] px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+                    {failed.length === 0
+                      ? <CheckCircle2 size={16} className="text-green-600" />
+                      : <AlertTriangle size={16} className="text-amber-600" />}
+                    <p className="text-sm font-semibold text-gray-900">
+                      {isTestRun ? "Test sent" : `${succeeded} sent`}
+                      {failed.length > 0 && ` · ${failed.length} failed`}
+                    </p>
+                  </div>
+                  <div className="max-h-64 overflow-y-auto divide-y divide-gray-100">
+                    {results.map((r, i) => (
+                      <div key={r.confirmationCode + i} className="px-4 py-2.5 flex items-start gap-3">
+                        {r.ok
+                          ? <CheckCircle2 size={15} className="text-green-600 flex-shrink-0 mt-0.5" />
+                          : <AlertTriangle size={15} className="text-red-600 flex-shrink-0 mt-0.5" />}
+                        <div className="min-w-0">
+                          <p className="text-sm text-gray-900 truncate">{r.email}</p>
+                          <p className="text-xs text-gray-500">
+                            {r.confirmationCode}
+                            {r.ok && (r.attached ? " · invoice attached" : " · sent WITHOUT invoice")}
+                          </p>
+                          {r.error && <p className="text-xs text-red-600 mt-0.5 break-words">{r.error}</p>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
+          {!loading && !error && recipients.length === 0 && (
+            <p className="text-sm text-gray-500">No registrations with confirmation codes found.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminRegistrationsPage() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [loading, setLoading] = useState(true);
@@ -107,6 +332,7 @@ export default function AdminRegistrationsPage() {
   const [selected, setSelected] = useState<Registration | null>(null);
   const [checkedIds, setCheckedIds] = useState<Set<string>>(new Set());
   const [deleting, setDeleting] = useState(false);
+  const [showResend, setShowResend] = useState(false);
 
   useEffect(() => {
     fetch("/api/register")
@@ -205,6 +431,7 @@ export default function AdminRegistrationsPage() {
   return (
     <div className="p-6 max-w-6xl mx-auto">
       {selected && <DetailModal reg={selected} onClose={() => setSelected(null)} />}
+      {showResend && <ResendPanel onClose={() => setShowResend(false)} />}
 
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -212,6 +439,11 @@ export default function AdminRegistrationsPage() {
           <p className="text-gray-500 text-sm mt-1">{registrations.length} delegates registered</p>
         </div>
         <div className="flex gap-3 flex-wrap justify-end">
+          {registrations.length > 0 && (
+            <button onClick={() => setShowResend(true)} className="flex items-center gap-2 bg-[#0D3B66] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#1D4E89]">
+              <Send size={16} /> Resend with Invoices
+            </button>
+          )}
           <button onClick={downloadCSV} className="flex items-center gap-2 bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-600">
             <Download size={16} /> Export CSV
           </button>
