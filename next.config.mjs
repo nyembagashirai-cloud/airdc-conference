@@ -6,6 +6,7 @@ const nextConfig = {
   // otherwise the invoice renders without the AIRDC logo in production.
   outputFileTracingIncludes: {
     "/api/register": ["./public/images/logo.png"],
+    "/api/invoice": ["./public/images/logo.png"],
   },
   images: {
     remotePatterns: [

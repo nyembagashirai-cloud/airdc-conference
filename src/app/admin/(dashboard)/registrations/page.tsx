@@ -81,6 +81,19 @@ function DetailModal({ reg, onClose }: { reg: Registration; onClose: () => void 
             {row("Payment Status", reg.paymentStatus)}
             {row("Registered On", new Date(reg.createdAt).toLocaleString())}
           </div>
+          {reg.confirmationCode && (
+            <div className="pt-2 border-t border-gray-100">
+              <a
+                href={`/api/invoice?code=${encodeURIComponent(reg.confirmationCode)}`}
+                className="inline-flex items-center gap-2 bg-[#0D3B66] hover:bg-[#1D4E89] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
+              >
+                <Download size={16} /> Download Invoice (PDF)
+              </a>
+              <p className="text-xs text-gray-500 mt-2">
+                Proforma invoice with FBC banking details — same file that is emailed to the delegate.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
