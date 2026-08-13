@@ -45,18 +45,18 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              // Scripts: self + Vercel analytics + Cloudflare Turnstile
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://va.vercel-scripts.com",
+              // Scripts: self + Vercel analytics + Cloudflare Turnstile + Google tag (gtag.js / Google Ads)
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://va.vercel-scripts.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com",
               // Styles: self + inline (needed for Tailwind/Next.js)
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               // Fonts
               "font-src 'self' https://fonts.gstatic.com",
-              // Images: self + all image CDNs used by hotels/cloudinary
-              "img-src 'self' data: blob: https://res.cloudinary.com https://images.unsplash.com https://assets.hyatt.com https://rtgafrica.com https://images.crestahotels.com https://thegray.co.zw",
-              // Frames: Cloudflare Turnstile widget
-              "frame-src 'self' https://challenges.cloudflare.com",
-              // API calls: self + Resend + Cloudflare Turnstile verify
-              "connect-src 'self' https://api.resend.com https://challenges.cloudflare.com https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+              // Images: self + image CDNs + Google Ads conversion pixels
+              "img-src 'self' data: blob: https://res.cloudinary.com https://images.unsplash.com https://assets.hyatt.com https://rtgafrica.com https://images.crestahotels.com https://thegray.co.zw https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.google.co.zw https://googleads.g.doubleclick.net https://stats.g.doubleclick.net",
+              // Frames: Cloudflare Turnstile widget + Google Ads conversion frames
+              "frame-src 'self' https://challenges.cloudflare.com https://td.doubleclick.net https://bid.g.doubleclick.net https://www.googletagmanager.com",
+              // API calls: self + Resend + Cloudflare Turnstile verify + Google tag
+              "connect-src 'self' https://api.resend.com https://challenges.cloudflare.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.google.com",
               // Block all object/embed
               "object-src 'none'",
               // Upgrade insecure requests
