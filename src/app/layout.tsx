@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import { Inter, Poppins, Montserrat } from "next/font/google";
+import GoogleTag from "@/components/analytics/GoogleTag";
 import "./globals.css";
-
-// Google tag (gtag.js) — loaded on every page via the root layout
-const GOOGLE_TAG_ID = "AW-18385775131";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -88,22 +85,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable} ${montserrat.variable}`}>
-      <head>
-        {/* Google tag (gtag.js) */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-tag" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GOOGLE_TAG_ID}');
-          `}
-        </Script>
-      </head>
       <body className="font-sans antialiased bg-white text-foreground">
+        <GoogleTag />
         {children}
         <Analytics />
       </body>
