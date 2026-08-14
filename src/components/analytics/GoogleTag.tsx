@@ -14,6 +14,12 @@ declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    /**
+     * Reports a conversion, then (optionally) sends the visitor to `url`.
+     * Available on every page — call it from an onClick handler, e.g.
+     *   onClick={() => window.gtag_report_conversion?.()}
+     */
+    gtag_report_conversion?: (url?: string) => boolean;
   }
 }
 
@@ -63,6 +69,23 @@ export default function GoogleTag() {
 
           // Event snippet for Page view conversion page
           gtag('event', 'conversion', {'send_to': '${PAGE_VIEW_CONVERSION}'});
+
+          // Event snippet for click-triggered conversions.
+          // Call gtag_report_conversion(url) when someone clicks a chosen
+          // link or button; the visitor is sent to url once the hit is logged.
+          function gtag_report_conversion(url) {
+            var callback = function () {
+              if (typeof(url) != 'undefined') {
+                window.location = url;
+              }
+            };
+            gtag('event', 'conversion', {
+              'send_to': '${PAGE_VIEW_CONVERSION}',
+              'event_callback': callback
+            });
+            return false;
+          }
+          window.gtag_report_conversion = gtag_report_conversion;
         `}
       </Script>
       <PageViewConversionOnRouteChange />
