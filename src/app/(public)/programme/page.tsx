@@ -74,7 +74,7 @@ export default async function ProgrammePage() {
           <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-4">Programme</p>
           <h1 className="font-heading font-black text-white text-4xl md:text-5xl mb-2">Conference Programme</h1>
           <p className="text-white/70 text-lg">
-            27 to 30 September 2026 · Rainbow Towers, The Sheraton Hotel, Harare
+            27 to 30 September 2026 · Rainbow Towers Hotel, Harare
           </p>
           <p className="text-white/60 text-sm mt-3 max-w-2xl italic">
             Theme: Insurance resilience in the face of geopolitical and technological disruption for developing markets

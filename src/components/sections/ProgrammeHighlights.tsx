@@ -36,7 +36,7 @@ export function ProgrammeHighlights() {
           <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-3">Programme</p>
           <h2 className="section-title">Conference Programme</h2>
           <p className="text-muted-foreground leading-relaxed mt-4">
-            Four days of keynotes, expert panels and networking at the Rainbow Towers, The Sheraton Hotel, Harare.
+            Four days of keynotes, expert panels and networking at the Rainbow Towers Hotel, Harare.
             Sessions and timings are provisional and subject to change.
           </p>
         </div>
