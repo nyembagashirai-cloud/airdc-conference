@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Calendar, MapPin, Download, ArrowRight, ChevronDown, Globe, Users } from "lucide-react";
+import { HeroCountdown } from "@/components/ui/Countdown";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -150,6 +151,13 @@ export function HeroSection() {
                   </div>
                 </div>
               ))}
+            </motion.div>
+
+            {/* Countdown card */}
+            <motion.div
+              variants={fadeUp} initial="hidden" animate="show" custom={0.72}
+            >
+              <HeroCountdown />
             </motion.div>
 
             {/* Organiser Logos card */}

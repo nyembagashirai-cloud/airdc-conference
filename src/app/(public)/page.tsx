@@ -7,11 +7,13 @@ import { HotelsSection } from "@/components/sections/HotelsSection";
 import { SponsorsSection } from "@/components/sections/SponsorsSection";
 import { NewsPreview } from "@/components/sections/NewsPreview";
 import { CtaSection } from "@/components/sections/CtaSection";
+import { CountdownBand } from "@/components/ui/Countdown";
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <CountdownBand />
       <WelcomeSection />
       <section className="section-padding bg-white">
         <div className="container text-center max-w-2xl mx-auto">
