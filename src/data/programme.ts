@@ -1,10 +1,11 @@
 // 24th AIRDC Conference programme.
-// Source: official programme document (Day 1 to Day 3 lunch confirmed).
+// Source: final programme document received 7 September 2026 (Day 1 to Day 3 lunch confirmed).
 // Day 3 afternoon and Day 4 are not yet released and are intentionally omitted.
 
 export type ProgrammeTopic = {
   label?: string;
   title: string;
+  moderator?: string;
   speakerLabel?: string;
   speakers?: string[];
 };
@@ -66,7 +67,8 @@ export const PROGRAMME: ProgrammeDay[] = [
         endTime: "09:30",
         title: "Official Opening and Welcome Address",
         subtitle: "Patrick Kusikwenyu, Chairman, Local Organising Committee",
-        description: "Followed by remarks by the AIRDC President.",
+        description:
+          "Followed by remarks by the AIRDC President, Dr Aaron Issa Anafure.",
         type: "PLENARY",
       },
       {
@@ -99,11 +101,12 @@ export const PROGRAMME: ProgrammeDay[] = [
             label: "Topic 2",
             title:
               "Panel Discussion. The ultimate stress test: How developing country insurers survive economic disruptions",
+            moderator: "Mr T Tarupiwa",
             speakerLabel: "Panellists",
             speakers: [
               "Regional Reinsurers",
               "Zimbabwean Regulator",
-              "UNCTAD (Multilateral Development Partners)",
+              "Mr Chunky Chhetry",
             ],
           },
         ],
@@ -175,6 +178,10 @@ export const PROGRAMME: ProgrammeDay[] = [
             label: "Topic 6",
             title:
               "Keeping the Money at Home: How regulators are containing premium flight from developing countries",
+            speakerLabel: "Panellists",
+            speakers: [
+              "Mr Emmanuel O Amaoh, Ghana National Insurance Commission",
+            ],
           },
         ],
       },

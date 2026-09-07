@@ -180,6 +180,12 @@ export default async function ProgrammePage() {
                                   <p className="font-semibold text-sm text-foreground leading-snug mt-0.5">
                                     {topic.title}
                                   </p>
+                                  {topic.moderator && (
+                                    <p className="mt-2 text-xs text-muted-foreground">
+                                      <span className="font-semibold">Moderator:</span>{" "}
+                                      {topic.moderator}
+                                    </p>
+                                  )}
                                   {topic.speakers && topic.speakers.length > 0 && (
                                     <div className="mt-2 flex items-start gap-1.5 text-xs text-muted-foreground">
                                       <Users size={12} className="flex-shrink-0 mt-0.5" />
