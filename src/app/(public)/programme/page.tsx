@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Download, Users, MapPin, CalendarClock } from "lucide-react";
+import { Users, MapPin, CalendarClock } from "lucide-react";
 import { PROGRAMME, type ProgrammeDay, type ProgrammeItem } from "@/data/programme";
 
 export const metadata: Metadata = {
@@ -81,15 +81,8 @@ export default async function ProgrammePage() {
           </p>
           <div className="flex flex-wrap gap-4 mt-6">
             <a
-              href="/brochure.pdf"
-              target="_blank"
-              className="flex items-center gap-2 bg-secondary hover:bg-secondary-light text-primary-dark font-bold px-5 py-2.5 rounded-lg text-sm transition-colors"
-            >
-              <Download size={16} /> Download Programme
-            </a>
-            <a
               href="/register"
-              className="flex items-center gap-2 border border-white/40 text-white hover:bg-white hover:text-primary font-bold px-5 py-2.5 rounded-lg text-sm transition-colors"
+              className="flex items-center gap-2 bg-secondary hover:bg-secondary-light text-primary-dark font-bold px-5 py-2.5 rounded-lg text-sm transition-colors"
             >
               Register Now
             </a>
