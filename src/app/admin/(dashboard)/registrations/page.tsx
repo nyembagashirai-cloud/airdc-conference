@@ -23,6 +23,7 @@ type Registration = {
   departureTime?: string;
   airlineCompany?: string;
   flightNumber?: string;
+  accommodation?: string;
   confirmationCode?: string;
   paymentStatus?: string;
   createdAt: string;
@@ -65,6 +66,10 @@ function DetailModal({ reg, onClose }: { reg: Registration; onClose: () => void 
             {row("Company Address", reg.companyAddress)}
             {row("Category", reg.delegateType?.replace(/_/g, " "))}
             {row("Branch of Activity", reg.branchOfActivity)}
+          </div>
+          <div>
+            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Accommodation</h3>
+            {row("Staying At", reg.accommodation)}
           </div>
           <div>
             <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Visa & Travel</h3>
@@ -415,12 +420,12 @@ export default function AdminRegistrationsPage() {
   };
 
   const downloadCSV = () => {
-    const headers = ["Civility","First Name","Last Name","Email","Phone","Passport/ID","Organisation","Job Title","Company Address","Country","Category","Branch","Visa Invitation","Arrival Date","Arrival Time","Departure Date","Departure Time","Airline","Flight No","Confirmation Code","Payment Status","Date Registered"];
+    const headers = ["Civility","First Name","Last Name","Email","Phone","Passport/ID","Organisation","Job Title","Company Address","Country","Category","Branch","Visa Invitation","Arrival Date","Arrival Time","Departure Date","Departure Time","Airline","Flight No","Accommodation","Confirmation Code","Payment Status","Date Registered"];
     const rows = filtered.map(r => [
       r.civility,r.firstName,r.lastName,r.email,r.phone,r.passportId,r.organisation,r.jobTitle,
       r.companyAddress,r.country,r.delegateType,r.branchOfActivity,r.visaInvitation,
       r.arrivalDate,r.arrivalTime,r.departureDate,r.departureTime,r.airlineCompany,r.flightNumber,
-      r.confirmationCode,r.paymentStatus,new Date(r.createdAt).toLocaleDateString()
+      r.accommodation,r.confirmationCode,r.paymentStatus,new Date(r.createdAt).toLocaleDateString()
     ].map(v => `"${v ?? ""}"`));
     const csv = [headers, ...rows].map(r => r.join(",")).join("\n");
     const blob = new Blob([csv], { type: "text/csv" });

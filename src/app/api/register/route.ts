@@ -28,6 +28,7 @@ const schema = z.object({
   airlineCompany: z.string().optional(),
   flightNumber: z.string().optional(),
   workshopChoice: z.string().optional(),
+  accommodation: z.string().optional(),
   dietaryRequirements: z.string().optional(),
   specialNeeds: z.string().optional(),
   terms: z.boolean(),
@@ -71,8 +72,7 @@ export async function POST(req: NextRequest) {
 
     if (process.env.DATABASE_URL) {
       const { prisma } = await import("@/lib/prisma");
-      await prisma.registration.create({
-        data: {
+      const registrationData = {
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email,
@@ -93,12 +93,23 @@ export async function POST(req: NextRequest) {
           airlineCompany: data.airlineCompany,
           flightNumber: data.flightNumber,
           workshopChoice: data.workshopChoice,
+          accommodation: data.accommodation,
           dietaryRequirements: data.dietaryRequirements,
           specialNeeds: data.specialNeeds,
           confirmationCode,
-          paymentStatus: "PENDING",
-        },
-      });
+          paymentStatus: "PENDING" as const,
+      };
+
+      try {
+        await prisma.registration.create({ data: registrationData });
+      } catch (dbError) {
+        // If the `accommodation` column has not been added to the database yet,
+        // still save the registration rather than losing the delegate.
+        console.error("Registration insert failed, retrying without accommodation:", dbError);
+        const { accommodation, ...withoutAccommodation } = registrationData;
+        void accommodation;
+        await prisma.registration.create({ data: withoutAccommodation });
+      }
     }
 
     try {

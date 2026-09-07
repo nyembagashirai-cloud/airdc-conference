@@ -33,6 +33,8 @@ const schema = z.object({
     "Public Institution",
     "Other",
   ]),
+  accommodation: z.string().min(1, "Please select where you will be staying"),
+  accommodationOther: z.string().optional(),
   visaInvitation: z.enum(["YES", "NO"]),
   arrivalDate: z.string().optional(),
   arrivalTime: z.string().optional(),
@@ -41,6 +43,14 @@ const schema = z.object({
   airlineCompany: z.string().optional(),
   flightNumber: z.string().optional(),
   terms: z.boolean().refine(v => v === true, "You must accept the terms"),
+}).superRefine((data, ctx) => {
+  if (data.accommodation === "OTHER" && !data.accommodationOther?.trim()) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["accommodationOther"],
+      message: "Please enter the name of your hotel",
+    });
+  }
 });
 
 type FormData = z.infer<typeof schema>;
@@ -249,6 +259,14 @@ const branches = [
   "Association","Supervisory Authority","Public Institution","Other",
 ];
 
+const hotelOptions = [
+  "Rainbow Towers Hotel & Conference Centre (Conference Venue)",
+  "Holiday Inn Harare",
+  "Cresta Lodge Harare",
+  "Cresta Jameson Hotel",
+  "N1 Hotel Harare",
+];
+
 const inputClass = "w-full border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white";
 const labelClass = "block text-sm font-medium text-foreground mb-1.5";
 const sectionHeadingClass = "font-semibold text-foreground mb-4 pb-2 border-b-2 border-secondary text-base";
@@ -288,6 +306,7 @@ export function RegistrationForm() {
   }, [siteKey, onTurnstileSuccess]);
 
   const selectedDelegateType = watch("delegateType");
+  const selectedAccommodation = watch("accommodation");
   const displayFee = selectedDelegateType ? feeMap[selectedDelegateType] : null;
 
   const onSubmit = async (data: FormData) => {
@@ -300,6 +319,11 @@ export function RegistrationForm() {
         body: JSON.stringify({
           ...data,
           phone: `${phoneCode} ${data.phone}`,
+          accommodation:
+            data.accommodation === "OTHER"
+              ? data.accommodationOther?.trim()
+              : data.accommodation,
+          accommodationOther: undefined,
           workshopChoice: undefined,
           dietaryRequirements: undefined,
           specialNeeds: undefined,
@@ -472,6 +496,35 @@ export function RegistrationForm() {
               <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
                 <CheckCircle2 size={20} className="text-secondary" />
               </div>
+            </div>
+          )}
+        </div>
+
+        {/* Accommodation */}
+        <div>
+          <h3 className={sectionHeadingClass}>Accommodation</h3>
+          <div>
+            <label className={labelClass}>Where will you be staying? *</label>
+            <select {...register("accommodation")} className={inputClass}>
+              <option value="">Select your hotel...</option>
+              {hotelOptions.map(h => <option key={h} value={h}>{h}</option>)}
+              <option value="OTHER">Other hotel (not listed)</option>
+              <option value="Not yet decided">Not yet decided</option>
+            </select>
+            <p className="text-xs text-muted-foreground mt-1.5">
+              Delegates book and pay for their own accommodation directly with the hotel.
+            </p>
+            {errors.accommodation && <p className="text-red-500 text-xs mt-1">{errors.accommodation.message}</p>}
+          </div>
+          {selectedAccommodation === "OTHER" && (
+            <div className="mt-4">
+              <label className={labelClass}>Name of your hotel *</label>
+              <input
+                {...register("accommodationOther")}
+                className={inputClass}
+                placeholder="Enter the name of the hotel you will be staying at"
+              />
+              {errors.accommodationOther && <p className="text-red-500 text-xs mt-1">{errors.accommodationOther.message}</p>}
             </div>
           )}
         </div>

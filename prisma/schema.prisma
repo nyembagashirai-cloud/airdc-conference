@@ -218,6 +218,7 @@ model Registration {
   dietaryRequirements String?
   specialNeeds    String?
   workshopChoice  String?
+  accommodation   String?
   paymentStatus   PaymentStatus @default(PENDING)
   paymentRef      String?
   amount          Float?
