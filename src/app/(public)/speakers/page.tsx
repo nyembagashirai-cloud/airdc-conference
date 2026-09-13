@@ -127,12 +127,6 @@ export default async function SpeakersPage() {
               })}
             </div>
           )}
-
-          <div className="mt-12 text-center p-8 bg-white rounded-2xl border border-border shadow-card">
-            <h3 className="font-heading font-bold text-primary text-xl mb-2">Interested in Speaking?</h3>
-            <p className="text-muted-foreground mb-4">Submit your abstract or speaking proposal for consideration at AIRDC 2026.</p>
-            <Link href="/contact?subject=Speaking+Inquiry" className="btn-primary">Submit a Speaker Proposal</Link>
-          </div>
         </div>
       </section>
     </div>
