@@ -1,5 +1,16 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { SPEAKERS } from "@/data/speakers";
+
+type PreviewSpeaker = {
+  key: string;
+  name: string;
+  title: string;
+  organisation: string;
+  country: string;
+  photoUrl: string;
+  bio: string;
+};
 
 async function getFeaturedSpeakers() {
   if (!process.env.DATABASE_URL) return [];
@@ -14,7 +25,33 @@ async function getFeaturedSpeakers() {
 }
 
 export async function SpeakersPreview() {
-  const speakers = await getFeaturedSpeakers();
+  const dbSpeakers = await getFeaturedSpeakers();
+
+  // Speakers entered through the admin dashboard take precedence.
+  // When none exist, the confirmed line-up in src/data/speakers.ts is shown.
+  const speakers: PreviewSpeaker[] = dbSpeakers.length > 0
+    ? dbSpeakers.map((s) => ({
+        key: s.id,
+        name: s.name,
+        title: s.title || "",
+        organisation: s.organisation || "",
+        country: s.country || "",
+        photoUrl: s.photoUrl || "",
+        bio: s.bio || "",
+      }))
+    : SPEAKERS.filter((s) => s.featured)
+        .sort((a, b) => a.order - b.order)
+        .slice(0, 6)
+        .map((s) => ({
+          key: s.slug,
+          name: s.name,
+          title: s.title,
+          organisation: s.organisation,
+          country: s.country,
+          photoUrl: s.photo,
+          bio: s.bio,
+        }));
+
   const showSection = speakers.length > 0;
 
   if (!showSection) {
@@ -61,10 +98,10 @@ export async function SpeakersPreview() {
           {speakers.map((speaker) => {
             const initials = speaker.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2);
             return (
-              <div key={speaker.id} className="card-premium group overflow-hidden">
-                <div className="relative h-48 bg-gradient-to-br from-primary to-primary-mid">
+              <Link key={speaker.key} href={`/speakers/${speaker.key}`} className="card-premium group overflow-hidden block">
+                <div className="relative h-60 bg-gradient-to-br from-primary to-primary-mid">
                   {speaker.photoUrl ? (
-                    <img src={speaker.photoUrl} alt={speaker.name} className="w-full h-full object-cover" />
+                    <img src={speaker.photoUrl} alt={speaker.name} className="w-full h-full object-cover object-top" />
                   ) : (
                     <div className="flex items-center justify-center h-full">
                       <span className="text-4xl font-bold text-white/30">{initials}</span>
@@ -87,7 +124,7 @@ export async function SpeakersPreview() {
                     </p>
                   )}
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

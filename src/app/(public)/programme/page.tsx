@@ -90,18 +90,6 @@ export default async function ProgrammePage() {
         </div>
       </div>
 
-      {/* Provisional programme notice */}
-      <div className="bg-secondary/10 border-b border-secondary/20 py-4 print:hidden">
-        <div className="container flex items-start gap-3">
-          <CalendarClock size={18} className="text-secondary flex-shrink-0 mt-0.5" />
-          <p className="text-sm font-medium text-foreground">
-            <span className="font-bold text-secondary">Provisional programme.</span>{" "}
-            Sessions, speakers and timings are subject to change. Remaining sessions will be published as they are
-            confirmed.
-          </p>
-        </div>
-      </div>
-
       <section className="section-padding bg-muted print:bg-white print:py-0">
         <div className="container space-y-12">
           {days.length === 0 ? (

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SPEAKERS } from "@/data/speakers";
 
 export const metadata: Metadata = {
   title: "Speakers",
@@ -14,6 +15,17 @@ const typeColors: Record<string, string> = {
   "Guest Speaker": "bg-blue-50 text-blue-700 border-blue-200",
 };
 
+type SpeakerCard = {
+  key: string;
+  name: string;
+  title: string;
+  organisation: string;
+  country: string;
+  speakerType: string;
+  photoUrl: string;
+  bio: string;
+};
+
 async function getSpeakers() {
   if (!process.env.DATABASE_URL) return [];
   try {
@@ -23,7 +35,31 @@ async function getSpeakers() {
 }
 
 export default async function SpeakersPage() {
-  const speakers = await getSpeakers();
+  const dbSpeakers = await getSpeakers();
+
+  // Speakers entered through the admin dashboard take precedence.
+  // When none exist, the confirmed line-up in src/data/speakers.ts is shown.
+  const speakers: SpeakerCard[] = dbSpeakers.length > 0
+    ? dbSpeakers.map((s) => ({
+        key: s.id,
+        name: s.name,
+        title: s.title || "",
+        organisation: s.organisation || "",
+        country: s.country || "",
+        speakerType: s.speakerType || "Speaker",
+        photoUrl: s.photoUrl || "",
+        bio: s.bio || "",
+      }))
+    : SPEAKERS.map((s) => ({
+        key: s.slug,
+        name: s.name,
+        title: s.title,
+        organisation: s.organisation,
+        country: s.country,
+        speakerType: s.speakerType,
+        photoUrl: s.photo,
+        bio: s.bio,
+      }));
 
   return (
     <div className="pt-20">
@@ -54,10 +90,10 @@ export default async function SpeakersPage() {
               {speakers.map((speaker) => {
                 const initials = speaker.name.split(" ").map(n => n[0]).join("").slice(0, 2);
                 return (
-                  <div key={speaker.id} className="card-premium group overflow-hidden">
-                    <div className="relative h-52 bg-gradient-to-br from-primary to-primary-mid">
+                  <Link key={speaker.key} href={`/speakers/${speaker.key}`} className="card-premium group overflow-hidden block">
+                    <div className="relative h-64 bg-gradient-to-br from-primary to-primary-mid">
                       {speaker.photoUrl ? (
-                        <img src={speaker.photoUrl} alt={speaker.name} className="w-full h-full object-cover" />
+                        <img src={speaker.photoUrl} alt={speaker.name} className="w-full h-full object-cover object-top" />
                       ) : (
                         <div className="flex items-center justify-center h-full">
                           <span className="text-5xl font-bold text-white/20">{initials}</span>
@@ -82,14 +118,11 @@ export default async function SpeakersPage() {
                           {speaker.bio}
                         </p>
                       )}
-                      {speaker.linkedinUrl && (
-                        <a href={speaker.linkedinUrl} target="_blank" rel="noopener noreferrer"
-                          className="mt-3 text-xs text-primary font-medium border-t border-border pt-3 block hover:text-accent">
-                          LinkedIn Profile →
-                        </a>
-                      )}
+                      <span className="mt-3 inline-block text-xs font-semibold text-primary group-hover:text-accent transition-colors">
+                        View full profile →
+                      </span>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
