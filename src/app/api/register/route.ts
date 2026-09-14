@@ -36,19 +36,26 @@ const schema = z.object({
 });
 
 
-async function verifyTurnstile(token: string): Promise<boolean> {
+type TurnstileResult = { ok: boolean; codes: string[] };
+
+async function verifyTurnstile(token: string): Promise<TurnstileResult> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret) return true; // Skip if not configured
+  if (!secret) return { ok: true, codes: [] }; // Skip if not configured
+  if (!token) return { ok: false, codes: ["missing-input-response"] };
   try {
     const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ secret, response: token }),
     });
-    const json = await res.json() as { success: boolean };
-    return json.success === true;
-  } catch {
-    return false;
+    const json = await res.json() as { success: boolean; "error-codes"?: string[] };
+    return { ok: json.success === true, codes: json["error-codes"] ?? [] };
+  } catch (err) {
+    // Cloudflare unreachable from the function. Blocking a real delegate over a
+    // network blip is worse than the spam risk, so let the registration through
+    // and record it in the logs.
+    console.error("Turnstile siteverify unreachable, allowing registration:", err);
+    return { ok: true, codes: ["siteverify-unreachable"] };
   }
 }
 
@@ -63,9 +70,18 @@ export async function POST(req: NextRequest) {
 
   // Verify Turnstile CAPTCHA if secret key is configured
   if (process.env.TURNSTILE_SECRET_KEY) {
-    const tokenOk = await verifyTurnstile(data.turnstileToken ?? "");
-    if (!tokenOk) {
-      return NextResponse.json({ error: "CAPTCHA verification failed. Please refresh and try again." }, { status: 400 });
+    const turnstile = await verifyTurnstile(data.turnstileToken ?? "");
+    if (!turnstile.ok) {
+      console.error(
+        `Turnstile rejected a registration for ${data.email}. Codes: ${turnstile.codes.join(", ") || "none"}`
+      );
+      return NextResponse.json(
+        {
+          error:
+            "The security check has expired. Please tick the security box again, then press Submit. If it keeps failing, email info@airdczim.co.zw and we will register you.",
+        },
+        { status: 400 }
+      );
     }
   }
     const confirmationCode = generateCode();
@@ -130,10 +146,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, confirmationCode });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      const fields = Array.from(new Set(error.errors.map(e => e.path.join(".")).filter(Boolean)));
+      console.error("Registration rejected by validation. Fields:", fields.join(", "));
+      return NextResponse.json(
+        {
+          error: fields.length
+            ? `Please check these fields and submit again: ${fields.join(", ")}`
+            : "Some of the details entered are not valid. Please check the form and submit again.",
+          fields,
+        },
+        { status: 400 }
+      );
     }
     console.error("Registration error:", error);
-    return NextResponse.json({ error: "Registration failed" }, { status: 500 });
+    return NextResponse.json(
+      { error: "We could not save your registration. Please try again in a moment, or email info@airdczim.co.zw and we will register you." },
+      { status: 500 }
+    );
   }
 }
 

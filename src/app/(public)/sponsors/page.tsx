@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2, Check, Minus, Download, Mail, Sparkles } from "lucide-react";
+import { SPONSORS, type StaticSponsor } from "@/data/sponsors";
 
 export const metadata: Metadata = {
   title: "Sponsors & Partners",
@@ -285,14 +286,31 @@ function BenefitMark({ value }: { value: string | boolean }) {
   return <span className="font-heading font-bold text-primary text-sm">{value}</span>;
 }
 
-async function getSponsors() {
-  if (!process.env.DATABASE_URL) return [];
-  try {
-    const { prisma } = await import("@/lib/prisma");
-    return await prisma.sponsor.findMany({ where: { active: true }, orderBy: [{ tier: "asc" }, { order: "asc" }] });
-  } catch {
-    return [];
+async function getSponsors(): Promise<StaticSponsor[]> {
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import("@/lib/prisma");
+      const rows = await prisma.sponsor.findMany({
+        where: { active: true },
+        orderBy: [{ tier: "asc" }, { order: "asc" }],
+      });
+      // Sponsors entered through the admin dashboard take precedence.
+      if (rows.length > 0) {
+        return rows.map((s) => ({
+          id: s.id,
+          name: s.name,
+          tier: s.tier,
+          logoUrl: s.logoUrl,
+          website: s.website,
+          description: s.description,
+          order: s.order,
+        }));
+      }
+    } catch {
+      // fall through to the published list
+    }
   }
+  return SPONSORS;
 }
 
 export default async function SponsorsPage() {

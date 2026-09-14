@@ -1,19 +1,36 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { SPONSORS, type StaticSponsor } from "@/data/sponsors";
 
 const TIER_ORDER = ["PLATINUM", "GOLD", "SILVER", "SUPPORTING_PARTNER"];
 const TIER_LABELS: Record<string, string> = { PLATINUM: "Platinum Sponsors", GOLD: "Gold Sponsors", SILVER: "Silver Sponsors", SUPPORTING_PARTNER: "Supporting Partners" };
 const TIER_SIZES: Record<string, string> = { PLATINUM: "h-24 w-48", GOLD: "h-20 w-40", SILVER: "h-16 w-32", SUPPORTING_PARTNER: "h-14 w-28" };
 
-async function getSponsors() {
-  if (!process.env.DATABASE_URL) return [];
-  try {
-    const { prisma } = await import("@/lib/prisma");
-    return await prisma.sponsor.findMany({
-      where: { active: true },
-      orderBy: [{ tier: "asc" }, { order: "asc" }],
-    });
-  } catch { return []; }
+async function getSponsors(): Promise<StaticSponsor[]> {
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import("@/lib/prisma");
+      const rows = await prisma.sponsor.findMany({
+        where: { active: true },
+        orderBy: [{ tier: "asc" }, { order: "asc" }],
+      });
+      // Sponsors entered through the admin dashboard take precedence.
+      if (rows.length > 0) {
+        return rows.map((s) => ({
+          id: s.id,
+          name: s.name,
+          tier: s.tier,
+          logoUrl: s.logoUrl,
+          website: s.website,
+          description: s.description,
+          order: s.order,
+        }));
+      }
+    } catch {
+      // fall through to the published list
+    }
+  }
+  return SPONSORS;
 }
 
 export async function SponsorsSection() {

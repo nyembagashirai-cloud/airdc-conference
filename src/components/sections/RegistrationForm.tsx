@@ -291,10 +291,28 @@ export function RegistrationForm() {
     setTurnstileToken(token);
   }, []);
 
+  // A Turnstile token expires five minutes after it is issued and can only be
+  // used once. This form is long, so without this the token is usually dead by
+  // the time the delegate presses Submit, and every retry reused the dead one.
+  const onTurnstileExpired = useCallback(() => {
+    setTurnstileToken("");
+  }, []);
+
+  const resetTurnstile = useCallback(() => {
+    setTurnstileToken("");
+    try {
+      const w = window as unknown as { turnstile?: { reset: () => void } };
+      w.turnstile?.reset();
+    } catch {
+      /* widget not ready */
+    }
+  }, []);
+
   useEffect(() => {
     if (!siteKey) return;
-    // Expose callback globally for Turnstile
+    // Expose callbacks globally for Turnstile
     (window as unknown as Record<string, unknown>)["_turnstileCb"] = onTurnstileSuccess;
+    (window as unknown as Record<string, unknown>)["_turnstileExpiredCb"] = onTurnstileExpired;
     if (document.querySelector("#turnstile-script")) return;
     const script = document.createElement("script");
     script.id = "turnstile-script";
@@ -302,14 +320,25 @@ export function RegistrationForm() {
     script.async = true;
     script.defer = true;
     document.body.appendChild(script);
-    return () => { delete (window as unknown as Record<string, unknown>)["_turnstileCb"]; };
-  }, [siteKey, onTurnstileSuccess]);
+    return () => {
+      delete (window as unknown as Record<string, unknown>)["_turnstileCb"];
+      delete (window as unknown as Record<string, unknown>)["_turnstileExpiredCb"];
+    };
+  }, [siteKey, onTurnstileSuccess, onTurnstileExpired]);
 
   const selectedDelegateType = watch("delegateType");
   const selectedAccommodation = watch("accommodation");
   const displayFee = selectedDelegateType ? feeMap[selectedDelegateType] : null;
 
   const onSubmit = async (data: FormData) => {
+    // Never send a missing or expired token to the server: that comes back as a
+    // failed security check and the delegate has no idea why.
+    if (siteKey && !turnstileToken) {
+      setError("Please complete the security check below, then press Submit again.");
+      resetTurnstile();
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      return;
+    }
     setSubmitting(true);
     setError("");
     try {
@@ -330,13 +359,25 @@ export function RegistrationForm() {
           turnstileToken: turnstileToken || undefined,
         }),
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error("Submission failed");
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(
+          typeof json?.error === "string"
+            ? json.error
+            : "We could not save your registration. Please check your details and try again, or email info@airdczim.co.zw"
+        );
+      }
       setConfirmationCode(json.confirmationCode ?? "");
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch {
-      setError("Something went wrong. Please try again or email us at info@airdczim.co.zw");
+    } catch (err) {
+      setError(
+        err instanceof Error && err.message
+          ? err.message
+          : "Something went wrong. Please try again or email us at info@airdczim.co.zw"
+      );
+      // A Turnstile token is single use, so a fresh one is needed before retrying.
+      resetTurnstile();
     } finally {
       setSubmitting(false);
     }
@@ -591,6 +632,12 @@ export function RegistrationForm() {
             className="cf-turnstile"
             data-sitekey={siteKey}
             data-callback="_turnstileCb"
+            data-expired-callback="_turnstileExpiredCb"
+            data-error-callback="_turnstileExpiredCb"
+            data-timeout-callback="_turnstileExpiredCb"
+            data-refresh-expired="auto"
+            data-retry="auto"
+            data-retry-interval={4000}
             data-theme="light"
           />
         )}
