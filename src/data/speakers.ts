@@ -131,22 +131,19 @@ export const SPEAKERS: StaticSpeaker[] = [
     featured: true,
     order: 7,
   },
-
-  // ── Awaiting profile ────────────────────────────────────────────────────────
-  // Photo is already in place at /images/speakers/patience-speaker.jpg.
-  // Fill in the name, title, organisation and biography below, then remove the
-  // // marks at the start of each line to publish this speaker.
-  //
-  // {
-  //   slug: "patience",
-  //   name: "",
-  //   title: "",
-  //   organisation: "",
-  //   country: "Zimbabwe",
-  //   speakerType: "Panel Speaker",
-  //   photo: "/images/speakers/patience-speaker.jpg",
-  //   bio: "",
-  //   featured: true,
-  //   order: 8,
-  // },
+  {
+    slug: "patience-mashaire-marwiro",
+    name: "Patience Mashaire Marwiro, FIISA, ACII",
+    title: "Managing Director",
+    organisation: "Emeritus International Reinsurance Company Botswana",
+    country: "Botswana",
+    speakerType: "Panel Speaker",
+    photo: "/images/speakers/patience-mashaire-marwiro.jpg",
+    bio: [
+      "Mrs. Patience Mashaire Marwiro is a seasoned insurance executive with over 25 years of experience in the insurance and reinsurance industry across Zimbabwe and Botswana. She currently serves as the Managing Director of Emeritus International Reinsurance Company Botswana, a position she has held since 2023. Her leadership journey includes over 20 years in senior management, with deep expertise in underwriting, marketing, operations, risk management, compliance, and financial reporting. Mrs. Marwiro has also served on various boards for over 15 years, reflecting her strategic influence within the industry.",
+      "A Chartered Insurer (CII) and Fellow of the Insurance Institute of South Africa, she holds an MSc in Risk Management and Insurance, an MBA, and multiple advanced insurance qualifications from IISA and the CII (UK). She is well versed in both Zimbabwean and Botswana regulatory frameworks and is passionate about driving operational excellence and sustainable growth. Mrs. Marwiro is a respected figure in the African insurance space and actively contributes to industry development through her roles with organisations such as the Insurance Institute of Botswana, the Botswana Short-Term Insurance Underwriters Association, and regional bodies like OESAI and AIO.",
+    ].join("\n\n"),
+    featured: true,
+    order: 8,
+  },
 ];
