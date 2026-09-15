@@ -215,6 +215,10 @@ model Registration {
   departureTime   String?
   airlineCompany  String?
   flightNumber    String?
+  departureAirline String?
+  departureFlightNumber String?
+  airportPickup   String?
+  travelUpdatedAt DateTime?
   dietaryRequirements String?
   specialNeeds    String?
   workshopChoice  String?

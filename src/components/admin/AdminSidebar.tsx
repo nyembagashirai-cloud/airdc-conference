@@ -4,13 +4,14 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Users, Award, Newspaper, Images,
   CalendarDays, UserCheck, MessageSquare, LogOut, Settings,
-  BarChart3, Hotel
+  BarChart3, Hotel, Plane
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard", exact: true },
   { href: "/admin/registrations", icon: UserCheck, label: "Registrations" },
+  { href: "/admin/travel", icon: Plane, label: "Travel Details" },
   { href: "/admin/speakers", icon: Users, label: "Speakers" },
   { href: "/admin/sponsors", icon: Award, label: "Sponsors" },
   { href: "/admin/programme", icon: CalendarDays, label: "Programme" },
