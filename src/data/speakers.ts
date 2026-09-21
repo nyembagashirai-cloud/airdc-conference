@@ -145,5 +145,24 @@ export const SPEAKERS: StaticSpeaker[] = [
     ].join("\n\n"),
     featured: true,
     order: 8,
-  },
+  },{
+  slug: 'kennedy-chengeta',
+  name: 'Dr. Kennedy Chengeta',
+  title: 'Co-founder & AI/Automation Lead, KaribuTech AI; Camunda Chapter Lead — Hyperautomation & AI, Southern Africa',
+  organisation: 'KaribuTech AI',
+  country: 'South Africa',
+  speakerType: 'Speaker',
+  photo: '/images/speakers/kennedy-chengeta.jpg',
+  featured: true,
+  order: 9,
+  bio: `Kennedy Chengeta is an artificial intelligence researcher and enterprise architect with more than two decades in financial services technology, including nine years in insurance. He is co-founder and AI/Automation Lead at KaribuTech AI in Johannesburg, and Camunda Chapter Lead for hyperautomation and AI in Southern Africa.
+
+He designed eLife at ZB Life Assurance, which served as the insurer's core administration system for twelve years, and is currently running a proof of value for AI-enabled life insurance with a leading Southern African insurer. He spent a decade at Standard Bank leading integration and workflow automation, contributing to the award-winning MyMo onboarding platform and to digital payments modernisation across twenty-one countries.
+
+He holds a PhD in Computer Science from the University of KwaZulu-Natal and is the author of 26 published books on artificial intelligence in insurance, reinsurance, actuarial practice and enterprise architecture, including "Digitization of the Insurance Domain," "Artificial Intelligence for Reinsurance," and "Actuarial Science and Artificial Intelligence at Crossroads."
+
+He is a TOGAF Certified Architect, NVIDIA AI Technical Foundation Partner, Microsoft Foundation AI Partner, and 2022 IBM TechScale winner. He was a keynote presenter on AI at the Deep Learning Indaba Zimbabwe 2026 and a key presenter at the Camunda Berlin Conference on Insurance Hyperautomation, 2022.
+
+Session: "Digitisation of Insurance — A Case for Artificial Intelligence and Generative AI" — 28 September 2026, 14:00, Technology & Innovation track.`,
+},
 ];
