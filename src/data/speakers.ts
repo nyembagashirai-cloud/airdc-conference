@@ -165,4 +165,20 @@ He is a TOGAF Certified Architect, NVIDIA AI Technical Foundation Partner, Micro
 
 Session: "Digitisation of Insurance — A Case for Artificial Intelligence and Generative AI" — 28 September 2026, 14:00, Technology & Innovation track.`,
 },
+{
+  slug: 'chunky-chhetry',
+  name: 'Mr. Chunky Chhetry',
+  title: "CEO, Sagarmatha Lumbini Insurance; Immediate Past President, Nepal Insurers' Association",
+  organisation: 'Sagarmatha Lumbini Insurance',
+  country: 'Nepal',
+  speakerType: 'Speaker',
+  photo: '/images/speakers/chunky-chhetry.jpg',
+  featured: true,
+  order: 10,
+  bio: `Mr. Chunky Chhetry is a highly accomplished business leader with extensive experience in the insurance industry. He currently serves as CEO of Sagarmatha Lumbini Insurance, where he has been pivotal in driving the company's strategic vision and ensuring its sustained growth and success. His deep expertise spans underwriting, claims management, risk assessment and regulatory compliance, giving him a comprehensive understanding of the industry's complexities and challenges.
+
+He is known for his collaborative leadership style, prioritising open communication and fostering a culture of innovation and continuous improvement, and encourages the adoption of new technologies and processes to enhance customer experience and operational efficiency.
+
+In addition to his role at Sagarmatha Lumbini Insurance, Mr. Chhetry holds several prestigious positions, including Immediate Past President of the Nepal Insurers' Association; Vice President – Insurance of ICC Nepal (2024-2026); Treasurer of the managing committee of the Management Association of Nepal; Tariff Committee Member at the Nepal Insurance Authority; Marketing and Strategy Executive Member at Nepal Re-Insurance Co. Ltd.; Trustee Member of the Association of Insurers and Reinsurers of Developing Countries (AIRDC) (2024-2026); Vice President of the Sri Lanka Chamber of Commerce; Member of the Nepal Capital Market Promotion Committee under the Nepal Chamber of Commerce; Member of the Banking Insurance & Financial Committee under the Nepal Chamber of Commerce; and Executive Member of the Federation of Nepalese Chambers of Commerce and Industry.`,
+},
 ];
