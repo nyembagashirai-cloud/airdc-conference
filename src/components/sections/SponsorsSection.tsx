@@ -2,9 +2,9 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SPONSORS, type StaticSponsor } from "@/data/sponsors";
 
-const TIER_ORDER = ["PLATINUM", "GOLD", "SILVER", "SUPPORTING_PARTNER"];
-const TIER_LABELS: Record<string, string> = { PLATINUM: "Platinum Sponsors", GOLD: "Gold Sponsors", SILVER: "Silver Sponsors", SUPPORTING_PARTNER: "Supporting Partners" };
-const TIER_SIZES: Record<string, string> = { PLATINUM: "h-24 w-48", GOLD: "h-20 w-40", SILVER: "h-16 w-32", SUPPORTING_PARTNER: "h-14 w-28" };
+const TIER_ORDER = ["PLATINUM", "DIAMOND", "GOLD", "SILVER", "BRONZE", "SUPPORTING_PARTNER"];
+const TIER_LABELS: Record<string, string> = { PLATINUM: "Platinum Sponsors", DIAMOND: "Diamond Sponsors", GOLD: "Gold Sponsors", SILVER: "Silver Sponsors", BRONZE: "Bronze Sponsors", SUPPORTING_PARTNER: "Supporting Partners" };
+const TIER_SIZES: Record<string, string> = { PLATINUM: "h-24 w-48", DIAMOND: "h-20 w-44", GOLD: "h-20 w-40", SILVER: "h-16 w-32", BRONZE: "h-14 w-28", SUPPORTING_PARTNER: "h-14 w-28" };
 
 async function getSponsors(): Promise<StaticSponsor[]> {
   if (process.env.DATABASE_URL) {
