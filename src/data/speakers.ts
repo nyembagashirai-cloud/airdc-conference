@@ -181,4 +181,34 @@ He is known for his collaborative leadership style, prioritising open communicat
 
 In addition to his role at Sagarmatha Lumbini Insurance, Mr. Chhetry holds several prestigious positions, including Immediate Past President of the Nepal Insurers' Association; Vice President – Insurance of ICC Nepal (2024-2026); Treasurer of the managing committee of the Management Association of Nepal; Tariff Committee Member at the Nepal Insurance Authority; Marketing and Strategy Executive Member at Nepal Re-Insurance Co. Ltd.; Trustee Member of the Association of Insurers and Reinsurers of Developing Countries (AIRDC) (2024-2026); Vice President of the Sri Lanka Chamber of Commerce; Member of the Nepal Capital Market Promotion Committee under the Nepal Chamber of Commerce; Member of the Banking Insurance & Financial Committee under the Nepal Chamber of Commerce; and Executive Member of the Federation of Nepalese Chambers of Commerce and Industry.`,
 },
+{
+  slug: 'jithesh-leo-prince',
+  name: 'Jithesh Leo Prince',
+  title: 'Business Head, Platform Solutions',
+  organisation: 'Insursa',
+  country: '',
+  speakerType: 'Speaker',
+  photo: '/images/speakers/jithesh-leo-prince.jpg',
+  featured: true,
+  order: 11,
+  bio: `Jithesh Leo Prince leads Platform Solutions Strategy at Insursa, driving product innovation and implementation across Africa, the Middle East and the US. With more than 15 years in Insurtech, he bridges business needs and technical delivery to create tailored digital platforms.
+
+As Business Head, Platforms, he oversees client-centric solutions, aligning product design with regional priorities. His ability to convert complex requirements into scalable systems supports Insursa's rapid platform adoption. Jithesh brings focused technical leadership and strategic clarity to every engagement.`,
+},
+{
+  slug: 'abel-moyo',
+  name: 'Abel Moyo',
+  title: 'Head of Innovation, AI and Data, Zimnat Group',
+  organisation: 'Zimnat Group',
+  country: 'Zimbabwe',
+  speakerType: 'Speaker',
+  photo: '/images/speakers/abel-moyo.jpg',
+  featured: true,
+  order: 12,
+  bio: `Abel Moyo is a technology executive and InsurTech leader currently serving as Head of Innovation, AI and Data for the Zimnat Group. He also leads the TENDDAI business, delivering practical insurance technology solutions for organisations such as MucaRe ReInsurance, Minerva, GrandRe and several other financial services players.
+
+Abel brings a practical African enterprise perspective to digital transformation. His work sits at the intersection of technology and strategy, helping organisations move beyond traditional systems into intelligent, connected and customer-centric business models. In the insurance sector, he is passionate about how InsurTech can transform distribution, underwriting, claims, compliance, policy administration, customer servicing and embedded insurance through AI, automation, data integration and digital ecosystems.
+
+Some of his innovations include AI-powered AML screening, claims automation engines, digital onboarding platforms, finance automation tools and enterprise workflow systems. He also sits on multiple boards and technology committees across private sector and Government institutions, including PRAZ.`,
+},
 ];
