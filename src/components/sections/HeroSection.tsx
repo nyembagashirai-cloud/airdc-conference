@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Download, ArrowRight, ChevronDown, Globe, Users } from "lucide-react";
+import { Calendar, MapPin, BookOpen, ArrowRight, ChevronDown, Globe, Users } from "lucide-react";
 import { HeroCountdown } from "@/components/ui/Countdown";
 
 const fadeUp = {
@@ -114,14 +114,13 @@ export function HeroSection() {
               >
                 Register Now <ArrowRight size={18} />
               </Link>
-              <a
-                href="/brochure.pdf"
-                target="_blank"
+              <Link
+                href="/publications"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-base border-2 text-white transition-all duration-200 hover:bg-white/10 backdrop-blur-sm"
                 style={{ borderColor: "rgba(255,255,255,0.3)" }}
               >
-                <Download size={18} /> Download Brochure
-              </a>
+                <BookOpen size={18} /> Read the Digest Magazine
+              </Link>
             </motion.div>
           </div>
 
