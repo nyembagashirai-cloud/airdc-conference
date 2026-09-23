@@ -5,21 +5,27 @@ const DAYS = [
   {
     day: "Day 1",
     date: "Sunday, 27 September",
-    highlights: ["AIRDC Committee Meeting", "Arrival and Registration", "Welcome Cocktail"],
+    highlights: ["AIRDC Board Meeting", "Arrival and Registration", "Welcome Cocktail"],
   },
   {
     day: "Day 2",
     date: "Monday, 28 September",
     highlights: [
       "Official Opening and Guest of Honour",
-      "Session 1: Geo Politics and Impact of Insurance",
+      "Session 1: Geopolitics and Impact of Insurance",
       "Session 2: Impact of AI and Technology on Insurance",
+      "AIRDC General Membership Meeting",
     ],
   },
   {
     day: "Day 3",
     date: "Tuesday, 29 September",
-    highlights: ["ESG and Sustainable Insurance", "Session 3: Regulators Session"],
+    highlights: [
+      "Session 3: Geopolitics and Impact of Insurance",
+      "Session 4: Regulators Session",
+      "Closing Ceremony",
+      "Gala Dinner",
+    ],
   },
   {
     day: "Day 4",
