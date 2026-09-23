@@ -69,7 +69,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden xl:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -87,7 +87,7 @@ export function Navbar() {
           </nav>
 
           {/* CTA */}
-          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
+          <div className="hidden xl:flex items-center gap-3 flex-shrink-0">
             <Link
               href="/register"
               className="bg-secondary text-white font-semibold whitespace-nowrap px-4 xl:px-5 py-2.5 rounded-lg text-sm hover:bg-secondary-light transition-all duration-200 shadow-card hover:-translate-y-0.5"
@@ -100,7 +100,7 @@ export function Navbar() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "lg:hidden p-2 rounded-lg transition-colors",
+              "xl:hidden p-2 rounded-lg transition-colors",
               isDark ? "text-white hover:bg-white/10" : "text-foreground hover:bg-muted"
             )}
             aria-label="Toggle menu"
@@ -112,7 +112,7 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="lg:hidden bg-white border-t border-border shadow-premium">
+        <div className="xl:hidden bg-white border-t border-border shadow-premium">
           <div className="container py-4 space-y-1">
             {navLinks.map((link) => (
               <Link
