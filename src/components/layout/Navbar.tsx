@@ -75,7 +75,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                  "px-2 xl:px-3 py-2 rounded-lg text-sm whitespace-nowrap font-medium transition-all duration-200",
                   isDark
                     ? "text-white/90 hover:text-white hover:bg-white/10"
                     : "text-foreground hover:text-primary hover:bg-muted"
@@ -87,10 +87,10 @@ export function Navbar() {
           </nav>
 
           {/* CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
             <Link
               href="/register"
-              className="bg-secondary text-white font-semibold px-5 py-2.5 rounded-lg text-sm hover:bg-secondary-light transition-all duration-200 shadow-card hover:-translate-y-0.5"
+              className="bg-secondary text-white font-semibold whitespace-nowrap px-4 xl:px-5 py-2.5 rounded-lg text-sm hover:bg-secondary-light transition-all duration-200 shadow-card hover:-translate-y-0.5"
             >
               Register Now
             </Link>
