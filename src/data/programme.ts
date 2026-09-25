@@ -1,182 +1,209 @@
 // 24th AIRDC Conference programme.
-// Source: "FINAL AIRDC PROGRAMM.docx" received 25 September 2026 (final approved programme, Day 1 to Day 3).
-// Day 4 is not included in the programme document and is intentionally omitted.
+// Source: "FINAL AIRDC PROGRAMM.docx", the final approved programme (received 25 September 2026).
+// Every line below is copied exactly from the document, in the same order.
+// Text wrapped in **double asterisks** is bold in the document.
+// Admin dashboard sessions take precedence over this file when any exist.
 
-export type ProgrammeTopic = {
-  label?: string;
-  title: string;
-  moderator?: string;
-  speakerLabel?: string;
-  speakers?: string[];
+export type ProgrammeLine = { text: string; indent?: boolean };
+
+export type ProgrammeRow = {
+  time: string[];
+  blocks: ProgrammeLine[][];
+  tone?: "break" | "social" | "meeting" | "registration";
 };
 
-export type ProgrammeItem = {
-  startTime: string;
-  endTime?: string;
-  title: string;
-  subtitle?: string;
-  description?: string;
-  venue?: string;
-  type: string;
-  topics?: ProgrammeTopic[];
-};
+export type ProgrammeDay = { heading: string; rows: ProgrammeRow[] };
 
-export type ProgrammeDay = {
-  day: string;
-  dateLabel: string;
-  items: ProgrammeItem[];
+export const PROGRAMME_HEADER = {
+  title: "24TH AIRDC CONFERENCE PROGRAMME",
+  theme: "Theme: “Insurance resilience in the face of geopolitical and technological disruption for developing markets”",
+  organisation: "ASSOCIATION OF INSURERS AND REINSURERS OF DEVELOPING COUNTRIES",
+  dates: "27 – 30 SEPTEMBER 2026",
+  venue: "RAINBOW TOWERS: THE SHERATON HOTEL, HARARE, ZIMBABWE",
 };
 
 export const PROGRAMME: ProgrammeDay[] = [
   {
-    day: "Day 1",
-    dateLabel: "Sunday, 27 September 2026",
-    items: [
-      { startTime: "16:00", endTime: "18:00", title: "AIRDC Board Meeting", type: "MEETING" },
-      { startTime: "16:00", endTime: "19:00", title: "Arrival and Registration of Guests", type: "REGISTRATION" },
+    heading: "DAY 1: Sunday 27 September 2026",
+    rows: [
       {
-        startTime: "19:00",
-        endTime: "21:00",
-        title: "Welcome Cocktail",
-        subtitle: "Welcome remarks by the AIRDC LOC Chairman, P Kusikwenyu",
-        description: "Followed by remarks from AIRDC and ICZ.",
-        type: "SOCIAL",
+        time: ["16:00 – 18:00"],
+        tone: "meeting",
+        blocks: [
+          [
+            { text: "AIRDC Board Meeting" },
+          ],
+        ],
+      },
+      {
+        time: ["16:00 - 19:00"],
+        tone: "registration",
+        blocks: [
+          [
+            { text: "Arrival & Registration of Guests" },
+          ],
+        ],
+      },
+      {
+        time: ["19:00 – 21:00"],
+        tone: "social",
+        blocks: [
+          [
+            { text: "Welcome Cocktail" },
+            { text: "Welcome Remarks – AIRDC LOC Chairman – **P Kusikwenyu**" },
+            { text: "Remarks - AIRDC & ICZ" },
+          ],
+        ],
       },
     ],
   },
   {
-    day: "Day 2",
-    dateLabel: "Monday, 28 September 2026",
-    items: [
-      { startTime: "08:00", endTime: "09:00", title: "Registration", type: "REGISTRATION" },
+    heading: "DAY 2: Monday 28 September 2026",
+    rows: [
       {
-        startTime: "09:00",
-        endTime: "09:30",
-        title: "Official Opening and Welcome Address",
-        subtitle: "Patrick Kusikwenyu, Chairman, Local Organising Committee",
-        description:
-          "Remarks by the AIRDC President, Dr Aaron Issa Anafure. Commissioner's remarks and introduction of the Guest of Honour by Dr Grace Muradzikwa.",
-        type: "PLENARY",
-      },
-      {
-        startTime: "09:30",
-        endTime: "10:00",
-        title: "Opening Remarks by the Guest of Honour",
-        subtitle: "Minister M Ncube",
-        type: "KEYNOTE",
-      },
-      { startTime: "10:00", endTime: "10:30", title: "Coffee Break", type: "BREAK" },
-      {
-        startTime: "10:30",
-        endTime: "13:00",
-        title: "Session 1: Environmental Disruption and Impact on Insurance",
-        type: "PLENARY",
-        topics: [
-          {
-            label: "Topic 1",
-            title:
-              "ESG, Sustainable Insurance and Climate Risk: Towards a transformation of the global insurance landscape",
-            speakerLabel: "Speaker",
-            speakers: ["Dr Tawanda Collins Muzamwese, CEO, African Sustainability Consultants"],
-          },
-          {
-            label: "Topic 2",
-            title:
-              "Panel Discussion. The ultimate stress test: How developing country insurers survive economic disruptions",
-            moderator: "Patience Mashaire Marwiro",
-            speakerLabel: "Panellists",
-            speakers: [
-              "Mr Mufaro Chauruka, Founding MD, Emeritus Resseguros",
-              "Mr Chunky Chhetry, CEO, Sagarmatha Lumbini Insurance",
-              "Mr Livingstone Magorimbo, Chief Actuary, First Mutual",
-            ],
-          },
-        ],
-      },
-      { startTime: "13:00", endTime: "14:00", title: "Lunch Break", type: "BREAK" },
-      {
-        startTime: "14:00",
-        endTime: "16:00",
-        title: "Session 2: Impact of AI and Technology on Insurance",
-        type: "PLENARY",
-        topics: [
-          {
-            label: "Topic 3",
-            title: "Digitalisation of Insurance: A case for AI",
-            speakerLabel: "Speaker",
-            speakers: ["Kennedy Chengeta, Co-founder, KaribuTech AI"],
-          },
-          {
-            label: "Topic 4",
-            title: "Hunting the Invisible: The battle of insurers against cyber crime",
-            moderator: "Don Mlambo, Cyber Security Specialist, NMB",
-            speakerLabel: "Panellists",
-            speakers: [
-              "Mr Derek Masvosvere, Director Africa, Linkshadow",
-              "Jithesh Leo Prince, Business Head, Platform Solutions, Insursa",
-              "Abel Moyo, Head of Innovation, Zimnat",
-            ],
-          },
+        time: ["08:00 – 09:00"],
+        tone: "registration",
+        blocks: [
+          [
+            { text: "Registration" },
+          ],
         ],
       },
       {
-        startTime: "16:00",
-        endTime: "17:00",
-        title: "AIRDC General Membership Meeting",
-        subtitle: "AIRDC members only",
-        type: "MEETING",
+        time: ["09:00 – 09:30"],
+        blocks: [
+          [
+            { text: "Official Opening and Welcome Address by the Local Organising Committee Chairman, **Patrick Kusikwenyu**" },
+            { text: "**AIRDC President’s** remarks presented by **Dr Aaron Issa Anafure**" },
+            { text: "Commissioner’s Remarks and Introduction of Guest of Honour **Dr Grace Muradzikwa**" },
+          ],
+        ],
+      },
+      {
+        time: ["09:30 – 10:00"],
+        blocks: [
+          [
+            { text: "Opening Remarks by Guest of Honour: **Minister M Ncube**" },
+          ],
+        ],
+      },
+      {
+        time: ["10:00 – 10:30"],
+        tone: "break",
+        blocks: [
+          [
+            { text: "**Coffee Break**" },
+          ],
+        ],
+      },
+      {
+        time: ["10:30 – 13:00"],
+        blocks: [
+          [
+            { text: "**Session 1:** Environmental Disruption and Impact on Insurance" },
+          ],
+          [
+            { text: "**Topic 1: \"ESG, Sustainable Insurance and Climate Risk - Towards a transformation of the global Insurance Landscape**" },
+            { text: "Speaker: **Dr**. **Tawanda Collins Muzamwese, CEO, African Sustainability Consultants**" },
+          ],
+          [
+            { text: "**Topic 2:** Panel Discussion: **Moderator, Patience Mashaire Marwiro**: The ultimate stress test: How developing country insurers survive economic disruptions" },
+            { text: "**Panelists:** 1: **Mr Mufaro Chauruka, Founding MD, Emeritus Resseguros**" },
+            { text: "**2: Mr Chunky Chhetry, CEO, Sagarmatha Lumbini Insurance**", indent: true },
+            { text: "**3. Mr Livingstone Magorimbo, Chief Actuary, First Mutual**", indent: true },
+          ],
+        ],
+      },
+      {
+        time: ["13:00 – 14:00"],
+        tone: "break",
+        blocks: [
+          [
+            { text: "**Lunch Break**" },
+          ],
+        ],
+      },
+      {
+        time: ["14:00 – 16:00", "16:00 – 17:00"],
+        blocks: [
+          [
+            { text: "**Session 2:** Impact of AI and Technology on Insurance" },
+          ],
+          [
+            { text: "**Topic 3:** Digitalisation of Insurance – A case for AI" },
+            { text: "Speaker: **Kennedy Chengeta, Co-founder, KaribuTech AI**" },
+          ],
+          [
+            { text: "**Topic 4:** Hunting the Invisible: **Don Mlambo, Cyber Security Specialist, NMB** The battle of insurers against Cyber Crime" },
+            { text: "Panelists: **1**. **Mr. Derek Masvosvere, Director Africa at Linkshadow**" },
+            { text: "**2. Jithesh Leo Prince, Business Head, Platform Solutions**", indent: true },
+            { text: "**3. Abel Moyo, Head Innovation, Zimnat**", indent: true },
+            { text: "" },
+            { text: "**AIRDC General Membership Meeting (AIRDC Members Only)**" },
+          ],
+        ],
       },
     ],
   },
   {
-    day: "Day 3",
-    dateLabel: "Tuesday, 29 September 2026",
-    items: [
+    heading: "DAY 3: Tuesday 29 September 2026",
+    rows: [
       {
-        startTime: "09:00",
-        endTime: "10:00",
-        title: "Session 3: Geopolitics and Impact on Insurance",
-        type: "PLENARY",
-        topics: [
-          {
-            label: "Topic 5",
-            title:
-              "Hidden Tax on Risk: How global friction redefines local insurance in developing countries",
-            speakerLabel: "Speaker",
-            speakers: ["Wadzanayi B Phiri, Coronation Solutions (Private) Limited"],
-          },
+        time: ["09:00 – 10:00"],
+        blocks: [
+          [
+            { text: "**Session 3:** Geopolitics and Impact on Insurance" },
+          ],
+          [
+            { text: "**Topic 5:** Hidden Tax on Risk – How global friction redefines local insurance in developing countries" },
+            { text: "Speaker: **Wadzanayi B Phiri, Coronation Solutions (Private) Limited**" },
+          ],
         ],
       },
-      { startTime: "10:00", endTime: "10:30", title: "Coffee Break", type: "BREAK" },
       {
-        startTime: "10:30",
-        endTime: "13:00",
-        title: "Session 3: Regulators Session",
-        type: "PANEL",
-        topics: [
-          {
-            label: "Topic 6",
-            title:
-              "Keeping the Money at Home: How regulators are containing premium flight from developing countries",
-            moderator: "Dr Clementine Chinyuku",
-            speakerLabel: "Panellists",
-            speakers: [
-              "Mr Emmanuel O Amaoh, Ghana National Insurance Commission",
-              "Pushpa Kunwar, Nepal Insurance Authority",
-              "Mrs Sibongile Siwela, Director Insurance, IPEC",
-            ],
-          },
+        time: ["10:00 – 10:30"],
+        tone: "break",
+        blocks: [
+          [
+            { text: "**Coffee Break**" },
+          ],
         ],
       },
-      { startTime: "13:00", endTime: "14:00", title: "Lunch Break", type: "BREAK" },
       {
-        startTime: "14:00",
-        endTime: "14:30",
-        title: "Closing Ceremony",
-        subtitle: "Handover of the AIRDC Presidency",
-        type: "PLENARY",
+        time: ["10:30 – 13:00"],
+        blocks: [
+          [
+            { text: "**Session 3:** Regulators Session" },
+          ],
+          [
+            { text: "**Topic 6: Moderator – Dr Clementine Chinyuku:** Keeping the Money at Home – How regulators are containing premium flight from developing countries" },
+            { text: "" },
+            { text: "Panelists: 1. **Mr Emmanuel O Amaoh, Ghana National Insurance Commission**" },
+            { text: "2. **Pushpa Kunwar, Nepal Insurance Authority**", indent: true },
+            { text: "**3. Mrs Sibongile Siwela, Director Insurance, IPEC**", indent: true },
+          ],
+        ],
       },
-      { startTime: "18:00", title: "Gala Dinner", subtitle: "Theme: Ethnic", type: "SOCIAL" },
+      {
+        time: ["13:00 – 14:00", "14:00 - 1430"],
+        tone: "break",
+        blocks: [
+          [
+            { text: "**Lunch Break**" },
+            { text: "" },
+            { text: "**Closing Ceremony (Handover of AIRDC Presidency)**" },
+          ],
+        ],
+      },
+      {
+        time: ["1800"],
+        tone: "social",
+        blocks: [
+          [
+            { text: "**GALA DINNER - ETHNIC**" },
+          ],
+        ],
+      },
     ],
   },
 ];

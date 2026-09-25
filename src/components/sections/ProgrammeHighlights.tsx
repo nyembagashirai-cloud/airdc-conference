@@ -4,27 +4,27 @@ import { ArrowRight, CalendarDays } from "lucide-react";
 const DAYS = [
   {
     day: "Day 1",
-    date: "Sunday, 27 September",
-    highlights: ["AIRDC Board Meeting", "Arrival and Registration", "Welcome Cocktail"],
+    date: "Sunday 27 September 2026",
+    highlights: ["AIRDC Board Meeting", "Arrival & Registration of Guests", "Welcome Cocktail"],
   },
   {
     day: "Day 2",
-    date: "Monday, 28 September",
+    date: "Monday 28 September 2026",
     highlights: [
-      "Official Opening and Guest of Honour",
+      "Opening Remarks by Guest of Honour: Minister M Ncube",
       "Session 1: Environmental Disruption and Impact on Insurance",
       "Session 2: Impact of AI and Technology on Insurance",
-      "AIRDC General Membership Meeting",
+      "AIRDC General Membership Meeting (AIRDC Members Only)",
     ],
   },
   {
     day: "Day 3",
-    date: "Tuesday, 29 September",
+    date: "Tuesday 29 September 2026",
     highlights: [
       "Session 3: Geopolitics and Impact on Insurance",
       "Session 3: Regulators Session",
-      "Closing Ceremony",
-      "Gala Dinner",
+      "Closing Ceremony (Handover of AIRDC Presidency)",
+      "GALA DINNER - ETHNIC",
     ],
   },
 ];

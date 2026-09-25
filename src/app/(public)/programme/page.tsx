@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
-import { Users, MapPin, CalendarClock } from "lucide-react";
-import { PROGRAMME, type ProgrammeDay, type ProgrammeItem } from "@/data/programme";
+import { CalendarClock } from "lucide-react";
+import {
+  PROGRAMME,
+  PROGRAMME_HEADER,
+  type ProgrammeDay,
+  type ProgrammeRow,
+} from "@/data/programme";
 
 export const metadata: Metadata = {
   title: "Programme",
@@ -8,24 +13,38 @@ export const metadata: Metadata = {
     "Full conference programme for the 24th AIRDC Conference, 27 to 30 September 2026, Rainbow Towers Hotel, Harare, Zimbabwe.",
 };
 
-const typeStyles: Record<string, { bg: string; border: string; dot: string; label: string }> = {
-  PLENARY:      { bg: "bg-blue-50",   border: "border-blue-400",   dot: "bg-blue-500",   label: "Plenary" },
-  KEYNOTE:      { bg: "bg-purple-50", border: "border-purple-400", dot: "bg-purple-500", label: "Keynote" },
-  PANEL:        { bg: "bg-indigo-50", border: "border-indigo-400", dot: "bg-indigo-500", label: "Panel" },
-  WORKSHOP:     { bg: "bg-green-50",  border: "border-green-400",  dot: "bg-green-500",  label: "Workshop" },
-  BREAK:        { bg: "bg-gray-50",   border: "border-gray-300",   dot: "bg-gray-400",   label: "Break" },
-  SOCIAL:       { bg: "bg-yellow-50", border: "border-yellow-400", dot: "bg-yellow-500", label: "Social" },
-  MEETING:      { bg: "bg-orange-50", border: "border-orange-400", dot: "bg-orange-500", label: "Meeting" },
-  NETWORKING:   { bg: "bg-teal-50",   border: "border-teal-400",   dot: "bg-teal-500",   label: "Networking" },
-  REGISTRATION: { bg: "bg-sky-50",    border: "border-sky-400",    dot: "bg-sky-500",    label: "Registration" },
+const toneStyles: Record<string, string> = {
+  default: "bg-white border-blue-400",
+  break: "bg-gray-50 border-gray-300",
+  social: "bg-yellow-50 border-yellow-400",
+  meeting: "bg-orange-50 border-orange-400",
+  registration: "bg-sky-50 border-sky-400",
 };
 
-const DAY_DATES: Record<string, string> = {
-  "Day 1": "Sunday, 27 September 2026",
-  "Day 2": "Monday, 28 September 2026",
-  "Day 3": "Tuesday, 29 September 2026",
-  "Day 4": "Wednesday, 30 September 2026",
+const DAY_HEADINGS: Record<string, string> = {
+  "Day 1": "DAY 1: Sunday 27 September 2026",
+  "Day 2": "DAY 2: Monday 28 September 2026",
+  "Day 3": "DAY 3: Tuesday 29 September 2026",
+  "Day 4": "DAY 4: Wednesday 30 September 2026",
 };
+
+// Renders text exactly as written, with **double asterisks** shown in bold.
+function RichText({ text }: { text: string }) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g).filter(Boolean);
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.startsWith("**") && part.endsWith("**") ? (
+          <strong key={i} className="font-semibold text-foreground">
+            {part.slice(2, -2)}
+          </strong>
+        ) : (
+          <span key={i}>{part}</span>
+        ),
+      )}
+    </>
+  );
+}
 
 async function getSessions() {
   if (!process.env.DATABASE_URL) return [];
@@ -43,25 +62,28 @@ export default async function ProgrammePage() {
   const dbSessions = await getSessions();
 
   // Sessions entered through the admin dashboard take precedence.
-  // When none exist, the published programme document is shown.
+  // When none exist, the approved programme document is shown exactly as written.
   let days: ProgrammeDay[];
 
   if (dbSessions.length > 0) {
     const uniqueDays = Array.from(new Set(dbSessions.map((s) => s.day))).sort();
     days = uniqueDays.map((day) => ({
-      day,
-      dateLabel: DAY_DATES[day] || day,
-      items: dbSessions
+      heading: DAY_HEADINGS[day] || day,
+      rows: dbSessions
         .filter((s) => s.day === day)
-        .map((s) => ({
-          startTime: s.startTime,
-          endTime: s.endTime || undefined,
-          title: s.title,
-          subtitle: s.subtitle || undefined,
-          description: s.description || undefined,
-          type: s.type,
-          venue: s.venue || undefined,
-        })) as ProgrammeItem[],
+        .map(
+          (s): ProgrammeRow => ({
+            time: [s.endTime ? `${s.startTime} – ${s.endTime}` : s.startTime],
+            blocks: [
+              [
+                { text: `**${s.title}**` },
+                ...(s.subtitle ? [{ text: s.subtitle }] : []),
+                ...(s.description ? [{ text: s.description }] : []),
+                ...(s.venue ? [{ text: s.venue }] : []),
+              ],
+            ],
+          }),
+        ),
     }));
   } else {
     days = PROGRAMME;
@@ -71,14 +93,15 @@ export default async function ProgrammePage() {
     <div className="pt-20">
       <div className="bg-primary py-16">
         <div className="container">
-          <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-4">Programme</p>
-          <h1 className="font-heading font-black text-white text-4xl md:text-5xl mb-2">Conference Programme</h1>
-          <p className="text-white/70 text-lg">
-            27 to 30 September 2026 · Rainbow Towers Hotel, Harare
+          <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-4">
+            {PROGRAMME_HEADER.organisation}
           </p>
-          <p className="text-white/60 text-sm mt-3 max-w-2xl italic">
-            Theme: Insurance resilience in the face of geopolitical and technological disruption for developing markets
-          </p>
+          <h1 className="font-heading font-black text-white text-3xl md:text-5xl mb-3">
+            {PROGRAMME_HEADER.title}
+          </h1>
+          <p className="text-white/80 text-lg">{PROGRAMME_HEADER.dates}</p>
+          <p className="text-white/70 text-sm mt-1">{PROGRAMME_HEADER.venue}</p>
+          <p className="text-white/60 text-sm mt-3 max-w-2xl italic">{PROGRAMME_HEADER.theme}</p>
           <div className="flex flex-wrap gap-4 mt-6">
             <a
               href="/register"
@@ -104,94 +127,44 @@ export default async function ProgrammePage() {
             </div>
           ) : (
             days.map((day) => (
-              <div key={day.day} className="card-premium overflow-hidden break-inside-avoid">
-                <div className="bg-primary px-8 py-5">
-                  <span className="text-secondary font-bold text-sm uppercase tracking-widest">{day.day}</span>
-                  <h2 className="text-white font-heading font-bold text-xl">{day.dateLabel}</h2>
+              <div key={day.heading} className="card-premium overflow-hidden break-inside-avoid">
+                <div className="bg-primary px-6 sm:px-8 py-5">
+                  <h2 className="text-white font-heading font-bold text-lg sm:text-xl">{day.heading}</h2>
                 </div>
                 <div className="divide-y divide-border">
-                  {day.items.map((item, i) => {
-                    const style = typeStyles[item.type] || typeStyles.PLENARY;
-                    return (
-                      <div
-                        key={`${day.day}-${i}`}
-                        className={`flex flex-col sm:flex-row gap-4 p-5 ${style.bg} border-l-4 ${style.border}`}
-                      >
-                        <div className="flex items-center gap-2 sm:w-36 flex-shrink-0">
-                          <span className={`w-2 h-2 rounded-full flex-shrink-0 ${style.dot}`} />
-                          <span className="text-xs font-bold text-muted-foreground">
-                            {item.startTime}
-                            {item.endTime ? ` – ${item.endTime}` : ""}
-                          </span>
-                        </div>
-
-                        <div className="flex-1 min-w-0">
-                          <p className="font-heading font-bold text-foreground leading-snug">{item.title}</p>
-
-                          {item.subtitle && (
-                            <div className="flex items-center gap-1.5 mt-1.5 text-muted-foreground text-xs">
-                              <Users size={12} className="flex-shrink-0" />
-                              <span>{item.subtitle}</span>
-                            </div>
-                          )}
-
-                          {item.venue && (
-                            <div className="flex items-center gap-1.5 mt-1.5 text-muted-foreground text-xs">
-                              <MapPin size={12} className="flex-shrink-0" />
-                              <span>{item.venue}</span>
-                            </div>
-                          )}
-
-                          {item.description && (
-                            <p className="text-muted-foreground text-xs mt-2 leading-relaxed">{item.description}</p>
-                          )}
-
-                          {item.topics && item.topics.length > 0 && (
-                            <div className="mt-4 space-y-3">
-                              {item.topics.map((topic, ti) => (
-                                <div
-                                  key={ti}
-                                  className="bg-white/80 border border-border rounded-lg px-4 py-3"
-                                >
-                                  {topic.label && (
-                                    <span className="text-[11px] font-bold uppercase tracking-widest text-secondary">
-                                      {topic.label}
-                                    </span>
-                                  )}
-                                  <p className="font-semibold text-sm text-foreground leading-snug mt-0.5">
-                                    {topic.title}
-                                  </p>
-                                  {topic.moderator && (
-                                    <p className="mt-2 text-xs text-muted-foreground">
-                                      <span className="font-semibold">Moderator:</span>{" "}
-                                      {topic.moderator}
-                                    </p>
-                                  )}
-                                  {topic.speakers && topic.speakers.length > 0 && (
-                                    <div className="mt-2 flex items-start gap-1.5 text-xs text-muted-foreground">
-                                      <Users size={12} className="flex-shrink-0 mt-0.5" />
-                                      <span>
-                                        <span className="font-semibold">
-                                          {topic.speakerLabel || "Speaker"}:
-                                        </span>{" "}
-                                        {topic.speakers.join(" · ")}
-                                      </span>
-                                    </div>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-
-                        <span
-                          className={`self-start text-xs font-bold uppercase tracking-wide px-2.5 py-1 rounded-full border ${style.bg} ${style.border} flex-shrink-0`}
-                        >
-                          {style.label}
-                        </span>
+                  {day.rows.map((row, i) => (
+                    <div
+                      key={`${day.heading}-${i}`}
+                      className={`flex flex-col sm:flex-row gap-3 sm:gap-6 p-5 border-l-4 ${toneStyles[row.tone || "default"]}`}
+                    >
+                      <div className="sm:w-36 flex-shrink-0 space-y-1">
+                        {row.time.map((t, ti) => (
+                          <p key={ti} className="text-sm font-bold text-primary">
+                            {t}
+                          </p>
+                        ))}
                       </div>
-                    );
-                  })}
+
+                      <div className="flex-1 min-w-0 divide-y divide-border/70">
+                        {row.blocks.map((block, bi) => (
+                          <div key={bi} className={bi === 0 ? "pb-3 last:pb-0" : "py-3 last:pb-0"}>
+                            {block.map((line, li) =>
+                              line.text === "" ? (
+                                <div key={li} className="h-3" />
+                              ) : (
+                                <p
+                                  key={li}
+                                  className={`text-sm text-muted-foreground leading-relaxed ${line.indent ? "pl-[4.75rem]" : ""}`}
+                                >
+                                  <RichText text={line.text} />
+                                </p>
+                              ),
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))
