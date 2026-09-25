@@ -130,4 +130,13 @@ export const SPONSORS: StaticSponsor[] = [
     description: null,
     order: 13,
   },
+  {
+    id: "alliance-insurance",
+    name: "Alliance Insurance",
+    tier: "SUPPORTING_PARTNER",
+    logoUrl: "/images/sponsors/alliance-insurance.png",
+    website: null,
+    description: null,
+    order: 14,
+  },
 ];
