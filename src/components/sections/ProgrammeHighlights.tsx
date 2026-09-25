@@ -12,7 +12,7 @@ const DAYS = [
     date: "Monday, 28 September",
     highlights: [
       "Official Opening and Guest of Honour",
-      "Session 1: Geopolitics and Impact of Insurance",
+      "Session 1: Environmental Disruption and Impact on Insurance",
       "Session 2: Impact of AI and Technology on Insurance",
       "AIRDC General Membership Meeting",
     ],
@@ -21,16 +21,11 @@ const DAYS = [
     day: "Day 3",
     date: "Tuesday, 29 September",
     highlights: [
-      "Session 3: Geopolitics and Impact of Insurance",
-      "Session 4: Regulators Session",
+      "Session 3: Geopolitics and Impact on Insurance",
+      "Session 3: Regulators Session",
       "Closing Ceremony",
       "Gala Dinner",
     ],
-  },
-  {
-    day: "Day 4",
-    date: "Wednesday, 30 September",
-    highlights: ["Programme to be confirmed"],
   },
 ];
 
@@ -42,12 +37,11 @@ export function ProgrammeHighlights() {
           <p className="text-secondary font-semibold text-sm uppercase tracking-widest mb-3">Programme</p>
           <h2 className="section-title">Conference Programme</h2>
           <p className="text-muted-foreground leading-relaxed mt-4">
-            Four days of keynotes, expert panels and networking at the Rainbow Towers Hotel, Harare.
-            Sessions and timings are provisional and subject to change.
+            Keynotes, expert panels and networking at the Rainbow Towers Hotel, Harare.
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-10">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-10">
           {DAYS.map((d) => (
             <div
               key={d.day}

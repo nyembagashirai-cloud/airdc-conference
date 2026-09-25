@@ -1,5 +1,5 @@
 // 24th AIRDC Conference programme.
-// Source: "v5 AIRDC Programme.docx" received 23 September 2026 (Day 1 to Day 3 confirmed).
+// Source: "FINAL AIRDC PROGRAMM.docx" received 25 September 2026 (final approved programme, Day 1 to Day 3).
 // Day 4 is not included in the programme document and is intentionally omitted.
 
 export type ProgrammeTopic = {
@@ -69,7 +69,7 @@ export const PROGRAMME: ProgrammeDay[] = [
       {
         startTime: "10:30",
         endTime: "13:00",
-        title: "Session 1: Geopolitics and Impact of Insurance",
+        title: "Session 1: Environmental Disruption and Impact on Insurance",
         type: "PLENARY",
         topics: [
           {
@@ -86,9 +86,9 @@ export const PROGRAMME: ProgrammeDay[] = [
             moderator: "Patience Mashaire Marwiro",
             speakerLabel: "Panellists",
             speakers: [
-              "Mr Mufaro Chaukruka, Founding MD, Emeritus Resseguros",
+              "Mr Mufaro Chauruka, Founding MD, Emeritus Resseguros",
               "Mr Chunky Chhetry, CEO, Sagarmatha Lumbini Insurance",
-              "Mr Livingstone Magorimbo, Chief Actuary, FML",
+              "Mr Livingstone Magorimbo, Chief Actuary, First Mutual",
             ],
           },
         ],
@@ -109,6 +109,7 @@ export const PROGRAMME: ProgrammeDay[] = [
           {
             label: "Topic 4",
             title: "Hunting the Invisible: The battle of insurers against cyber crime",
+            moderator: "Don Mlambo, Cyber Security Specialist, NMB",
             speakerLabel: "Panellists",
             speakers: [
               "Mr Derek Masvosvere, Director Africa, Linkshadow",
@@ -134,7 +135,7 @@ export const PROGRAMME: ProgrammeDay[] = [
       {
         startTime: "09:00",
         endTime: "10:00",
-        title: "Session 3: Geopolitics and Impact of Insurance",
+        title: "Session 3: Geopolitics and Impact on Insurance",
         type: "PLENARY",
         topics: [
           {
@@ -150,7 +151,7 @@ export const PROGRAMME: ProgrammeDay[] = [
       {
         startTime: "10:30",
         endTime: "13:00",
-        title: "Session 4: Regulators Session",
+        title: "Session 3: Regulators Session",
         type: "PANEL",
         topics: [
           {
