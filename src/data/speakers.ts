@@ -211,4 +211,60 @@ Abel brings a practical African enterprise perspective to digital transformation
 
 Some of his innovations include AI-powered AML screening, claims automation engines, digital onboarding platforms, finance automation tools and enterprise workflow systems. He also sits on multiple boards and technology committees across private sector and Government institutions, including PRAZ.`,
 },
+{
+  slug: 'sibongile-siwela',
+  name: 'Mrs. Sibongile Siwela',
+  title: 'Director of Insurance and Microinsurance',
+  organisation: 'Insurance and Pensions Commission (IPEC)',
+  country: 'Zimbabwe',
+  speakerType: 'Panel Speaker',
+  photo: '/images/speakers/sibongile-siwela.jpg',
+  featured: true,
+  order: 13,
+  bio: `Sibongile Siwela is the Director of Insurance and Microinsurance at the Insurance and Pensions Commission (IPEC) in Zimbabwe. She is an accomplished insurance practitioner with over 30 years of extensive experience spanning both insurance operations and regulatory oversight.
+
+Sibongile joined IPEC in 2019, bringing with her a wealth of knowledge gained from 27 years in a leading life insurance company, where she held various managerial positions across the insurance value chain. Her roles provided deep exposure to product development, underwriting, claims management, customer service and strategic leadership, making her a well-rounded expert in insurance business operations. She has since accumulated an additional seven years of regulatory experience, further strengthening her expertise in prudential and market conduct supervision.
+
+In her current role as Director, she is responsible for prudential supervision of insurance entities, to ensure compliance, financial soundness and stability; market conduct regulation, aimed at protecting policyholders and promoting fair business practices; and driving the development and innovation of the insurance and microinsurance sectors in Zimbabwe.
+
+She holds a Master's degree in Business Administration and a Bachelor of Science Honours Degree in Risk Management and Insurance from the National University of Science and Technology, Zimbabwe (NUST). She also holds a Diploma in Insurance with the Insurance Institute of Zimbabwe (IIZ). Her vast experience, strategic insight and dedication to regulatory excellence continue to make her a key contributor to the growth and transformation of Zimbabwe's insurance industry.`,
+},
+{
+  slug: 'mufaro-chauruka',
+  name: 'Mr. Mufaro Chauruka FIISA',
+  title: 'Founding Managing Director',
+  organisation: 'Emeritus Resseguros',
+  country: 'Mozambique',
+  speakerType: 'Panel Speaker',
+  photo: '/images/speakers/mufaro-chauruka.jpg',
+  featured: true,
+  order: 14,
+  bio: `Mufaro Chauruka is an experienced reinsurance executive with more than three decades of insurance and reinsurance experience across underwriting, business leadership, market development and professional capacity building.
+
+He began his career in Zimbabwe in 1992 as a trainee underwriter and progressed through increasingly senior responsibilities before being seconded to Mozambique in 2006 to establish Zimre Mozambique, now Emeritus Resseguros, where he continues to serve as founding Managing Director. The company was incorporated in March 2007 and commenced operations in May 2007.
+
+He served on the Executive Committee and Board of the African Insurance Organisation from 2012 to 2015. He is the Alternate Board Member for Mozambique at OESAI and a Fiscal Council Board Member of the Insurance Association of Mozambique (AMS).
+
+He holds a Master of Business Administration (2006) and a Bachelor of Business Studies (Honours) (1991), both from the University of Zimbabwe. He is an Associate (1996) and a Fellow (2014) of the Insurance Institute of South Africa.
+
+He has completed a range of technical and specialist insurance and reinsurance programmes in the United Kingdom, Switzerland and Zimbabwe, and is actively involved in developing insurance professionals through seminar presentations, technical knowledge sharing and market-focused capacity-building initiatives.`,
+},
+{
+  slug: 'pushpa-kunwar',
+  name: 'Ms. Pushpa Kunwar',
+  title: 'Deputy Director',
+  organisation: 'Nepal Insurance Authority',
+  country: 'Nepal',
+  speakerType: 'Panel Speaker',
+  photo: '/images/speakers/pushpa-kunwar.jpg',
+  featured: true,
+  order: 15,
+  bio: `"Passionate about strengthening domestic market infrastructure and leveraging smart regulatory frameworks to foster consumer trust and innovation."
+
+Pushpa Kunwar is an insurance professional with over a decade of experience across the insurance, banking and education sectors.
+
+An MBA graduate and a Fellow of the Insurance Institute of India (FIII), Pushpa has over eight years of experience with the Nepal Insurance Authority, leading impactful initiatives across the Product Development, Human Resources, and Research and Statistics departments. During this period she has contributed significantly to product review and design, the development of regulations, and enhanced decision making through the use of data and research.
+
+This deep regulatory expertise is further enriched by foundational experience in the banking sector and a background in education, giving her a multisectoral perspective on insurance sector regulation.`,
+},
 ];
