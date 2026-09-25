@@ -60,8 +60,12 @@ export async function SponsorsSection() {
                     <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground">{TIER_LABELS[tier]}</span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
-                  <div className="flex flex-wrap justify-center gap-6 items-center">
-                    {tierSponsors.map(s => (
+                  {(tier === "SUPPORTING_PARTNER"
+                    ? [tierSponsors.slice(0, Math.ceil(tierSponsors.length / 2)), tierSponsors.slice(Math.ceil(tierSponsors.length / 2))]
+                    : [tierSponsors]
+                  ).filter(row => row.length > 0).map((row, rowIndex) => (
+                  <div key={rowIndex} className={`flex flex-wrap justify-center gap-6 items-center${tier === "SUPPORTING_PARTNER" ? " lg:flex-nowrap" : ""}${rowIndex > 0 ? " mt-6" : ""}`}>
+                    {row.map(s => (
                       <div key={s.id} className={`${TIER_SIZES[tier] || "h-16 w-32"} border-2 border-border bg-white rounded-xl flex items-center justify-center p-3 hover:border-secondary/50 transition-all hover:shadow-md`}>
                         {s.logoUrl ? (
                           s.website
@@ -75,6 +79,7 @@ export async function SponsorsSection() {
                       </div>
                     ))}
                   </div>
+                  ))}
                 </div>
               );
             })}

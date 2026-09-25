@@ -121,4 +121,13 @@ export const SPONSORS: StaticSponsor[] = [
     description: null,
     order: 12,
   },
+  {
+    id: "old-mutual",
+    name: "Old Mutual",
+    tier: "SUPPORTING_PARTNER",
+    logoUrl: "/images/sponsors/old-mutual.png",
+    website: null,
+    description: null,
+    order: 13,
+  },
 ];
