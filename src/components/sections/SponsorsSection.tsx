@@ -70,7 +70,7 @@ export async function SponsorsSection() {
                         {s.logoUrl ? (
                           s.website
                             ? <a href={s.website} target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
-                                <img src={s.logoUrl} alt={s.name} className="max-h-full max-w-full object-contain grayscale hover:grayscale-0 transition-all" />
+                                <img src={s.logoUrl} alt={s.name} className="max-h-full max-w-full object-contain" />
                               </a>
                             : <img src={s.logoUrl} alt={s.name} className="max-h-full max-w-full object-contain" />
                         ) : (

@@ -385,7 +385,7 @@ export default async function SponsorsPage() {
                               <img
                                 src={s.logoUrl}
                                 alt={s.name}
-                                className="h-20 w-auto object-contain grayscale hover:grayscale-0 transition-all"
+                                className="h-20 w-auto object-contain"
                               />
                             ) : (
                               <div className="h-20 w-full bg-muted rounded-xl flex items-center justify-center border border-border">
