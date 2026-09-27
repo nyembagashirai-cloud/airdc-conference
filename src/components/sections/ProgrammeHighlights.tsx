@@ -11,7 +11,7 @@ const DAYS = [
     day: "Day 2",
     date: "Monday 28 September 2026",
     highlights: [
-      "Opening Remarks by Guest of Honour: Minister M Ncube",
+      "Opening Remarks by Guest of Honour: Deputy Minister of Finance, Economic Development and Investment Promotion Hon. David Kudakwashe Mnangagwa",
       "Session 1: Environmental Disruption and Impact on Insurance",
       "Session 2: Impact of AI and Technology on Insurance",
       "AIRDC General Membership Meeting (AIRDC Members Only)",

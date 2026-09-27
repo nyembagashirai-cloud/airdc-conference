@@ -267,4 +267,16 @@ An MBA graduate and a Fellow of the Insurance Institute of India (FIII), Pushpa 
 
 This deep regulatory expertise is further enriched by foundational experience in the banking sector and a background in education, giving her a multisectoral perspective on insurance sector regulation.`,
 },
+{
+  slug: 'don-mlambo',
+  name: 'Mr. Don Mlambo',
+  title: 'Senior Cyber Security Engineer',
+  organisation: 'xPLUG',
+  country: '',
+  speakerType: 'Speaker',
+  photo: '/images/speakers/don-mlambo.jpg',
+  featured: true,
+  order: 16,
+  bio: `Don Mlambo is a Senior Cyber Security Engineer at xPLUG, with over 6 years of experience in cybersecurity, technology risk, data protection and security governance, primarily within the financial services sector. His work focuses on cyber resilience, emerging technology risk and supporting secure digital transformation.`,
+},
 ];

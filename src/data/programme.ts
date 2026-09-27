@@ -1,5 +1,5 @@
 // 24th AIRDC Conference programme.
-// Source: "FINAL AIRDC PROGRAMM.docx", the final approved programme (received 25 September 2026).
+// Source: "FINAL AIRDC PROGRAMM.pdf", the final approved programme (updated 27 September 2026).
 // Every line below is copied exactly from the document, in the same order.
 // Text wrapped in **double asterisks** is bold in the document.
 // Admin dashboard sessions take precedence over this file when any exist.
@@ -83,7 +83,7 @@ export const PROGRAMME: ProgrammeDay[] = [
         time: ["09:30 – 10:00"],
         blocks: [
           [
-            { text: "Opening Remarks by Guest of Honour: **Minister M Ncube**" },
+            { text: "Opening Remarks by Guest of Honour: **Deputy Minister of Finance, Economic Development and Investment Promotion Hon. David Kudakwashe Mnangagwa**" },
           ],
         ],
       },
