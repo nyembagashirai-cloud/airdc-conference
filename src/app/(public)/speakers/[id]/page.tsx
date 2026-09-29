@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Building2, MapPin, Linkedin } from "lucide-react";
+import { ArrowLeft, Building2, MapPin, Linkedin, Download } from "lucide-react";
+import { PRESENTATIONS } from "@/data/presentations";
 import { SPEAKERS } from "@/data/speakers";
 
 type Props = { params: Promise<{ id: string }> };
@@ -76,6 +77,7 @@ export default async function SpeakerProfilePage({ params }: Props) {
 
   const initials = speaker.name.split(" ").map((n) => n[0]).join("").slice(0, 2);
   const paragraphs = speaker.bio.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+  const decks = PRESENTATIONS.filter((p) => p.speakerSlug === id);
 
   return (
     <div className="pt-20">
@@ -150,6 +152,31 @@ export default async function SpeakerProfilePage({ params }: Props) {
               )}
             </div>
           </div>
+
+          {decks.length > 0 && (
+            <div className="mt-12">
+              <h2 className="font-heading font-bold text-primary text-xl mb-4">Presentations</h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {decks.map((d) => (
+                  <a
+                    key={d.id}
+                    href={d.file}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-3 p-4 rounded-xl border border-border bg-white hover:border-secondary hover:shadow-card transition-all"
+                  >
+                    <Download size={18} className="text-secondary mt-0.5 flex-shrink-0" />
+                    <span>
+                      <span className="block font-semibold text-primary leading-snug">{d.title}</span>
+                      <span className="block text-xs text-muted-foreground mt-1">
+                        {d.kind} · {d.pages} pages · {d.sizeMb} MB
+                      </span>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="mt-14 text-center p-8 bg-muted rounded-2xl border border-border">
             <h2 className="font-heading font-bold text-primary text-xl mb-2">
