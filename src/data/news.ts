@@ -16,6 +16,17 @@ export type ExternalArticle = {
 
 export const EXTERNAL_ARTICLES: ExternalArticle[] = [
   {
+    id: "kusikwenyu-airdc-presidency",
+    title: "Kusikwenyu takes AIRDC presidency, pledges to build stronger insurance ecosystem",
+    excerpt:
+      "Patrick Kusikwenyu took over the AIRDC presidency for 2026 to 2028 from Chai Sophonpanich at the Harare conference. He plans to lift member participation, create benchmarking opportunities between insurers, expand training with national insurance associations and deepen collaboration on technology and AI across Africa, Asia and Latin America.",
+    category: "NEWS",
+    publishedAt: "2026-09-29",
+    coverImage: "/images/gallery/day-1/airdc-239.jpg",
+    source: "Insurance24",
+    sourceUrl: "https://insurance24.co.zw/kusikwenyu-takes-airdc-presidency-pledges-to-build-stronger-insurance-ecosystem/",
+  },
+  {
     id: "phiri-stress-test-resilience",
     title: "Insurers urged to stress-test against shocks and build resilience",
     excerpt:
