@@ -16,6 +16,17 @@ export type ExternalArticle = {
 
 export const EXTERNAL_ARTICLES: ExternalArticle[] = [
   {
+    id: "phiri-stress-test-resilience",
+    title: "Insurers urged to stress-test against shocks and build resilience",
+    excerpt:
+      "Wadzanayi Phiri of Coronation Solutions set out five priorities for African insurers: an honest read of market friction, stress-testing for severe shocks, products built for African customers, coordination across the industry and clear accountability. She also urged pension trustees to weigh liquidity and offshore investment risks carefully.",
+    category: "NEWS",
+    publishedAt: "2026-09-29",
+    coverImage: "/images/gallery/day-1/airdc-201.jpg",
+    source: "Insurance24",
+    sourceUrl: "https://insurance24.co.zw/insurers-urged-to-stress-test-against-shocks-and-build-resilience/",
+  },
+  {
     id: "mnangagwa-protection-gap",
     title: "Mnangagwa challenges insurers to close Zimbabwe's protection gap",
     excerpt:
