@@ -133,6 +133,19 @@ export function Footer() {
             <Link href="/admin" className="text-white/50 hover:text-white text-xs transition-colors">Admin</Link>
           </div>
         </div>
+        <div className="container pb-6 text-center">
+          <p className="text-white/50 text-xs">
+            Developed &amp; Managed by{" "}
+            <a
+              href="https://www.claudiusco.co.zw"
+              target="_blank"
+              rel="noopener"
+              className="text-secondary font-semibold hover:text-white transition-colors"
+            >
+              Claudius &amp; Co.
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );
