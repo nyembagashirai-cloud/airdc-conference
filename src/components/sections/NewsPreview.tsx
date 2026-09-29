@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, ExternalLink } from "lucide-react";
+import { EXTERNAL_ARTICLES } from "@/data/news";
 
 const categoryColors: Record<string, string> = {
   ANNOUNCEMENT: "bg-secondary/10 text-secondary",
@@ -10,15 +11,18 @@ const categoryColors: Record<string, string> = {
 };
 
 async function getLatestArticles() {
-  if (!process.env.DATABASE_URL) return [];
-  try {
-    const { prisma } = await import("@/lib/prisma");
-    return await prisma.article.findMany({
-      where: { published: true },
-      orderBy: { publishedAt: "desc" },
-      take: 3,
-    });
-  } catch { return []; }
+  let db: { id: string; href: string; external: boolean; title: string; excerpt: string | null; category: string; publishedAt: Date | null; coverImage: string | null }[] = [];
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import("@/lib/prisma");
+      const rows = await prisma.article.findMany({ where: { published: true }, orderBy: { publishedAt: "desc" }, take: 3 });
+      db = rows.map((a) => ({ id: a.id, href: `/news/${a.slug}`, external: false, title: a.title, excerpt: a.excerpt, category: a.category, publishedAt: a.publishedAt, coverImage: a.coverImage }));
+    } catch {}
+  }
+  const ext = EXTERNAL_ARTICLES.map((a) => ({ id: a.id, href: a.sourceUrl, external: true, title: a.title, excerpt: a.excerpt, category: a.category, publishedAt: new Date(a.publishedAt) as Date | null, coverImage: a.coverImage as string | null }));
+  return [...db, ...ext]
+    .sort((x, y) => (y.publishedAt?.getTime() ?? 0) - (x.publishedAt?.getTime() ?? 0))
+    .slice(0, 3);
 }
 
 export async function NewsPreview() {
@@ -44,7 +48,8 @@ export async function NewsPreview() {
         ) : (
           <div className="grid md:grid-cols-3 gap-6">
             {articles.map((article) => (
-              <Link key={article.id} href={`/news/${article.slug}`}
+              <Link key={article.id} href={article.href}
+                {...(article.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="card-premium group overflow-hidden block">
                 {article.coverImage ? (
                   <div className="h-40 overflow-hidden">
@@ -72,7 +77,7 @@ export async function NewsPreview() {
                     <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">{article.excerpt}</p>
                   )}
                   <div className="flex items-center gap-1 mt-4 text-accent text-sm font-medium group-hover:gap-2 transition-all">
-                    Read more <ArrowRight size={14} />
+                    {article.external ? <>Read full article <ExternalLink size={14} /></> : <>Read more <ArrowRight size={14} /></>}
                   </div>
                 </div>
               </Link>

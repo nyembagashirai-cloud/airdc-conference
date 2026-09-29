@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Calendar, ArrowRight } from "lucide-react";
+import { Calendar, ArrowRight, ExternalLink } from "lucide-react";
+import { EXTERNAL_ARTICLES } from "@/data/news";
 
 export const metadata: Metadata = {
   title: "News & Updates",
@@ -15,12 +16,49 @@ const categoryColors: Record<string, string> = {
   INSIGHT: "bg-teal-50 text-teal-700 border-teal-200",
 };
 
-async function getArticles() {
-  if (!process.env.DATABASE_URL) return [];
-  try {
-    const { prisma } = await import("@/lib/prisma");
-    return await prisma.article.findMany({ where: { published: true }, orderBy: { publishedAt: "desc" } });
-  } catch { return []; }
+type Card = {
+  id: string;
+  href: string;
+  external: boolean;
+  title: string;
+  excerpt: string | null;
+  category: string;
+  publishedAt: Date | null;
+  coverImage: string | null;
+  byline: string | null;
+};
+
+async function getArticles(): Promise<Card[]> {
+  let db: Card[] = [];
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import("@/lib/prisma");
+      const rows = await prisma.article.findMany({ where: { published: true }, orderBy: { publishedAt: "desc" } });
+      db = rows.map((a) => ({
+        id: a.id,
+        href: `/news/${a.slug}`,
+        external: false,
+        title: a.title,
+        excerpt: a.excerpt,
+        category: a.category,
+        publishedAt: a.publishedAt,
+        coverImage: a.coverImage,
+        byline: a.authorName ? `By ${a.authorName}` : null,
+      }));
+    } catch {}
+  }
+  const ext: Card[] = EXTERNAL_ARTICLES.map((a) => ({
+    id: a.id,
+    href: a.sourceUrl,
+    external: true,
+    title: a.title,
+    excerpt: a.excerpt,
+    category: a.category,
+    publishedAt: new Date(a.publishedAt),
+    coverImage: a.coverImage,
+    byline: `Source: ${a.source}`,
+  }));
+  return [...db, ...ext].sort((x, y) => (y.publishedAt?.getTime() ?? 0) - (x.publishedAt?.getTime() ?? 0));
 }
 
 export default async function NewsPage() {
@@ -51,10 +89,11 @@ export default async function NewsPage() {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {articles.map((article, i) => (
-                <Link key={article.id} href={`/news/${article.slug}`}
+                <Link key={article.id} href={article.href}
+                  {...(article.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className={`card-premium group overflow-hidden block ${i === 0 ? "md:col-span-2" : ""}`}>
                   {article.coverImage && (
-                    <div className="relative h-48 overflow-hidden">
+                    <div className={`relative overflow-hidden ${i === 0 ? "h-64" : "h-48"}`}>
                       <img src={article.coverImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
                   )}
@@ -78,9 +117,9 @@ export default async function NewsPage() {
                       <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 mb-4">{article.excerpt}</p>
                     )}
                     <div className="flex items-center justify-between pt-4 border-t border-border">
-                      {article.authorName && <span className="text-xs text-muted-foreground">By {article.authorName}</span>}
+                      {article.byline && <span className="text-xs text-muted-foreground">{article.byline}</span>}
                       <span className="text-accent text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all ml-auto">
-                        Read more <ArrowRight size={14} />
+                        {article.external ? <>Read full article <ExternalLink size={14} /></> : <>Read more <ArrowRight size={14} /></>}
                       </span>
                     </div>
                   </div>
