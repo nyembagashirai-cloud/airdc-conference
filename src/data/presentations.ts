@@ -20,6 +20,22 @@ export type Presentation = {
 
 export const PRESENTATIONS: Presentation[] = [
   {
+    id: "hidden-tax-on-risk",
+    title: "Hidden Tax on Risk",
+    subtitle: "How global friction redefines local insurance in developing countries",
+    speaker: "Wadzanayi B Phiri",
+    speakerSlug: "wadzanayi-phiri",
+    organisation: "Coronation Solutions (Private) Limited",
+    session: "Session 3: Geopolitics and Impact on Insurance, Topic 5",
+    date: "29 September 2026",
+    kind: "Slides",
+    pages: 13,
+    sizeMb: 2.2,
+    file: "/publications/presentations/hidden-tax-on-risk-wadzanayi-phiri.pdf",
+    cover: "/publications/presentations/hidden-tax-on-risk-cover.jpg",
+    coverShape: "landscape",
+  },
+  {
     id: "digitalisation-of-insurance-a-case-for-ai",
     title: "Digitalisation of Insurance: A Case for AI",
     subtitle: "Wolf Pack Strategy: Winning the AI Race",
