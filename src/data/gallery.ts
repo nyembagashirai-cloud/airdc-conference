@@ -14,7 +14,28 @@ const img = (album: string, name: string, title: string): StaticGalleryImage => 
   altText: `${title}, 24th AIRDC Annual Conference, Harare`,
 });
 
+const seq = (album: string, prefix: string, from: number, to: number, title: string): StaticGalleryImage[] =>
+  Array.from({ length: to - from + 1 }, (_, i) => img(album, `${prefix}${from + i}`, title));
+
 export const GALLERY_ALBUMS: StaticGalleryAlbum[] = [
+  {
+    id: "gala-dinner",
+    title: "Gala Dinner, Tuesday 29 September",
+    description: "The ethnic-themed gala dinner closing the second conference day at Rainbow Towers.",
+    year: 2026,
+    driveUrl: "https://drive.google.com/drive/folders/1Pu71u9_oN22i_tBeOSq6vD8-xpqdwhIT",
+    coverImage: "/images/gallery/gala-dinner/airdc-gala-31-thumb.jpg",
+    images: seq("gala-dinner", "airdc-gala-", 1, 167, "Gala Dinner, Tuesday 29 September"),
+  },
+  {
+    id: "day-2",
+    title: "Conference Day, Tuesday 29 September",
+    description: "Panels, presentations and awards on the second full conference day.",
+    year: 2026,
+    driveUrl: "https://drive.google.com/drive/folders/1gKyTSwWRKAjm_DaUPsd0o0RMffm_3X8X",
+    coverImage: "/images/gallery/day-2/airdc-488-thumb.jpg",
+    images: seq("day-2", "airdc-", 376, 562, "Conference Day, Tuesday 29 September"),
+  },
   {
     id: "day-1",
     title: "Conference Day, Monday 28 September",
